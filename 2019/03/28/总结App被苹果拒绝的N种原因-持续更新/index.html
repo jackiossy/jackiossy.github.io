@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="###App Store新规：6月1日起ios应用须支持IPv6  #####该政策将在6月1日起生效，到时所有提交至苹果App Store的应用申请必须要兼容面向硬件识别和网络路由的最新互联网协议–IPv6-only标准。 ######注意 : 由于国内还不支持iPv6 , 所以iOS工程内所用到的接口地址必须为域名,否则上架会被拒 !  以下内容来源于网络 , 如未来会有新被拒理由会及时更新。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="总结App被苹果拒绝的N种原因_持续更新...">
+<meta property="og:url" content="http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/index.html">
+<meta property="og:site_name" content="技术大爆炸">
+<meta property="og:description" content="###App Store新规：6月1日起ios应用须支持IPv6  #####该政策将在6月1日起生效，到时所有提交至苹果App Store的应用申请必须要兼容面向硬件识别和网络路由的最新互联网协议–IPv6-only标准。 ######注意 : 由于国内还不支持iPv6 , 所以iOS工程内所用到的接口地址必须为域名,否则上架会被拒 !  以下内容来源于网络 , 如未来会有新被拒理由会及时更新。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-28T08:48:02.841Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="总结App被苹果拒绝的N种原因_持续更新...">
+<meta name="twitter:description" content="###App Store新规：6月1日起ios应用须支持IPv6  #####该政策将在6月1日起生效，到时所有提交至苹果App Store的应用申请必须要兼容面向硬件识别和网络路由的最新互联网协议–IPv6-only标准。 ######注意 : 由于国内还不支持iPv6 , 所以iOS工程内所用到的接口地址必须为域名,否则上架会被拒 !  以下内容来源于网络 , 如未来会有新被拒理由会及时更新。">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>总结App被苹果拒绝的N种原因_持续更新...</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2016/03/25/iOS开发编码建议与编程经验/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&text=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&is_video=false&description=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=总结App被苹果拒绝的N种原因_持续更新...&body=Check out this article: http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&name=总结App被苹果拒绝的N种原因_持续更新...&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        总结App被苹果拒绝的N种原因_持续更新...
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">技术大爆炸</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-28T08:47:47.000Z" itemprop="datePublished">2019-03-28</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>###App Store新规：6月1日起ios应用须支持IPv6</p>
+<hr>
+<p>#####该政策将在6月1日起生效，到时所有提交至苹果App Store的应用申请必须要兼容面向硬件识别和网络路由的最新互联网协议–IPv6-only标准。</p>
+<p>######注意 : 由于国内还不支持iPv6 , 所以iOS工程内所用到的接口地址必须为域名,否则上架会被拒 !</p>
+<hr>
+<p>以下内容来源于网络 , 如未来会有新被拒理由会及时更新。</p>
+<hr>
+<p>1、程序有重大bug，程序不能启动，或者中途退出。</p>
+<p>2、绕过苹果的付费渠道，我们之前游戏里的用兑换码兑换金币。</p>
+<p>3、游戏里有实物奖励的话，一定要说清楚，奖励由本公司负责，和苹果没有关系。</p>
+<p>4、用到苹果的标志。（应用的设计和Apple的Logo风格太像了也会被拒）</p>
+<p>5、网络功能不能正常访问。</p>
+<p>6、图标不能点击，不能点击的图标要置灰，或者直接隐藏。</p>
+<p>7、没有设置default页，启动画面为黑屏，有一定概率被拒绝。</p>
+<p>8、一个应用在线，但你想在发一个豪华版之类的，再开一个应用也会被拒绝。</p>
+<p>9、用了著名游戏的关键字，比如说“愤怒的小鸟”之类的。</p>
+<p>10、iPhone版不支持480*320分辨率被决绝。</p>
+<p>11、娱乐分类App，拒绝理由：我们认为你的App不具有娱乐性。</p>
+<p>12、你的软件不符合中国法律，还打电话来跟我说。（奶奶的，中国哪个法律说不可以翻墙。）</p>
+<p>13、技术支持地址写的微博地址，于是被拒绝了。原因是：不能将需要登陆才能访问的网址作为技术支持地址。</p>
+<p>14、说我们的应用不该用App开发，应该用HTML5。（而且还很热心的给出了参考链接哦）</p>
+<p>15、调用截屏功能,当时没注意,是私有API,被拒.改成非私有API实现截屏功能就通过了.</p>
+<p>16、开放了文件document分享功能(Application supports iTunes file sharing),被退回,理由:不需要分享,为何开放了.回复邮件说明理由后上线.</p>
+<p>17、年龄设置太低,说是有成人内容,被拒.修改内容后上线.</p>
+<p>18、同一软件多个版本只是针对不同的国家和内置的语言不同.前面几个上线,后面几个被拒.让改成一个程序做程序内下载资源.</p>
+<p>19、程序有crash被拒.修改bug后上线.</p>
+<p>20、原因是我们的一个软件只允许联通用户验证真实身份并发布信息。apple要求要么放弃验证，要么允许移动和电信用户验证。</p>
+<p>21、APP中出现了某本以乔布斯为封面的本集团出版物图片，遭拒。</p>
+<p>22、原来做过一个显示假电池的App, 就是显示一个假的的电量, 这样别人找你借手机就可以以没电了为理由不借给他. 结果App Store说会迷惑用户, 让我改简介. 改为简介后苹果中国给我打电话说这个App不用再提交了, 不可能过, 会迷惑用户… 我了个去的 于是这个App就一直存在在我的iTunes Connect里.</p>
+<p>23、忘记提供测试账号。（如果你的APP有登录功能）</p>
+<p>24、软件有个vip功能，涉嫌应用内收费。</p>
+<p>25、拨打电话，涉嫌扣费。</p>
+<p>26、图片如果比较清凉的话需要设置软件级别。</p>
+<p>27、平板应用要支持最少2个翻转方向。</p>
+<p>28、程序内按钮设计成标准的iOS icon。</p>
+<p>29、内置付费的内容要明确告诉需要购买，购买前不能摆出来（这个属于运气不好，同样这么做的app很多）</p>
+<p>30、提交旗下一款新应用，为统一旗下各个产品的品牌识别，采取了与上一款产品相似的色调和logo结构。苹果拒绝理由是不知道这两款产品有什么区别（其实区别点进去就很明显，连UI布局都大相径庭）。</p>
+<p>31、应用内涉及到抽奖的运营活动，未声明与苹果官方无关。</p>
+<p>33、自认为第一版产品还不够完善，于是过度谦虚地在启动画面加上了“beta”字样。苹果的反馈是，不允许测试版产品上架。囧，后来翻了一下 Review Guideline 似乎是有提到这点的。</p>
+<p>34、链接堆砌，苹果建议用HTML5来做</p>
+<p>35、UIWebView 嵌页面片，苹果建议让用户通过浏览器访问，比如爱知乎，开始几个版本通过了，后面的更新一直没提交上去</p>
+<p>屏幕坏点检测应用，苹果说会误导用户，未上架</p>
+<p>36、登陆账号有两个字母写反了，改正后通过</p>
+<p>37、因远程服务器反应慢，苹果的人估计没耐心等，就说有bug给拒了，重新提交一份通过</p>
+<p>38、应用标题加了几个描述语句，苹果让在描述中写明达到此目的的操作流程，改正后通过</p>
+<p>39、一个第三方的应用，描述文字中有该网站的链接，进去网站后能找到付费链接，苹果说该网站有自己的支付方式，去除网址后通过</p>
+<p>40、应用请求使用地理位置的权限，但相关功能藏得比较深，Apple说没找到相关的功能。 — 回信说明后通过</p>
+<p>41、应用描述中提到了是全平台应用，可以和其他系统同步数据。因为提到了“android”的字眼被拒。 — 修改描述后通过<br>42、 App 的User Agreement中出现了 Beta、Preliminary 等字样。因为是发布第一个版本，产品带有一定的beta性质，但是确实是可发布产品了。按照公司LEGAL部门（外企，对User Agreement要求严格）的要求，必须有类似Beta的说明告知用户，而 Apple 是明确不允许有 Beta 性质的字样的。</p>
+<p>43、App 是一个机遇小区的社区工具，顺便做了房产广告，但是 apple 审核说是广告app，不允许发布。</p>
+<p>44、应用里有个去给我们打分的功能，被拒了。。（这是不是史上最坑爹的拒绝理由）</p>
+<p>45、网络工具软件，要求支持国外的电信运营商网络。</p>
+<p>46、曾经做一个 Chinajoy 美女图片 show 的，被认为不适合放在 App Store。</p>
+<p>47、iOS 5 的数据存储问题…网络下载的资源不能直接搞在Documents目录下。这个反复整了5次左右才通过审核。</p>
+<p>48、忘记提供测试账号……（审核的大爷们你们就不能自己弄个或者注册个账号么）</p>
+<p>49、还有一次被拒，我回复说你们所说的问题不存在……后来……通过审核了。-.-</p>
+<p>50、菜单中有一个文字包含测试，被打回，说不能上测试版本。</p>
+<p>51、app名字包含pad，被打回，说容易名字不能有pad，会被误解为苹果自己的应用，不过同名的iphone版本就通过了…</p>
+<p>52、upport地址在safari（仅仅是safari）下由于适配性问题打不开，结果就收到了apple的来信。</p>
+<p>53、app里做了次抽奖，奖品是iphone4s，结果他们必须要我们将奖品改成别的，同时申明此活动与苹果公司无关，才可以上架。。。</p>
+<p>54、app里做了次抽奖，奖品是iphone4s，结果他们必须要我们将奖品改成别的，同时申明此活动与苹果公司无关，才可以上架。。。</p>
+<p>55、在程序的说明信息中有“越狱”俩字，被拒，后来把这俩字去了，PASS。但是：如果我在程序运行中检测出手机越狱了，这结果报出来让不让过？</p>
+<p>56、使用GPS常驻后台服务，要我给出一个合适的理由，否则不往下审核，还好，解释一翻过去了。</p>
+<p>57、出现“给我们五星好评”之类的文字。</p>
+<p>58、应用内提到付费项目但木有通过苹果付费渠道（妄图不让苹果老大赚钱）</p>
+<p>59、问我服务是不是只在IOS平台，还是同时支持多平台（我当然拥护苹果老大的领导，木有其他平台，iPhone专属）</p>
+<p>60、地图应用，Google大神的LOGO没有显示。</p>
+<p>61、google地图下面logo被一个UIView给遮挡了被拒。调整位置后ok</p>
+<p>62、对不存在普遍比较标准的几类人进行比较和评判。不比人比动物后ok</p>
+<p>63、上传通讯录没有通知。这个等了几个月，苹果的法律纠纷差不多了之后拒掉。然后加了提示后ok。</p>
+<p>64、我写的英文App介绍审核人员看不懂，被拒。后然直接用中文。唉。</p>
+<p>65、因为上行短信实现用户认证被拒</p>
+<p>66、果测试人员的手机号在国外，因为收不到国内短信，被拒</p>
+<p>67、他们打开我的一个APP测试，显示空白无内容，哈哈，因为他们相册里没有960*640的图，就说我该程序功能没开发完毕吧？<br>然后我回了信，然后第二天就上架了。虽然这个小应用是极其简单的。</p>
+<p>68、最蛋疼的是，提供了测试用户帐号密码，被我们某个手贱的测试人员测试修改密码的时候给改掉了。。。于是苹果登录不进来，于是杯具</p>
+<p>69、App价格不能超过99美金（其中有一个是99.99美元，你妹啊！！！！！！！你麻痹多出0.99美金啊！！人家游戏都可以有啊！！！！为什么我们就不行啊！！！）</p>
+<p>70、不能强迫用户注册（网络游戏啊亲！！你妹有直接登陆的按钮啊！！！不需要注册的啊！！试一下会shi啊！！！！）</p>
+<p>71、support URL无法访问（草草草草草！！！那几天GFW抽风，海外访问国内网站有问题，你妹躲在香港的体谅一下大陆人民啊！！！）</p>
+<p>72、没有生成Paid iOS合同（游戏内含IAP，好吧，这个是合作公司搞的乌龙，就不吐槽苹果了）</p>
+<p>73、某微博客户端，提供了测试账号，被拒的理由是「账号登录不进去」，还有截屏，我一看，这不把我们提供的测试账号的最后两个字母写反了么…赶紧反馈，之后三天才继续审核，这三天真是太赔了。</p>
+<p>74、某门户新闻客户端，免费应用，被拒的理由是「找不到in app purchase的项目对应的界面」，可是我们的应用跟本没有应用内支付，继续反馈…又等了三天…</p>
+<p>2012/8/21补充<br>75、iPhone Human interface Guidelines中指出了基本UI控件应该如何正确地使用。我们应该按照它的要求来检查Tab Bar、Navigation Bar和Alert View等控件是否符合Apple的口味。</p>
+<p>76、确保应用不要模仿设备预装应用的样式和功能，如Music、iTunes Music Store和App Store等。这一条规则似乎是选择性实施的，因为许多浏览器和指南针类的应用都得到了批准。</p>
+<p>77、不要加入过多脏话、无理由的性爱场面和吸毒场面。</p>
+<p>78、不要对硬件按钮进行重新编程，赋予其它功能。例如，不要将音量按钮作为照相应用的快门键，不要将home键作为游戏中的开火键。</p>
+<p>2012年/12/23补充</p>
+<p>苹果拒绝获取iOS设备的App （推荐：《iOS设备的UDID是什么？苹果为什么拒绝获取iOS设备UDID的应用？如何替代UDID？》）</p>
+<p>看完上面的各种原因，dApps建议各位开发者仔细阅读 Apple Review Guideline(苹果应用商店AppStore审核中文指南（译本）)</p>
+<p>2013年/2/7补充<br>苹果应用审查团队叫停cookie追踪技术，凡是有开发者App使用“cookie追踪”技术的，请尽快想办法让其符合苹果的审查条件。</p>
+<p>2014年 7月补充<br>应用涉及到硬件的开发，需要硬件辅助运行的，比如穿戴设备，应用无注明并没有邮寄硬件设备，那么应用可能会被拒绝。<br>2014年12月补充<br>苹果应用商店AppStore上线被拒10大原因（官方提供数据）<br>2015年1月补充<br>App产品发布和提交环节的注意事项，小心被拒。<br>2015年2月15日补充<br>→AppStore：App图标及App截图不准出现“枪”<br>2015年3月5日补充<br>　　10.6 Details<br>　　Your app includes an update button or alerts the user to update the app. To avoid user confusion, app version updates must utilize the iOS built-in update mechanism.<br>应用里面有个cell 后有个“版本检测XX”点击后做更新流程，如果是最新版本则提示当前是最新版本，如果不是则跳转到AppStore。<br>非常不解啊，但是还是悲剧了。难道苹果又严格了，对旧条款有新的含义诠释。<br>更改方案为：当前版本：XX 仅作显示，去除更新的流程。<br>被拒提示示例（2015年4月7日补充）<br>2015年4月补充<br>App用 有米、多盟（domob）、艾德思奇（mobisage）、万普 积分墙SDK的直接被拒</p>
+<p>2015年8月补充<br>因为 17.2被拒<br>　　17.2 - Apps that require users to share personal information, such as email address and date of birth, in order to function will be rejected<br>　　17.2 Details<br>　　We noticed that your app requires users to register with personal information to access non account-based features.Apps cannot require user registration prior to allowing access to app content and features that are not associated specifically to the user.<br>　　Specifically, your app requires users’ gender and location information for account creation. We’ve attached screenshot(s) for your reference.<br>　　Next Steps<br>　　User registration that requires the sharing of personal information must be optional or tied to account-specific functionality. Additionally, the requested information must be relevant to the features.<br>　　解决方法：回复苹果说明为什么要收集用户的这些信息，只要理由正当，一般会通过。</p>
+<p>2015年10月11日补充<br>　　① 对于言论自由的内容，需要有用户主动可以举报的按钮或者区域（举例如社区中的匿名内容，必须要有用户可以自主举报的按钮，关于这一点我记得当时人家审核团队直接打电话给我说 我还试图和他”狡辩“说我们有自己的一套筛选内容的机制，以及我们的运营人员24小时不停的在审核内容，然而还是不行，审核人员直接和我说你没有 用户可以自主举报的地方审核是不会过的）<br>　　② 不能限制用户进入你的app，但是你可以限制用户只使用你的app的部分功能（想到这一点也真是眼泪掉下来，这句话是人家苹果美国团队的某审核团队负责人直接说的原话，具体是怎么回事呢。我来解释一下吧~之前我们的一个app是指适用于校园范围内的，所以一打开app就直接定位，如果用户所在的地理位置不在学校内或者说他不允许使用gps权限，那么我们就禁止他进入，只给他提示界面。然而就是因为这样的原因，导致app不过，他给的理由就是不能限制用户进入你的app这一点，后来还听同事说如果一进来就要注册的app，而注册时候必须要传照片，不然不让注册的好像也是会被拒绝，原因也是这个）<br>　　③ 出现和iphone桌面一样的ui风格（就是说出现圆角的icon并且按照桌面风格排列）<br>　　④ 依赖其他app的功能（这一点主要出现在分享功能上，app中经常会有分享到微信什么的，如果你没有判断用户的手机是否安装了微信，然而苹果审核人员的机子上肯定是不会有微信的，这样他会觉得你们的app 牵涉到了其他的app 这样也是不允许的）<br>　　⑤如果有个人profile页面展示的，而且有照片啊之类可以自我编辑的，好像也需要有举报等功能。（这一点，我也不是很确定，前几天我朋友碰到的，就是他的app中有profile页，然后可以上传相片，审核被拒的原因，也是说会自主产生内容之类的。。。）<br>　　好了，暂时跳入脑海的就那么几条，我感觉这几条也是比较容易忽视的。当然还有一些奇葩的比如说ui太丑啊什么的，这种看个人的审美的，再提交一次原模原样的也是会过的，只能说明你的人品不好。 还想说的是，一般的审核新app的提交会比较严格，所以我一般提交的原则是这样的，能呈现给苹果的流程，尽量不呈现给他们，比如说有注册流程的app，那么我就直接提供他们一个测试账号，这样就可以有效的避免了注册流程。如果一个app对性别不同或者身份不能的逻辑是不一样的，那么也给他们一个最简单，牵涉到逻辑，内容最少的一种测试账号。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&text=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&is_video=false&description=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=总结App被苹果拒绝的N种原因_持续更新...&body=Check out this article: http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&title=总结App被苹果拒绝的N种原因_持续更新..."><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/28/总结App被苹果拒绝的N种原因-持续更新/&name=总结App被苹果拒绝的N种原因_持续更新...&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Jackiossy
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
