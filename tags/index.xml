@@ -1,62 +1,90 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Jackiossy&#39;s Blog</title>
-    <link>https://jackiossy.top/tags/</link>
-    <description>Recent content in Tags on Jackiossy&#39;s Blog</description>
+    <title>Tags on Jackiossy &#39;s blog</title>
+    <link>http://jackiossy.top/tags/</link>
+    <description>Recent content in Tags on Jackiossy &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 22 Mar 2022 21:01:42 +0800</lastBuildDate><atom:link href="https://jackiossy.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Oct 2023 14:33:56 +0800</lastBuildDate><atom:link href="http://jackiossy.top/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>KMS激活</title>
-      <link>https://jackiossy.top/tags/kms%E6%BF%80%E6%B4%BB/</link>
-      <pubDate>Tue, 22 Mar 2022 21:01:42 +0800</pubDate>
+      <title>AirPrint</title>
+      <link>http://jackiossy.top/tags/airprint/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/tags/kms%E6%BF%80%E6%B4%BB/</guid>
+      <guid>http://jackiossy.top/tags/airprint/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>windows10激活</title>
-      <link>https://jackiossy.top/tags/windows10%E6%BF%80%E6%B4%BB/</link>
-      <pubDate>Tue, 22 Mar 2022 21:01:42 +0800</pubDate>
+      <title>CUPS</title>
+      <link>http://jackiossy.top/tags/cups/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/tags/windows10%E6%BF%80%E6%B4%BB/</guid>
+      <guid>http://jackiossy.top/tags/cups/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>iPhone</title>
-      <link>https://jackiossy.top/tags/iphone/</link>
-      <pubDate>Mon, 21 Mar 2022 14:59:00 +0800</pubDate>
+      <title>Docker</title>
+      <link>http://jackiossy.top/tags/docker/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/tags/iphone/</guid>
+      <guid>http://jackiossy.top/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>RAM规格列表</title>
-      <link>https://jackiossy.top/tags/ram%E8%A7%84%E6%A0%BC%E5%88%97%E8%A1%A8/</link>
-      <pubDate>Mon, 21 Mar 2022 14:59:00 +0800</pubDate>
+      <title>openWRT</title>
+      <link>http://jackiossy.top/tags/openwrt/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/tags/ram%E8%A7%84%E6%A0%BC%E5%88%97%E8%A1%A8/</guid>
+      <guid>http://jackiossy.top/tags/openwrt/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>SE 2022</title>
-      <link>https://jackiossy.top/tags/se-2022/</link>
-      <pubDate>Sun, 20 Mar 2022 11:43:16 +0800</pubDate>
+      <title>Swift5.9</title>
+      <link>http://jackiossy.top/tags/swift5.9/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/tags/se-2022/</guid>
+      <guid>http://jackiossy.top/tags/swift5.9/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>iPhone/iPad</title>
-      <link>https://jackiossy.top/tags/iphone/ipad/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>SwiftUI</title>
+      <link>http://jackiossy.top/tags/swiftui/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/tags/iphone/ipad/</guid>
+      <guid>http://jackiossy.top/tags/swiftui/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>WWDC2023</title>
+      <link>http://jackiossy.top/tags/wwdc2023/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
+      
+      <guid>http://jackiossy.top/tags/wwdc2023/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>英语</title>
+      <link>http://jackiossy.top/tags/%E8%8B%B1%E8%AF%AD/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
+      
+      <guid>http://jackiossy.top/tags/%E8%8B%B1%E8%AF%AD/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>英语单词</title>
+      <link>http://jackiossy.top/tags/%E8%8B%B1%E8%AF%AD%E5%8D%95%E8%AF%8D/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
+      
+      <guid>http://jackiossy.top/tags/%E8%8B%B1%E8%AF%AD%E5%8D%95%E8%AF%8D/</guid>
       <description></description>
     </item>
     

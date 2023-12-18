@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>openWRT on Jackiossy &#39;s blog</title>
+    <link>http://jackiossy.top/tags/openwrt/</link>
+    <description>Recent content in openWRT on Jackiossy &#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Oct 2023 14:33:56 +0800</lastBuildDate><atom:link href="http://jackiossy.top/tags/openwrt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何自己手动编译openWRT on ubuntu server</title>
+      <link>http://jackiossy.top/posts/how_to_build_openwrt/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
+      
+      <guid>http://jackiossy.top/posts/how_to_build_openwrt/</guid>
+      <description>如何自己手动编译openWRT on ubuntu server 1.前期准备 ubuntu linux server 魔法上网环境 （ 中国大陆用户 ） 脑子 🧠 双手 👋 2.前往Lean 仓库克隆代码 点击 Lean Openwrt仓库地址进入该项目首页， 为接下来的编译提供参考。
+sudo apt update -y sudo apt full-upgrade -y sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \ bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \ git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \ libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \ mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.</description>
+    </item>
+    
+  </channel>
+</rss>

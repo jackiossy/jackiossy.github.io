@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Docker部署CUPS打印服务</title>
+    <meta name="description" content="Small but beautiful application independent developer.">
+    <meta name="keywords" content='blog, gokarna, hugo, Docker, CUPS, AirPrint'>
+
+    <meta property="og:url" content="http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Docker部署CUPS打印服务">
+    <meta property="og:description" content="Small but beautiful application independent developer.">
+    <meta property="og:image" content="http://jackiossy.top/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="http://jackiossy.top/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Docker部署CUPS打印服务">
+    <meta name="twitter:description" content="Small but beautiful application independent developer.">
+    <meta property="twitter:domain" content="http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
+    <meta property="twitter:url" content="http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
+    <meta name="twitter:image" content="http://jackiossy.top/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.edd985581bf860dfb4507e5885197f1680160c7fe19f23b31e183126d99dd596.js" integrity="sha256-7dmFWBv4YN&#43;0UH5YhRl/FoAWDH/hnyOzHhgxJtmd1ZY="></script>
+
+    
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="http://jackiossy.top">
+                <img src="http://jackiossy.top/images/avatar.jpg" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="http://jackiossy.top">Jackiossy &#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="http://jackiossy.top/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://jackiossy.top/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="http://jackiossy.top/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://jackiossy.top/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Docker部署CUPS打印服务</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            October 7, 2023
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="http://jackiossy.top/tags/docker">Docker</a></li>
+        
+            <li class="post-tag"><a href="http://jackiossy.top/tags/cups">CUPS</a></li>
+        
+            <li class="post-tag"><a href="http://jackiossy.top/tags/airprint">AirPrint</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <h2 id="docker部署cups打印服务-使传统打印机支持airprint">Docker部署CUPS打印服务， 使传统打印机支持AirPrint</h2>
+<p>在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的使用打印功能。但是，我们并不是所有的打印机都支持AirPrint功能， 而且支持AirPrint功能都比较昂贵，那么我们如何才能将传统的USB打印机通过一些技术手段，将USB打印机变为AirPrint打印机呢？</p>
+<p>前期准备工作：</p>
+<ul>
+<li>Docker （ 任何运行方式都可以， 比如软路由，群晖，Ubuntu&hellip; everything )</li>
+<li>一台USB打印机 任何品牌</li>
+<li>打印机的Linux驱动 （ 官网下载， 如果CUPS默认自带打印机驱动可不用额外准备 ）</li>
+</ul>
+<p>具体方案如下:</p>
+<p>1.docker 部署CUPS服务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo docker run -d --name<span style="color:#f92672">=</span>airprint --net<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;host&#34;</span>  --privileged<span style="color:#f92672">=</span>true  -e TZ<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Asia/Shanghai&#34;</span>  -e HOST_OS<span style="color:#f92672">=</span>“Ubuntu” -p <span style="color:#e6db74">&#39;631:631&#39;</span>  -v <span style="color:#e6db74">&#34;/volume1/docker/airprint/config&#34;</span>:<span style="color:#e6db74">&#34;/config&#34;</span>  -v /dev:/dev  -v <span style="color:#e6db74">&#34;/volume1/docker/airprint/avahi&#34;</span>:<span style="color:#e6db74">&#34;/etc/avahi/services&#34;</span> <span style="color:#ae81ff">\-</span>v /var/run/dbus:/var/run/dbus <span style="color:#e6db74">&#34;olbat/cupsd&#34;</span>
+</span></span></code></pre></div><p>2.执行完毕后运行。</p>
+<p>cupsd启动之后打开浏览器访问cups服务的web管理页面， 并点击顶部菜单&quot;Administration&quot;, 点击 Printers 分类中的 &ldquo;Add Print&rdquo; 按钮，然后输入默认的账号 print , 密码 print ，登陆之后你就会看到USB连接到这台docker设备上的打印机型号， 我这里的打印机是佳能的激光打印机 Canon LBP6018L , 这里我们发现Local Printers已经识别出来 &ldquo;Canon LBP6030/6040/6018L&quot;打印机了， 我们选择，然后点击continue 继续。</p>
+<p>3.按提示填写打印机的名字/描述, 并勾选☑️“Share This Printer” , 然后点击继续。在驱动列表当中选择你的打印机品牌和型号， 如果列表当中有你的打印机型号， 即添加打印机完毕。 可在Web管理当中打印测试页进行测试。如果列表当中并没有你的打印机型号的时候， 请你去官网去查找你的打印机的Linux驱动， 并下载到本地。 通过 scp 服务传输到我们docker所在的服务器/主机当中。并传输进docker容器当中（使用docker cp) 命令。</p>
+<p>4.（非必要） 在docker当中安装linux打印机驱动， 一般驱动包解压出来后， 里面会有 install.sh 安装文件， 我们执行 ./install.sh 命令后，即可自动执行驱动的安装， 当Linux安装完毕之后， 我们重新进入步骤2， 进入web管理页面按照刚才的方法添加打印机，在驱动选择的列表即可看到您的打印机型号。 按照上面的教程添加即可。</p>
+<p>5.可成功在Web管理页面打印测试页面后， 我们需要在iOS/iPadOS/macOS当中， 直接选择打印机， 我们随意找一个文档， 可以是网页/PDF/备忘录/Page/照片等等均可。 我们在选择打印机的时候， 就可以看到我们刚才安装的打印机啦， 我们选择发现的打印机即可直接打印。</p>
+<p>6.Share CUPS Printer via Bonjour/IPP Protocol.</p>
+<p>如果在iPhone/ macOS当中， 并没有发现打印机。 我们需要在docker所在的系统当中， 去安装 Avahi-daemon 服务并运行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt install avahi-daemon
+</span></span></code></pre></div><p>执行启动服务命令：</p>
+<pre tabindex="0"><code>sudo systemctl start avahi-daemon
+</code></pre><p>将avahi-daemon服务加入到开机启动计划当中：</p>
+<pre tabindex="0"><code>sudo systemctl enable avahi-daemon
+</code></pre><p>我们将UDP 5353端口打开， 因为 avahi-daemon  要使用5353端口进行广播：</p>
+<pre tabindex="0"><code>sudo ufw allow 5353/udp
+</code></pre><p>成功运行 avahi-daemon 服务之后， iOS/ macOS就会发现我们共享的AirPrint打印机🖨️ ， 我们直接使用即可。</p>
+<p>参考文档：</p>
+<p><a href="https://www.linuxbabe.com/ubuntu/set-up-cups-print-server-ubuntu-bonjour-ipp-samba-airprint">https://www.linuxbabe.com/ubuntu/set-up-cups-print-server-ubuntu-bonjour-ipp-samba-airprint</a></p>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+    <span>&copy; 2023 The Marauders</span>
+    
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

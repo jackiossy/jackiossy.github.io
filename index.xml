@@ -1,51 +1,60 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jackiossy&#39;s Blog</title>
-    <link>https://jackiossy.top/</link>
-    <description>Recent content on Jackiossy&#39;s Blog</description>
+    <title>Jackiossy &#39;s blog</title>
+    <link>http://jackiossy.top/</link>
+    <description>Recent content on Jackiossy &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 22 Mar 2022 21:01:42 +0800</lastBuildDate><atom:link href="https://jackiossy.top/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Oct 2023 14:33:56 +0800</lastBuildDate><atom:link href="http://jackiossy.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>沧水KMS激活脚本——windows10、11支持全系</title>
-      <link>https://jackiossy.top/2022/03/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</link>
-      <pubDate>Tue, 22 Mar 2022 21:01:42 +0800</pubDate>
+      <title>[WWDC2023]Swift 5.9 新功能</title>
+      <link>http://jackiossy.top/posts/swift5.9_new_func/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/2022/03/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</guid>
-      <description>KMS 是什么 ? KMS的全称是 Key Management Service , 即密钥管理服务
-KMS是微软认可的一种产品激活方式 , 主要用于企业公司的内部批量激活设备。
-KMS脚本激活不容易误报病毒，激活更安全。这里感谢🙏沧水提供的KMS激活服务
-脚本下载地址 仓水服务器本地下载
-原文地址:https://kms.cangshui.net
-使用说明 【①】激活Windows系统要求：尽可能不使用淘宝/电脑城奸商系统，某吧某坛大神精简系统，某木风某白菜某之家某花园某家园魔改ghost系统，等一系列被人二次修改的系统，你可以点击这里下载原版系统镜像
-【②】Windows7只支持专业VL版，点这里下载，windows10与windows11支持全系,OEM版什么的就肯定不能用kms激活
-【③】激活Office要求：请勿使用各种精简版或上古版本你可以点击这里下载官方Office镜像
-【④】KMS激活Office时，请根据你安装的软件版本选择激活为2016还是2019/2021版本
-【⑤】双击脚本运行时，windows自带的安全机制会弹出窗口询问你是否要运行！因为脚本是申请了管理员权限的
-【⑥】0x80070005错误一般是你没用管理员权限运行CMD，请检查是否被拦截运行
-【⑦】清除Windows的kms之后需要重启电脑才能重新激活！
-【⑧】大多数情况你根本不用到处问来问去，直接根据出错代码自己百度搜索出错原因就行了！
-KMS激活脚本下载(更新时间：2022-02-20 更新日志)：
-已更新“去除Office显示许可证并非正版”功能！</description>
+      <guid>http://jackiossy.top/posts/swift5.9_new_func/</guid>
+      <description>Swift.org/swift-evolution 布告栏
+1.代码整理新方式：允许将if / else 和 switch 语句用作表达式
+if / else 可使用更可阅读的方式来表达
+let bullet = if isRoot &amp;amp;&amp;amp; (count == 0 || !willExpand) {&amp;#34;&amp;#34;} else if count == 0 {&amp;#34;- &amp;#34;} else if maxDepth &amp;lt;= 0 {&amp;#34;&amp;gt;&amp;#34;} else {&amp;#34;V&amp;#34;} 2.结果构造器 Result builders 显著改进
+诊断器识别错误更加的精准。
+3.泛型。
+类型参数聚合
+&amp;lt;each Result&amp;gt;	func evaluate&amp;lt;each Result&amp;gt;(_: repeat Request&amp;lt;each Result&amp;gt;) -&amp;gt; (repeat each Result) 可以处理所有参数长度， 没有人为限制。
+4.Swift宏 （ swift macros）</description>
     </item>
     
     <item>
-      <title>iPhone、iPad全设备RAM规格列表</title>
-      <link>https://jackiossy.top/2022/03/iphoneipad%E5%85%A8%E8%AE%BE%E5%A4%87ram%E8%A7%84%E6%A0%BC%E5%88%97%E8%A1%A8/</link>
-      <pubDate>Mon, 21 Mar 2022 14:59:00 +0800</pubDate>
+      <title>Docker部署CUPS打印服务</title>
+      <link>http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/2022/03/iphoneipad%E5%85%A8%E8%AE%BE%E5%A4%87ram%E8%A7%84%E6%A0%BC%E5%88%97%E8%A1%A8/</guid>
-      <description>Document    是否支持  RAM  RAM类型  存储类型  芯片  iOS设备  最高支持   iPhone  iPodTouch  iPad   Yes  16 GB  LPDDR4X  PCIe-Based SSD  M1      Pro 12.9&#34;(5th)(≥1TB),Pro 11&#34;(3rd)(≥1TB)  15.4 (current)   8 GB      Air(5th),Pro12.9&#34;(5th)(&amp;lt;1 TB),Pro 11&#34;(3rd)(&amp;lt;1 TB)   6 GB  NVMe NAND  A15 Bionic  13 Pro, 13 Pro Max       4 GB  SE (3rd), 13, 13 Mini    Mini (6th)   6 GB  A14 Bionic  12 Pro, 12 Pro Max       4 GB  12, 12 Mini    Air (4th)   A13 Bionic  11, 11 Pro, 11 Pro Max       3 GB  SE (2nd)    9th   6 GB  A12Z Bionic      Pro12.</description>
+      <guid>http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</guid>
+      <description>Docker部署CUPS打印服务， 使传统打印机支持AirPrint 在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的使用打印功能。但是，我们并不是所有的打印机都支持AirPrint功能， 而且支持AirPrint功能都比较昂贵，那么我们如何才能将传统的USB打印机通过一些技术手段，将USB打印机变为AirPrint打印机呢？
+前期准备工作：
+Docker （ 任何运行方式都可以， 比如软路由，群晖，Ubuntu&amp;hellip; everything ) 一台USB打印机 任何品牌 打印机的Linux驱动 （ 官网下载， 如果CUPS默认自带打印机驱动可不用额外准备 ） 具体方案如下:
+1.docker 部署CUPS服务
+sudo docker run -d --name=airprint --net=&amp;#34;host&amp;#34; --privileged=true -e TZ=&amp;#34;Asia/Shanghai&amp;#34; -e HOST_OS=“Ubuntu” -p &amp;#39;631:631&amp;#39; -v &amp;#34;/volume1/docker/airprint/config&amp;#34;:&amp;#34;/config&amp;#34; -v /dev:/dev -v &amp;#34;/volume1/docker/airprint/avahi&amp;#34;:&amp;#34;/etc/avahi/services&amp;#34; \-v /var/run/dbus:/var/run/dbus &amp;#34;olbat/cupsd&amp;#34; 2.执行完毕后运行。
+cupsd启动之后打开浏览器访问cups服务的web管理页面， 并点击顶部菜单&amp;quot;Administration&amp;quot;, 点击 Printers 分类中的 &amp;ldquo;Add Print&amp;rdquo; 按钮，然后输入默认的账号 print , 密码 print ，登陆之后你就会看到USB连接到这台docker设备上的打印机型号， 我这里的打印机是佳能的激光打印机 Canon LBP6018L , 这里我们发现Local Printers已经识别出来 &amp;ldquo;Canon LBP6030/6040/6018L&amp;quot;打印机了， 我们选择，然后点击continue 继续。</description>
     </item>
     
     <item>
-      <title>Apple发布全新iPhoneSE</title>
-      <link>https://jackiossy.top/2022/03/apple%E5%8F%91%E5%B8%83%E5%85%A8%E6%96%B0iphonese/</link>
-      <pubDate>Sun, 20 Mar 2022 11:43:16 +0800</pubDate>
+      <title>在SwiftUI中常见的英语单词</title>
+      <link>http://jackiossy.top/posts/english_words_about_swiftui/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>https://jackiossy.top/2022/03/apple%E5%8F%91%E5%B8%83%E5%85%A8%E6%96%B0iphonese/</guid>
-      <description>这款 iPhone 价格亲民，搭载强劲的 A15 仿生芯片，支持 5G，提供更长电池续航，更加耐用，并且配备全新的摄像头系统，支持智能 HDR 4、摄影风格、深度融合等高级功能 加利福尼亚州，库比提诺 Apple 今日发布了 iPhone SE，这款采用经典设计的强大 iPhone 以超值的价格带来出众的功能与性能。iPhone SE 采用紧凑设计，经久耐用，配合 iOS 15 系统，可提供流畅的用户体验。新款 iPhone SE 在许多方面都有重大提升。A15 仿生芯片的卓越性能，不仅能够驱动先进的摄像头功能，还提升了几乎所有的体验，从图片编辑，到游戏与增强现实等高功耗操作，都变得更加流畅。iPhone SE 支持 5G，电池续航更长，更加耐用，并有三种绚丽配色可供选择，分别是午夜色、星光色和红色，将于 3 月 11 日（星期五）起接受预购，并于 3 月 18 日（星期五）正式发售。 “iPhone SE 设计经典，性能出众，价格亲民，一直备受 iPhone 新老用户的青睐。在今年，我们更是设计出了迄今最强大、最耐用的 iPhone SE，搭载与 iPhone 13 系列相同的 A15 仿生芯片，因而能够提供更长的电池续航，还能实现智能 HDR 4、摄影风格、深度融合等先进的相机功能。”Apple 全球 iPhone 产品营销副总裁 Kaiann Drance 表示，“此外，凭借对 5G 网络的支持，iPhone SE 能为用户提供更快的下载和上传速度，让用户能够在线观看画面质量更高的视频，在 app 内实现实时交互，以及更多的强大功能。以这样的价格带来最新一代的技术和性能，只有 Apple 可以做到。
-加利福尼亚州，库比提诺 Apple 今日发布了 iPhone SE，这款采用经典设计的强大 iPhone 以超值的价格带来出众的功能与性能。iPhone SE 采用紧凑设计，经久耐用，配合 iOS 15 系统，可提供流畅的用户体验。新款 iPhone SE 在许多方面都有重大提升。A15 仿生芯片的卓越性能，不仅能够驱动先进的摄像头功能，还提升了几乎所有的体验，从图片编辑，到游戏与增强现实等高功耗操作，都变得更加流畅。iPhone SE 支持 5G，电池续航更长，更加耐用，并有三种绚丽配色可供选择，分别是午夜色、星光色和红色，将于 3 月 11 日（星期五）起接受预购，并于 3 月 18 日（星期五）正式发售。 “iPhone SE 设计经典，性能出众，价格亲民，一直备受 iPhone 新老用户的青睐。在今年，我们更是设计出了迄今最强大、最耐用的 iPhone SE，搭载与 iPhone 13 系列相同的 A15 仿生芯片，因而能够提供更长的电池续航，还能实现智能 HDR 4、摄影风格、深度融合等先进的相机功能。”Apple 全球 iPhone 产品营销副总裁 Kaiann Drance 表示，“此外，凭借对 5G 网络的支持，iPhone SE 能为用户提供更快的下载和上传速度，让用户能够在线观看画面质量更高的视频，在 app 内实现实时交互，以及更多的强大功能。以这样的价格带来最新一代的技术和性能，只有 Apple 可以做到。</description>
+      <guid>http://jackiossy.top/posts/english_words_about_swiftui/</guid>
+      <description> foreground color 前景色 bold 粗体 opacity 不透明 radius 半径 infinity 距离无限 alignment 一致 leading 左对齐 spacing 间隔，行距 padding 内边距 ignores Safe Area ， 忽略安全区域 overlay 覆在……上面 stroke 一笔，一划 Rounded Rectangle 圆角矩形 </description>
+    </item>
+    
+    <item>
+      <title>如何自己手动编译openWRT on ubuntu server</title>
+      <link>http://jackiossy.top/posts/how_to_build_openwrt/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
+      
+      <guid>http://jackiossy.top/posts/how_to_build_openwrt/</guid>
+      <description>如何自己手动编译openWRT on ubuntu server 1.前期准备 ubuntu linux server 魔法上网环境 （ 中国大陆用户 ） 脑子 🧠 双手 👋 2.前往Lean 仓库克隆代码 点击 Lean Openwrt仓库地址进入该项目首页， 为接下来的编译提供参考。
+sudo apt update -y sudo apt full-upgrade -y sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \ bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \ git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \ libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \ mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.</description>
     </item>
     
   </channel>

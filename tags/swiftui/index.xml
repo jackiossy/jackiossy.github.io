@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SwiftUI on Jackiossy &#39;s blog</title>
+    <link>http://jackiossy.top/tags/swiftui/</link>
+    <description>Recent content in SwiftUI on Jackiossy &#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Oct 2023 14:33:56 +0800</lastBuildDate><atom:link href="http://jackiossy.top/tags/swiftui/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在SwiftUI中常见的英语单词</title>
+      <link>http://jackiossy.top/posts/english_words_about_swiftui/</link>
+      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
+      
+      <guid>http://jackiossy.top/posts/english_words_about_swiftui/</guid>
+      <description> foreground color 前景色 bold 粗体 opacity 不透明 radius 半径 infinity 距离无限 alignment 一致 leading 左对齐 spacing 间隔，行距 padding 内边距 ignores Safe Area ， 忽略安全区域 overlay 覆在……上面 stroke 一笔，一划 Rounded Rectangle 圆角矩形 </description>
+    </item>
+    
+  </channel>
+</rss>

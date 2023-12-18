@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>如何自己手动编译openWRT on ubuntu server</title>
+    <meta name="description" content="Small but beautiful application independent developer.">
+    <meta name="keywords" content='blog, gokarna, hugo, openWRT'>
+
+    <meta property="og:url" content="http://jackiossy.top/posts/how_to_build_openwrt/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="如何自己手动编译openWRT on ubuntu server">
+    <meta property="og:description" content="Small but beautiful application independent developer.">
+    <meta property="og:image" content="http://jackiossy.top/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="http://jackiossy.top/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="如何自己手动编译openWRT on ubuntu server">
+    <meta name="twitter:description" content="Small but beautiful application independent developer.">
+    <meta property="twitter:domain" content="http://jackiossy.top/posts/how_to_build_openwrt/">
+    <meta property="twitter:url" content="http://jackiossy.top/posts/how_to_build_openwrt/">
+    <meta name="twitter:image" content="http://jackiossy.top/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="http://jackiossy.top/posts/how_to_build_openwrt/" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.edd985581bf860dfb4507e5885197f1680160c7fe19f23b31e183126d99dd596.js" integrity="sha256-7dmFWBv4YN&#43;0UH5YhRl/FoAWDH/hnyOzHhgxJtmd1ZY="></script>
+
+    
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="http://jackiossy.top">
+                <img src="http://jackiossy.top/images/avatar.jpg" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="http://jackiossy.top">Jackiossy &#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="http://jackiossy.top/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://jackiossy.top/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="http://jackiossy.top/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://jackiossy.top/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>如何自己手动编译openWRT on ubuntu server</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            October 7, 2023
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="http://jackiossy.top/tags/openwrt">openWRT</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <h2 id="如何自己手动编译openwrt-on-ubuntu-server">如何自己手动编译openWRT on ubuntu server</h2>
+<h4 id="1前期准备">1.前期准备</h4>
+<ul>
+<li>ubuntu linux server</li>
+<li>魔法上网环境 （ 中国大陆用户 ）</li>
+<li>脑子 🧠</li>
+<li>双手 👋</li>
+</ul>
+<h4 id="2前往lean-仓库克隆代码">2.前往Lean 仓库克隆代码</h4>
+<p>点击 <a href="https://github.com/coolsnowwolf/lede">Lean Openwrt仓库地址</a>进入该项目首页， 为接下来的编译提供参考。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt update -y
+</span></span><span style="display:flex;"><span>sudo apt full-upgrade -y
+</span></span><span style="display:flex;"><span>sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>vim wget xmlto xxd zlib1g-dev python3-setuptools
+</span></span></code></pre></div><p>编译后的固件路径地址</p>
+<p>~/lede/bin/targets/x86/64$</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">3</span> jackiossy jackiossy      <span style="color:#ae81ff">4096</span> Nov <span style="color:#ae81ff">10</span> 21:01 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">3</span> jackiossy jackiossy      <span style="color:#ae81ff">4096</span> Sep  <span style="color:#ae81ff">7</span> 13:03 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy      <span style="color:#ae81ff">2995</span> Nov <span style="color:#ae81ff">10</span> 20:56 config.buildinfo
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy       <span style="color:#ae81ff">257</span> Nov <span style="color:#ae81ff">10</span> 20:56 feeds.buildinfo
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy   <span style="color:#ae81ff">5367104</span> Nov <span style="color:#ae81ff">10</span> 21:00 openwrt-x86-64-generic-kernel.bin
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy <span style="color:#ae81ff">116684088</span> Nov <span style="color:#ae81ff">10</span> 21:01 openwrt-x86-64-generic-squashfs-combined-efi.img.gz
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy <span style="color:#ae81ff">117112832</span> Nov <span style="color:#ae81ff">10</span> 21:01 openwrt-x86-64-generic-squashfs-combined-efi.vmdk
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy <span style="color:#ae81ff">110736860</span> Nov <span style="color:#ae81ff">10</span> 21:01 openwrt-x86-64-generic-squashfs-rootfs.img.gz
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy     <span style="color:#ae81ff">11901</span> Nov <span style="color:#ae81ff">10</span> 21:01 openwrt-x86-64-generic.manifest
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">2</span> jackiossy jackiossy     <span style="color:#ae81ff">20480</span> Nov <span style="color:#ae81ff">10</span> 20:56 packages
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy      <span style="color:#ae81ff">3088</span> Nov <span style="color:#ae81ff">10</span> 21:01 profiles.json
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy       <span style="color:#ae81ff">873</span> Nov <span style="color:#ae81ff">10</span> 21:01 sha256sums
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> jackiossy jackiossy        <span style="color:#ae81ff">16</span> Nov <span style="color:#ae81ff">10</span> 20:56 version.buildinfo
+</span></span></code></pre></div><p>编译成功后你需要使用的固件文件是 <em>openwrt-x86-64-generic-squashfs-combined-efi.img.gz</em></p>
+<p>然后我们使用linux解压缩工具gzip进行解压，执行一下命令，得到img固件文件</p>
+<pre tabindex="0"><code>gzip -dv openwrt-x86-64-generic-squashfs-combined-efi.img.gz
+</code></pre><p>然后我们把解压缩后得到的文件<em>openwrt-x86-64-generic-squashfs-combined-efi.img</em> 传输到我们的电脑之中。</p>
+<h4 id="3扩容overlay">3.扩容overlay</h4>
+<p>如何扩容overlay分区, 执行命令</p>
+<pre tabindex="0"><code>cfdisk
+</code></pre><p>按照已有的磁盘列表分区方式，酌情进行 新建， 写入， 退出。</p>
+<p>接下来格式化我们新建的sda3分区</p>
+<pre tabindex="0"><code>mkfs.ext4 /dev/sda3
+</code></pre><p>等待执行完毕，并且显示<em>Writing superblocks and filesystem accounting information: done</em>后， 我们继续操作, 使用一下命令挂载分区。</p>
+<pre tabindex="0"><code>mount /dev/sda3 /mnt/sda3
+</code></pre><p>挂载成功后我们可以执行ls命令检查文件内是否涵盖lost+found文件，如果存在， 说明我们挂载成功了。</p>
+<p>接下来我们迁移overlay配置</p>
+<pre tabindex="0"><code>cp -r /overlay/* /mnt/sda3
+</code></pre><p>执行ls命令检查overlay配置是否成功复制到sda3当中</p>
+<pre tabindex="0"><code>ls /mnt/sda3
+</code></pre><p>如果文件内容含有 <em>upper</em>       <em>work</em>   等文件夹， 说明我们复制配置成功，接下来我们去Luci网页页面去配置启动挂载点即可。</p>
+<p>打开192.168.2.2 （路由器地址） 登录。</p>
+<h4 id="4去openwrt网页设置页面创建挂载点">4.去Openwrt网页设置页面创建挂载点</h4>
+<p>1）打开浏览器登录openwrt后台, 依次从菜单进入 “系统” — &ldquo;挂载点&rdquo;, 点击右侧挂载点的“添加”按钮🔘。</p>
+<p>2）点击“启用挂载点”勾选框框 ☑️ ， UUID选择新建格式化的磁盘， 挂载点选择“作为外部overlay使用”。</p>
+<p>3）点击“保存并应用” ，然后重新启动openwrt。</p>
+<h3 id="在编译前自定义固件相关内容">在编译前自定义固件相关内容</h3>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+    <span>&copy; 2023 The Marauders</span>
+    
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>
