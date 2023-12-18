@@ -22,32 +22,6 @@ cupsd启动之后打开浏览器访问cups服务的web管理页面， 并点击�
     </item>
     
     <item>
-      <title>[WWDC2023]Swift 5.9 新功能</title>
-      <link>http://jackiossy.top/posts/swift5.9_new_func/</link>
-      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
-      
-      <guid>http://jackiossy.top/posts/swift5.9_new_func/</guid>
-      <description>Swift.org/swift-evolution 布告栏
-1.代码整理新方式：允许将if / else 和 switch 语句用作表达式
-if / else 可使用更可阅读的方式来表达
-let bullet = if isRoot &amp;amp;&amp;amp; (count == 0 || !willExpand) {&amp;#34;&amp;#34;} else if count == 0 {&amp;#34;- &amp;#34;} else if maxDepth &amp;lt;= 0 {&amp;#34;&amp;gt;&amp;#34;} else {&amp;#34;V&amp;#34;} 2.结果构造器 Result builders 显著改进
-诊断器识别错误更加的精准。
-3.泛型。
-类型参数聚合
-&amp;lt;each Result&amp;gt;	func evaluate&amp;lt;each Result&amp;gt;(_: repeat Request&amp;lt;each Result&amp;gt;) -&amp;gt; (repeat each Result) 可以处理所有参数长度， 没有人为限制。
-4.Swift宏 （ swift macros）</description>
-    </item>
-    
-    <item>
-      <title>在SwiftUI中常见的英语单词</title>
-      <link>http://jackiossy.top/posts/english_words_about_swiftui/</link>
-      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
-      
-      <guid>http://jackiossy.top/posts/english_words_about_swiftui/</guid>
-      <description> foreground color 前景色 bold 粗体 opacity 不透明 radius 半径 infinity 距离无限 alignment 一致 leading 左对齐 spacing 间隔，行距 padding 内边距 ignores Safe Area ， 忽略安全区域 overlay 覆在……上面 stroke 一笔，一划 Rounded Rectangle 圆角矩形 </description>
-    </item>
-    
-    <item>
       <title>如何自己手动编译openWRT on ubuntu server</title>
       <link>http://jackiossy.top/posts/how_to_build_openwrt/</link>
       <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
