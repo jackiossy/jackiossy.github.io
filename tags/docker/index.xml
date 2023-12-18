@@ -6,11 +6,11 @@
     <description>Recent content in Docker on Jackiossy &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 07 Oct 2023 14:33:56 +0800</lastBuildDate><atom:link href="http://jackiossy.top/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 08 Oct 2023 14:33:56 +0800</lastBuildDate><atom:link href="http://jackiossy.top/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docker部署CUPS打印服务</title>
       <link>http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</link>
-      <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
+      <pubDate>Sun, 08 Oct 2023 14:33:56 +0800</pubDate>
       
       <guid>http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</guid>
       <description>Docker部署CUPS打印服务， 使传统打印机支持AirPrint 在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的使用打印功能。但是，我们并不是所有的打印机都支持AirPrint功能， 而且支持AirPrint功能都比较昂贵，那么我们如何才能将传统的USB打印机通过一些技术手段，将USB打印机变为AirPrint打印机呢？
