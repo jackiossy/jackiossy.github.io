@@ -2,17 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Jackiossy &#39;s blog</title>
-    <link>http://jackiossy.top/posts/</link>
+    <link>http://blog.by1.site/posts/</link>
     <description>Recent content in Posts on Jackiossy &#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 08 Oct 2023 14:33:56 +0800</lastBuildDate><atom:link href="http://jackiossy.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 22 Dec 2023 22:25:20 +0800</lastBuildDate><atom:link href="http://blog.by1.site/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>手机CMOS参数表查询</title>
+      <link>http://blog.by1.site/posts/%E6%89%8B%E6%9C%BAcmos%E5%8F%82%E6%95%B0%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
+      <pubDate>Fri, 22 Dec 2023 22:25:20 +0800</pubDate>
+      
+      <guid>http://blog.by1.site/posts/%E6%89%8B%E6%9C%BAcmos%E5%8F%82%E6%95%B0%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
+      <description>手机CMOS参数表查询 变态级别段位 ｜品牌｜型号｜尺寸｜像素｜ 单像素面积｜
+｜&amp;mdash;&amp;mdash;｜&amp;mdash;&amp;mdash;-｜&amp;mdash;&amp;mdash;｜&amp;mdash;&amp;mdash;-｜&amp;mdash;&amp;mdash;｜&amp;mdash;&amp;mdash;-｜
+｜SONY｜
+| Syntax | Description | | ----------- | ----------- | | Header | Title | | Paragraph | Text | </description>
+    </item>
+    
+    <item>
+      <title>Molived</title>
+      <link>http://blog.by1.site/posts/molived/</link>
+      <pubDate>Mon, 18 Dec 2023 22:25:20 +0800</pubDate>
+      
+      <guid>http://blog.by1.site/posts/molived/</guid>
+      <description> Molived iOS追剧平台App， 无广告，无内购。 现以开启App Store 应用商店下载。 </description>
+    </item>
+    
     <item>
       <title>Docker部署CUPS打印服务</title>
-      <link>http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</link>
+      <link>http://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</link>
       <pubDate>Sun, 08 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>http://jackiossy.top/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</guid>
+      <guid>http://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</guid>
       <description>Docker部署CUPS打印服务， 使传统打印机支持AirPrint 在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的使用打印功能。但是，我们并不是所有的打印机都支持AirPrint功能， 而且支持AirPrint功能都比较昂贵，那么我们如何才能将传统的USB打印机通过一些技术手段，将USB打印机变为AirPrint打印机呢？
 前期准备工作：
 Docker （ 任何运行方式都可以， 比如软路由，群晖，Ubuntu&amp;hellip; everything ) 一台USB打印机 任何品牌 打印机的Linux驱动 （ 官网下载， 如果CUPS默认自带打印机驱动可不用额外准备 ） 具体方案如下:
@@ -23,20 +44,20 @@ cupsd启动之后打开浏览器访问cups服务的web管理页面， 并点击�
     
     <item>
       <title>如何自己手动编译openWRT on ubuntu server</title>
-      <link>http://jackiossy.top/posts/how_to_build_openwrt/</link>
+      <link>http://blog.by1.site/posts/how_to_build_openwrt/</link>
       <pubDate>Sat, 07 Oct 2023 14:33:56 +0800</pubDate>
       
-      <guid>http://jackiossy.top/posts/how_to_build_openwrt/</guid>
+      <guid>http://blog.by1.site/posts/how_to_build_openwrt/</guid>
       <description>如何自己手动编译openWRT on ubuntu server 1.前期准备 ubuntu linux server 魔法上网环境 （ 中国大陆用户 ） 脑子 🧠 双手 👋 2.前往Lean 仓库克隆代码 点击 Lean Openwrt仓库地址进入该项目首页， 为接下来的编译提供参考。
 sudo apt update -y sudo apt full-upgrade -y sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \ bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \ git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \ libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \ mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.</description>
     </item>
     
     <item>
       <title>沧水KMS激活脚本——windows10、11支持全系</title>
-      <link>http://jackiossy.top/posts/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</link>
+      <link>http://blog.by1.site/posts/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</link>
       <pubDate>Fri, 07 Oct 2022 14:33:56 +0800</pubDate>
       
-      <guid>http://jackiossy.top/posts/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</guid>
+      <guid>http://blog.by1.site/posts/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</guid>
       <description>沧水KMS激活脚本——windows10、11支持全系 KMS 是什么 ? KMS的全称是 Key Management Service , 即密钥管理服务
 KMS是微软认可的一种产品激活方式 , 主要用于企业公司的内部批量激活设备。
 KMS脚本激活不容易误报病毒，激活更安全。这里感谢🙏沧水提供的KMS激活服务
