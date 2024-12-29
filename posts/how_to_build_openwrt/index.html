@@ -18,25 +18,28 @@
 
     
     <title>如何自己手动编译openWRT on ubuntu server</title>
-    <meta name="description" content="Small but beautiful application independent developer.">
+    <meta name="description" content="如何自己手动编译openWRT on ubuntu server 1.前期准备 ubuntu linux server 魔法上网环境 （ 中国大陆用户 ） 脑子 🧠 双手 👋 2.前往Lean 仓库克隆代码 点击 Lean Openwrt仓库地址进入该项目首页， 为接下来的编译提供参考。
+sudo apt update …">
     <meta name="keywords" content='blog, gokarna, hugo, openWRT'>
 
     <meta property="og:url" content="https://blog.by1.site/posts/how_to_build_openwrt/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="如何自己手动编译openWRT on ubuntu server">
-    <meta property="og:description" content="Small but beautiful application independent developer.">
+    <meta property="og:description" content="如何自己手动编译openWRT on ubuntu server 1.前期准备 ubuntu linux server 魔法上网环境 （ 中国大陆用户 ） 脑子 🧠 双手 👋 2.前往Lean 仓库克隆代码 点击 Lean Openwrt仓库地址进入该项目首页， 为接下来的编译提供参考。
+sudo apt update …">
     <meta property="og:image" content="https://blog.by1.site/images/avatar.jpg">
     <meta property="og:image:secure_url" content="https://blog.by1.site/images/avatar.jpg">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="如何自己手动编译openWRT on ubuntu server">
-    <meta name="twitter:description" content="Small but beautiful application independent developer.">
+    <meta name="twitter:description" content="如何自己手动编译openWRT on ubuntu server 1.前期准备 ubuntu linux server 魔法上网环境 （ 中国大陆用户 ） 脑子 🧠 双手 👋 2.前往Lean 仓库克隆代码 点击 Lean Openwrt仓库地址进入该项目首页， 为接下来的编译提供参考。
+sudo apt update …">
     <meta property="twitter:domain" content="https://blog.by1.site/posts/how_to_build_openwrt/">
     <meta property="twitter:url" content="https://blog.by1.site/posts/how_to_build_openwrt/">
     <meta name="twitter:image" content="https://blog.by1.site/images/avatar.jpg">
 
     
-    <link rel="canonical" href="https://blog.by1.site/posts/how_to_build_openwrt/" />
+    <link rel="canonical" href="https://blog.by1.site/posts/how_to_build_openwrt/">
 
     
     <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
@@ -48,13 +51,13 @@
     <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
 
     
-    <script src="/js/bundle.min.edd985581bf860dfb4507e5885197f1680160c7fe19f23b31e183126d99dd596.js" integrity="sha256-7dmFWBv4YN&#43;0UH5YhRl/FoAWDH/hnyOzHhgxJtmd1ZY="></script>
+    <script src="/js/bundle.min.3eb19cb61dde9e37b9522867f3e024aeb68e26ab8e03252e46e365abcb19acf7.js" integrity="sha256-PrGcth3enje5Uihn8&#43;AkrraOJquOAyUuRuNlq8sZrPc="></script>
 
     
     
 </head>
 <body>
-        <script type="text/javascript">
+        <script>
             
             setThemeByUserPref();
         </script><header class="header">
@@ -62,42 +65,42 @@
 
         
         <div class="avatar">
-            <a href="https://blog.by1.site">
-                <img src="https://blog.by1.site/images/avatar.jpg" alt="avatar" />
+            <a href="https://blog.by1.site/">
+                <img src='/images/avatar.jpg' alt="avatar">
             </a>
         </div>
         
 
         <div class="nav-title">
-            <a class="nav-brand" href="https://blog.by1.site">Biney&#39;s blog</a>
+            <a class="nav-brand" href="https://blog.by1.site/">Biney&#39;s blog</a>
         </div>
 
         <div class="nav-links">
             
             <div class="nav-link">
-                <a href="https://blog.by1.site/posts/"> Posts </a>
+                <a href="https://blog.by1.site/posts/" aria-label="posts" > Posts </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://blog.by1.site/tags/"> Tags </a>
+                <a href="https://blog.by1.site/tags/" aria-label="tags" > Tags </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://github.com"><span data-feather='github'></span>  </a>
+                <a href="https://github.com" aria-label="github" ><span data-feather='github'></span>  </a>
             </div>
             
 
             <span class="nav-icons-divider"></span>
             <div class="nav-link dark-theme-toggle">
-                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
-                <a>
-                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
                 </a>
             </div>
 
             <div class="nav-link" id="hamburger-menu-toggle">
-                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
-                <a>
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
                     <span data-feather="menu"></span>
                 </a>
             </div>
@@ -106,21 +109,21 @@
             <ul class="nav-hamburger-list visibility-hidden">
                 
                 <li class="nav-item">
-                    <a href="https://blog.by1.site/posts/"> Posts </a>
+                    <a href="https://blog.by1.site/posts/" > Posts </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://blog.by1.site/tags/"> Tags </a>
+                    <a href="https://blog.by1.site/tags/" > Tags </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://github.com"><span data-feather='github'></span>  </a>
+                    <a href="https://github.com" ><span data-feather='github'></span>  </a>
                 </li>
                 
                 <li class="nav-item dark-theme-toggle">
-                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
-                    <a>
-                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
                     </a>
                 </li>
             </ul>
@@ -132,21 +135,41 @@
     <div class="post container">
     <div class="post-header-section">
         <h1>如何自己手动编译openWRT on ubuntu server</h1>
-        <small role="doc-subtitle"></small>
-        <p class="post-date">
-            October 7, 2023
-        </p>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">October 7, 2023
+           
+          </p>
+	
 
         <ul class="post-tags">
-        
-            <li class="post-tag"><a href="https://blog.by1.site/tags/openwrt">openWRT</a></li>
-        
+          
+           
+             <li class="post-tag"><a href="https://blog.by1.site/tags/openwrt">openWRT</a></li>
+           
+         
         </ul>
     </div>
 
     <div class="post-content">
-        <p>
-            <h2 id="如何自己手动编译openwrt-on-ubuntu-server">如何自己手动编译openWRT on ubuntu server</h2>
+        <h2 id="如何自己手动编译openwrt-on-ubuntu-server">如何自己手动编译openWRT on ubuntu server</h2>
 <h4 id="1前期准备">1.前期准备</h4>
 <ul>
 <li>ubuntu linux server</li>
@@ -205,13 +228,16 @@
 <p>3）点击“保存并应用” ，然后重新启动openwrt。</p>
 <h3 id="在编译前自定义固件相关内容">在编译前自定义固件相关内容</h3>
 
-        </p>
         
     </div>
 
     <div class="prev-next">
         
     </div>
+
+    
+    
+    
 </div>
 
 
@@ -223,10 +249,28 @@
     
 
     
-    <span>&copy; 2024 The Marauders</span>
+
     
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2023 The Marauders</span>
+    
+
     <span>
-        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
     </span>
 </footer>
 </body>

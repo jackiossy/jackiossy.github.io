@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>[WWDC2023]Swift 5.9 新功能</title>
+    <meta name="description" content="//国家代码 &#34;AD&#34; = &#34;Andorra&#34;; &#34;AE&#34; = &#34;United Arab Emirates&#34;; &#34;AF&#34; = &#34;Afghanistan&#34;; &#34;AG&#34; = &#34;Antigua and …">
+    <meta name="keywords" content='blog, gokarna, hugo, Swift5.9, WWDC2023'>
+
+    <meta property="og:url" content="http://localhost:1313/posts/%E5%9B%BD%E5%AE%B6%E4%BB%A3%E7%A0%81localzable/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="[WWDC2023]Swift 5.9 新功能">
+    <meta property="og:description" content="//国家代码 &#34;AD&#34; = &#34;Andorra&#34;; &#34;AE&#34; = &#34;United Arab Emirates&#34;; &#34;AF&#34; = &#34;Afghanistan&#34;; &#34;AG&#34; = &#34;Antigua and …">
+    <meta property="og:image" content="http://localhost:1313/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="http://localhost:1313/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[WWDC2023]Swift 5.9 新功能">
+    <meta name="twitter:description" content="//国家代码 &#34;AD&#34; = &#34;Andorra&#34;; &#34;AE&#34; = &#34;United Arab Emirates&#34;; &#34;AF&#34; = &#34;Afghanistan&#34;; &#34;AG&#34; = &#34;Antigua and …">
+    <meta property="twitter:domain" content="http://localhost:1313/posts/%E5%9B%BD%E5%AE%B6%E4%BB%A3%E7%A0%81localzable/">
+    <meta property="twitter:url" content="http://localhost:1313/posts/%E5%9B%BD%E5%AE%B6%E4%BB%A3%E7%A0%81localzable/">
+    <meta name="twitter:image" content="http://localhost:1313/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/%E5%9B%BD%E5%AE%B6%E4%BB%A3%E7%A0%81localzable/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.3eb19cb61dde9e37b9522867f3e024aeb68e26ab8e03252e46e365abcb19acf7.js" integrity="sha256-PrGcth3enje5Uihn8&#43;AkrraOJquOAyUuRuNlq8sZrPc="></script>
+
+    
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="http://localhost:1313/">
+                <img src='/images/avatar.jpg' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="http://localhost:1313/">Biney&#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/posts/" aria-label="posts" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/tags/" aria-label="tags" > Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com" aria-label="github" ><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com" ><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>[WWDC2023]Swift 5.9 新功能</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">October 7, 2023
+           
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/swift5.9">Swift5.9</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/wwdc2023">WWDC2023</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <pre tabindex="0"><code>//国家代码
+&#34;AD&#34; = &#34;Andorra&#34;;
+&#34;AE&#34; = &#34;United Arab Emirates&#34;;
+&#34;AF&#34; = &#34;Afghanistan&#34;;
+&#34;AG&#34; = &#34;Antigua and Barbuda&#34;;
+&#34;AI&#34; = &#34;Anguilla&#34;;
+&#34;AL&#34; = &#34;Albania&#34;;
+&#34;AM&#34; = &#34;Armenia&#34;;
+&#34;AO&#34; = &#34;Angola&#34;;
+&#34;AQ&#34; = &#34;Antarctica&#34;;
+&#34;AR&#34; = &#34;Argentina&#34;;
+&#34;AS&#34; = &#34;American Samoa&#34;;
+&#34;AT&#34; = &#34;Austria&#34;;
+&#34;AU&#34; = &#34;Australia&#34;;
+&#34;AW&#34; = &#34;Aruba&#34;;
+&#34;AX&#34; = &#34;Åland Islands&#34;;
+&#34;AZ&#34; = &#34;Azerbaijan&#34;;
+&#34;BA&#34; = &#34;Bosnia and Herzegovina&#34;;
+&#34;BB&#34; = &#34;Barbados&#34;;
+&#34;BD&#34; = &#34;Bangladesh&#34;;
+&#34;BE&#34; = &#34;Belgium&#34;;
+&#34;BF&#34; = &#34;Burkina Faso&#34;;
+&#34;BG&#34; = &#34;Bulgaria&#34;;
+&#34;BH&#34; = &#34;Bahrain&#34;;
+&#34;BI&#34; = &#34;Burundi&#34;;
+&#34;BJ&#34; = &#34;Benin&#34;;
+&#34;BL&#34; = &#34;Saint Barthélemy&#34;;
+&#34;BM&#34; = &#34;Bermuda&#34;;
+&#34;BN&#34; = &#34;Brunei&#34;;
+&#34;BO&#34; = &#34;Bolivia&#34;;
+&#34;BQ&#34; = &#34;Bonaire, Sint Eustatius and Saba&#34;;
+&#34;BR&#34; = &#34;Brazil&#34;;
+&#34;BS&#34; = &#34;Bahamas&#34;;
+&#34;BT&#34; = &#34;Bhutan&#34;;
+&#34;BV&#34; = &#34;Bouvet Island&#34;;
+&#34;BW&#34; = &#34;Botswana&#34;;
+&#34;BY&#34; = &#34;Belarus&#34;;
+&#34;BZ&#34; = &#34;Belize&#34;;
+&#34;CA&#34; = &#34;Canada&#34;;
+&#34;CC&#34; = &#34;Cocos (Keeling) Islands&#34;;
+&#34;CD&#34; = &#34;Democratic Republic of the Congo&#34;;
+&#34;CF&#34; = &#34;Central African Republic&#34;;
+&#34;CG&#34; = &#34;Republic of the Congo&#34;;
+&#34;CH&#34; = &#34;Switzerland&#34;;
+&#34;CI&#34; = &#34;Ivory Coast&#34;;
+&#34;CK&#34; = &#34;Cook Islands&#34;;
+&#34;CL&#34; = &#34;Chile&#34;;
+&#34;CM&#34; = &#34;Cameroon&#34;;
+&#34;CN&#34; = &#34;China&#34;;
+&#34;CO&#34; = &#34;Colombia&#34;;
+&#34;CR&#34; = &#34;Costa Rica&#34;;
+&#34;CU&#34; = &#34;Cuba&#34;;
+&#34;CV&#34; = &#34;Cape Verde&#34;;
+&#34;CW&#34; = &#34;Curaçao&#34;;
+&#34;CX&#34; = &#34;Christmas Island&#34;;
+&#34;CY&#34; = &#34;Cyprus&#34;;
+&#34;CZ&#34; = &#34;Czech Republic&#34;;
+&#34;DE&#34; = &#34;Germany&#34;;
+&#34;DJ&#34; = &#34;Djibouti&#34;;
+&#34;DK&#34; = &#34;Denmark&#34;;
+&#34;DM&#34; = &#34;Dominica&#34;;
+&#34;DO&#34; = &#34;Dominican Republic&#34;;
+&#34;DZ&#34; = &#34;Algeria&#34;;
+&#34;EC&#34; = &#34;Ecuador&#34;;
+&#34;EE&#34; = &#34;Estonia&#34;;
+&#34;EG&#34; = &#34;Egypt&#34;;
+&#34;EH&#34; = &#34;Western Sahara&#34;;
+&#34;ER&#34; = &#34;Eritrea&#34;;
+&#34;ES&#34; = &#34;Spain&#34;;
+&#34;ET&#34; = &#34;Ethiopia&#34;;
+&#34;FI&#34; = &#34;Finland&#34;;
+&#34;FJ&#34; = &#34;Fiji&#34;;
+&#34;FK&#34; = &#34;Falkland Islands&#34;;
+&#34;FM&#34; = &#34;Micronesia&#34;;
+&#34;FO&#34; = &#34;Faroe Islands&#34;;
+&#34;FR&#34; = &#34;France&#34;;
+&#34;GA&#34; = &#34;Gabon&#34;;
+&#34;GB&#34; = &#34;United Kingdom&#34;;
+&#34;GD&#34; = &#34;Grenada&#34;;
+&#34;GE&#34; = &#34;Georgia&#34;;
+&#34;GF&#34; = &#34;French Guiana&#34;;
+&#34;GG&#34; = &#34;Guernsey&#34;;
+&#34;GH&#34; = &#34;Ghana&#34;;
+&#34;GI&#34; = &#34;Gibraltar&#34;;
+&#34;GL&#34; = &#34;Greenland&#34;;
+&#34;GM&#34; = &#34;Gambia&#34;;
+&#34;GN&#34; = &#34;Guinea&#34;;
+&#34;GP&#34; = &#34;Guadeloupe&#34;;
+&#34;GQ&#34; = &#34;Equatorial Guinea&#34;;
+&#34;GR&#34; = &#34;Greece&#34;;
+&#34;GS&#34; = &#34;South Georgia and the South Sandwich Islands&#34;;
+&#34;GT&#34; = &#34;Guatemala&#34;;
+&#34;GU&#34; = &#34;Guam&#34;;
+&#34;GW&#34; = &#34;Guinea-Bissau&#34;;
+&#34;GY&#34; = &#34;Guyana&#34;;
+&#34;HK&#34; = &#34;Hong Kong&#34;;
+&#34;HM&#34; = &#34;Heard Island and McDonald Islands&#34;;
+&#34;HN&#34; = &#34;Honduras&#34;;
+&#34;HR&#34; = &#34;Croatia&#34;;
+&#34;HT&#34; = &#34;Haiti&#34;;
+&#34;HU&#34; = &#34;Hungary&#34;;
+&#34;ID&#34; = &#34;Indonesia&#34;;
+&#34;IE&#34; = &#34;Ireland&#34;;
+&#34;IL&#34; = &#34;Israel&#34;;
+&#34;IM&#34; = &#34;Isle of Man&#34;;
+&#34;IN&#34; = &#34;India&#34;;
+&#34;IO&#34; = &#34;British Indian Ocean Territory&#34;;
+&#34;IQ&#34; = &#34;Iraq&#34;;
+&#34;IR&#34; = &#34;Iran&#34;;
+&#34;IS&#34; = &#34;Iceland&#34;;
+&#34;IT&#34; = &#34;Italy&#34;;
+&#34;JE&#34; = &#34;Jersey&#34;;
+&#34;JM&#34; = &#34;Jamaica&#34;;
+&#34;JO&#34; = &#34;Jordan&#34;;
+&#34;JP&#34; = &#34;Japan&#34;;
+&#34;KE&#34; = &#34;Kenya&#34;;
+&#34;KG&#34; = &#34;Kyrgyzstan&#34;;
+&#34;KH&#34; = &#34;Cambodia&#34;;
+&#34;KI&#34; = &#34;Kiribati&#34;;
+&#34;KM&#34; = &#34;Comoros&#34;;
+&#34;KN&#34; = &#34;Saint Kitts and Nevis&#34;;
+&#34;KP&#34; = &#34;North Korea&#34;;
+&#34;KR&#34; = &#34;South Korea&#34;;
+&#34;KW&#34; = &#34;Kuwait&#34;;
+&#34;KY&#34; = &#34;Cayman Islands&#34;;
+&#34;KZ&#34; = &#34;Kazakhstan&#34;;
+&#34;LA&#34; = &#34;Laos&#34;;
+&#34;LB&#34; = &#34;Lebanon&#34;;
+&#34;LC&#34; = &#34;Saint Lucia&#34;;
+&#34;LI&#34; = &#34;Liechtenstein&#34;;
+&#34;LK&#34; = &#34;Sri Lanka&#34;;
+&#34;LR&#34; = &#34;Liberia&#34;;
+&#34;LS&#34; = &#34;Lesotho&#34;;
+&#34;LT&#34; = &#34;Lithuania&#34;;
+&#34;LU&#34; = &#34;Luxembourg&#34;;
+&#34;LV&#34; = &#34;Latvia&#34;;
+&#34;LY&#34; = &#34;Libya&#34;;
+&#34;MA&#34; = &#34;Morocco&#34;;
+&#34;MC&#34; = &#34;Monaco&#34;;
+&#34;MD&#34; = &#34;Moldova&#34;;
+&#34;ME&#34; = &#34;Montenegro&#34;;
+&#34;MF&#34; = &#34;Saint Martin&#34;;
+&#34;MG&#34; = &#34;Madagascar&#34;;
+&#34;MH&#34; = &#34;Marshall Islands&#34;;
+&#34;MK&#34; = &#34;North Macedonia&#34;;
+&#34;ML&#34; = &#34;Mali&#34;;
+&#34;MM&#34; = &#34;Myanmar&#34;;
+&#34;MN&#34; = &#34;Mongolia&#34;;
+&#34;MO&#34; = &#34;Macao&#34;;
+&#34;MP&#34; = &#34;Northern Mariana Islands&#34;;
+&#34;MQ&#34; = &#34;Martinique&#34;;
+&#34;MR&#34; = &#34;Mauritania&#34;;
+&#34;MS&#34; = &#34;Montserrat&#34;;
+&#34;MT&#34; = &#34;Malta&#34;;
+&#34;MU&#34; = &#34;Mauritius&#34;;
+&#34;MV&#34; = &#34;Maldives&#34;;
+&#34;MW&#34; = &#34;Malawi&#34;;
+&#34;MX&#34; = &#34;Mexico&#34;;
+&#34;MY&#34; = &#34;Malaysia&#34;;
+&#34;MZ&#34; = &#34;Mozambique&#34;;
+&#34;NA&#34; = &#34;Namibia&#34;;
+&#34;NC&#34; = &#34;New Caledonia&#34;;
+&#34;NE&#34; = &#34;Niger&#34;;
+&#34;NF&#34; = &#34;Norfolk Island&#34;;
+&#34;NG&#34; = &#34;Nigeria&#34;;
+&#34;NI&#34; = &#34;Nicaragua&#34;;
+&#34;NL&#34; = &#34;Netherlands&#34;;
+&#34;NO&#34; = &#34;Norway&#34;;
+&#34;NP&#34; = &#34;Nepal&#34;;
+&#34;NR&#34; = &#34;Nauru&#34;;
+&#34;NU&#34; = &#34;Niue&#34;;
+&#34;NZ&#34; = &#34;New Zealand&#34;;
+&#34;OM&#34; = &#34;Oman&#34;;
+&#34;PA&#34; = &#34;Panama&#34;;
+&#34;PE&#34; = &#34;Peru&#34;;
+&#34;PF&#34; = &#34;French Polynesia&#34;;
+&#34;PG&#34; = &#34;Papua New Guinea&#34;;
+&#34;PH&#34; = &#34;Philippines&#34;;
+&#34;PK&#34; = &#34;Pakistan&#34;;
+&#34;PL&#34; = &#34;Poland&#34;;
+&#34;PM&#34; = &#34;Saint Pierre and Miquelon&#34;;
+&#34;PN&#34; = &#34;Pitcairn Islands&#34;;
+&#34;PR&#34; = &#34;Puerto Rico&#34;;
+&#34;PS&#34; = &#34;Palestine&#34;;
+&#34;PT&#34; = &#34;Portugal&#34;;
+&#34;PW&#34; = &#34;Palau&#34;;
+&#34;PY&#34; = &#34;Paraguay&#34;;
+&#34;QA&#34; = &#34;Qatar&#34;;
+&#34;RE&#34; = &#34;Réunion&#34;;
+&#34;RO&#34; = &#34;Romania&#34;;
+&#34;RS&#34; = &#34;Serbia&#34;;
+&#34;RU&#34; = &#34;Russia&#34;;
+&#34;RW&#34; = &#34;Rwanda&#34;;
+&#34;SA&#34; = &#34;Saudi Arabia&#34;;
+&#34;SB&#34; = &#34;Solomon Islands&#34;;
+&#34;SC&#34; = &#34;Seychelles&#34;;
+&#34;SD&#34; = &#34;Sudan&#34;;
+&#34;SE&#34; = &#34;Sweden&#34;;
+&#34;SG&#34; = &#34;Singapore&#34;;
+&#34;SH&#34; = &#34;Saint Helena, Ascension and Tristan da Cunha&#34;;
+&#34;SI&#34; = &#34;Slovenia&#34;;
+&#34;SJ&#34; = &#34;Svalbard and Jan Mayen&#34;;
+&#34;SK&#34; = &#34;Slovakia&#34;;
+&#34;SL&#34; = &#34;Sierra Leone&#34;;
+&#34;SM&#34; = &#34;San Marino&#34;;
+&#34;SN&#34; = &#34;Senegal&#34;;
+&#34;SO&#34; = &#34;Somalia&#34;;
+&#34;SR&#34; = &#34;Suriname&#34;;
+&#34;SS&#34; = &#34;South Sudan&#34;;
+&#34;ST&#34; = &#34;São Tomé and Príncipe&#34;;
+&#34;SV&#34; = &#34;El Salvador&#34;;
+&#34;SX&#34; = &#34;Sint Maarten&#34;;
+&#34;SY&#34; = &#34;Syria&#34;;
+&#34;SZ&#34; = &#34;Eswatini&#34;;
+&#34;TC&#34; = &#34;Turks and Caicos Islands&#34;;
+&#34;TD&#34; = &#34;Chad&#34;;
+&#34;TF&#34; = &#34;French Southern and Antarctic Lands&#34;;
+&#34;TG&#34; = &#34;Togo&#34;;
+&#34;TH&#34; = &#34;Thailand&#34;;
+&#34;TJ&#34; = &#34;Tajikistan&#34;;
+&#34;TK&#34; = &#34;Tokelau&#34;;
+&#34;TL&#34; = &#34;Timor-Leste&#34;;
+&#34;TM&#34; = &#34;Turkmenistan&#34;;
+&#34;TN&#34; = &#34;Tunisia&#34;;
+&#34;TO&#34; = &#34;Tonga&#34;;
+&#34;TR&#34; = &#34;Turkey&#34;;
+&#34;TT&#34; = &#34;Trinidad and Tobago&#34;;
+&#34;TV&#34; = &#34;Tuvalu&#34;;
+&#34;TW&#34; = &#34;Taiwan&#34;;
+&#34;TZ&#34; = &#34;Tanzania&#34;;
+&#34;UA&#34; = &#34;Ukraine&#34;;
+&#34;UG&#34; = &#34;Uganda&#34;;
+&#34;UM&#34; = &#34;United States Minor Outlying Islands&#34;;
+&#34;US&#34; = &#34;United States&#34;;
+&#34;UY&#34; = &#34;Uruguay&#34;;
+&#34;UZ&#34; = &#34;Uzbekistan&#34;;
+&#34;VA&#34; = &#34;Vatican City&#34;;
+&#34;VC&#34; = &#34;Saint Vincent and the Grenadines&#34;;
+&#34;VE&#34; = &#34;Venezuela&#34;;
+&#34;VG&#34; = &#34;British Virgin Islands&#34;;
+&#34;VI&#34; = &#34;United States Virgin Islands&#34;;
+&#34;VN&#34; = &#34;Vietnam&#34;;
+&#34;VU&#34; = &#34;Vanuatu&#34;;
+&#34;WF&#34; = &#34;Wallis and Futuna&#34;;
+&#34;WS&#34; = &#34;Samoa&#34;;
+&#34;YE&#34; = &#34;Yemen&#34;;
+&#34;YT&#34; = &#34;Mayotte&#34;;
+&#34;ZA&#34; = &#34;South Africa&#34;;
+&#34;ZM&#34; = &#34;Zambia&#34;;
+&#34;ZW&#34; = &#34;Zimbabwe&#34;;
+</code></pre>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2023 The Marauders</span>
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>
