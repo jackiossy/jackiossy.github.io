@@ -36,12 +36,5 @@
       <guid>https://blog.mose.ltd/posts/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</guid>
       <description>&lt;h1 id=&#34;沧水kms激活脚本windows1011支持全系&#34;&gt;沧水KMS激活脚本——windows10、11支持全系&lt;/h1&gt;&#xA;&lt;h3 id=&#34;kms-是什么-&#34;&gt;KMS 是什么 ?&lt;/h3&gt;&#xA;&lt;p&gt;KMS的全称是 Key Management Service , 即密钥管理服务&lt;/p&gt;&#xA;&lt;p&gt;KMS是微软认可的一种产品激活方式 , 主要用于企业公司的内部批量激活设备。&lt;/p&gt;&#xA;&lt;p&gt;KMS脚本激活不容易误报病毒，激活更安全。这里感谢🙏沧水提供的KMS激活服务&lt;/p&gt;&#xA;&lt;h3 id=&#34;脚本下载地址&#34;&gt;脚本下载地址&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://kms.cangshui.net/kms/KMS-Cangshui.net.bat&#34;&gt;仓水服务器本地下载&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;原文地址:&lt;a href=&#34;https://kms.cangshui.net/&#34;&gt;https://kms.cangshui.net&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;使用说明&#34;&gt;使用说明&lt;/h3&gt;&#xA;&lt;p&gt;【①】激活Windows系统要求：尽可能不使用淘宝/电脑城奸商系统，某吧某坛大神精简系统，某木风某白菜某之家某花园某家园魔改ghost系统，等一系列被人二次修改的系统，你可以点击这里下载原版系统镜像&lt;/p&gt;&#xA;&lt;p&gt;【②】Windows7只支持专业VL版，点这里下载，windows10与windows11支持全系,OEM版什么的就肯定不能用kms激活&lt;/p&gt;&#xA;&lt;p&gt;【③】激活Office要求：请勿使用各种精简版或上古版本你可以点击这里下载官方Office镜像&lt;/p&gt;&#xA;&lt;p&gt;【④】KMS激活Office时，请根据你安装的软件版本选择激活为2016还是2019/2021版本&lt;/p&gt;&#xA;&lt;p&gt;【⑤】双击脚本运行时，windows自带的安全机制会弹出窗口询问你是否要运行！因为脚本是申请了管理员权限的&lt;/p&gt;&#xA;&lt;p&gt;【⑥】0x80070005错误一般是你没用管理员权限运行CMD，请检查是否被拦截运行&lt;/p&gt;&#xA;&lt;p&gt;【⑦】清除Windows的kms之后需要重启电脑才能重新激活！&lt;/p&gt;&#xA;&lt;p&gt;【⑧】大多数情况你根本不用到处问来问去，直接根据出错代码自己百度搜索出错原因就行了！&lt;/p&gt;&#xA;&lt;p&gt;KMS激活脚本下载(更新时间：2022-02-20 更新日志)：&lt;/p&gt;&#xA;&lt;p&gt;已更新“去除Office显示许可证并非正版”功能！&lt;/p&gt;</description>
     </item>
-    <item>
-      <title></title>
-      <link>https://blog.mose.ltd/posts/%E5%85%B3%E4%BA%8Eios%E4%B8%8A%E6%9E%B6%E5%BA%94%E7%94%A8%E7%9A%84%E6%88%AA%E5%9B%BE%E8%A6%81%E6%B1%82/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://blog.mose.ltd/posts/%E5%85%B3%E4%BA%8Eios%E4%B8%8A%E6%9E%B6%E5%BA%94%E7%94%A8%E7%9A%84%E6%88%AA%E5%9B%BE%E8%A6%81%E6%B1%82/</guid>
-      <description>&lt;h1 id=&#34;关于ios上架应用的截图要求&#34;&gt;关于iOS上架应用的截图要求&lt;/h1&gt;&#xA;&lt;h3 id=&#34;截图是最基本的重中之重&#34;&gt;截图是最基本的重中之重&lt;/h3&gt;&#xA;&lt;p&gt;很多独立开发者非常不在乎自己的独立开发应用&lt;/p&gt;</description>
-    </item>
   </channel>
 </rss>
