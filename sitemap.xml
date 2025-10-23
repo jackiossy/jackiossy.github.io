@@ -2,45 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.by1.site/</loc>
+    <loc>https://blog.mose.ltd/</loc>
     <lastmod>2024-12-25T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/posts/</loc>
+    <loc>https://blog.mose.ltd/posts/</loc>
     <lastmod>2024-12-25T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/tags/</loc>
+    <loc>https://blog.mose.ltd/tags/</loc>
     <lastmod>2024-12-25T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/posts/%E5%86%99%E7%BB%99%E8%BF%9B%E5%85%A5%E5%BC%80%E5%8F%91%E8%80%85%E7%94%9F%E6%B6%AF9%E5%91%A8%E5%B9%B4%E7%9A%84%E8%87%AA%E5%B7%B1-/</loc>
+    <loc>https://blog.mose.ltd/posts/%E5%86%99%E7%BB%99%E8%BF%9B%E5%85%A5%E5%BC%80%E5%8F%91%E8%80%85%E7%94%9F%E6%B6%AF9%E5%91%A8%E5%B9%B4%E7%9A%84%E8%87%AA%E5%B7%B1-/</loc>
     <lastmod>2024-12-25T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/tags/%E6%80%9D%E6%83%B3%E6%9D%82%E8%B0%88/</loc>
+    <loc>https://blog.mose.ltd/tags/%E6%80%9D%E6%83%B3%E6%9D%82%E8%B0%88/</loc>
     <lastmod>2024-12-25T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/tags/airprint/</loc>
+    <loc>https://blog.mose.ltd/tags/airprint/</loc>
     <lastmod>2023-10-08T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/tags/cups/</loc>
+    <loc>https://blog.mose.ltd/tags/cups/</loc>
     <lastmod>2023-10-08T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/tags/docker/</loc>
+    <loc>https://blog.mose.ltd/tags/docker/</loc>
     <lastmod>2023-10-08T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</loc>
+    <loc>https://blog.mose.ltd/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</loc>
     <lastmod>2023-10-08T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/tags/openwrt/</loc>
+    <loc>https://blog.mose.ltd/tags/openwrt/</loc>
     <lastmod>2023-10-07T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/posts/how_to_build_openwrt/</loc>
+    <loc>https://blog.mose.ltd/posts/how_to_build_openwrt/</loc>
     <lastmod>2023-10-07T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/tags/windows10%E6%BF%80%E6%B4%BB/</loc>
+    <loc>https://blog.mose.ltd/tags/windows10%E6%BF%80%E6%B4%BB/</loc>
     <lastmod>2022-10-07T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/posts/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</loc>
+    <loc>https://blog.mose.ltd/posts/%E6%B2%A7%E6%B0%B4kms%E6%BF%80%E6%B4%BB%E8%84%9A%E6%9C%ACwindows1011%E6%94%AF%E6%8C%81%E5%85%A8%E7%B3%BB/</loc>
     <lastmod>2022-10-07T14:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://blog.by1.site/categories/</loc>
+    <loc>https://blog.mose.ltd/posts/%E5%85%B3%E4%BA%8Eios%E4%B8%8A%E6%9E%B6%E5%BA%94%E7%94%A8%E7%9A%84%E6%88%AA%E5%9B%BE%E8%A6%81%E6%B1%82/</loc>
+  </url><url>
+    <loc>https://blog.mose.ltd/categories/</loc>
   </url>
 </urlset>

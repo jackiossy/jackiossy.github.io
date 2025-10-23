@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>AirPrint on Biney&#39;s blog</title>
-    <link>https://blog.by1.site/tags/airprint/</link>
+    <link>https://blog.mose.ltd/tags/airprint/</link>
     <description>Recent content in AirPrint on Biney&#39;s blog</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 08 Oct 2023 14:33:56 +0800</lastBuildDate>
-    <atom:link href="https://blog.by1.site/tags/airprint/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.mose.ltd/tags/airprint/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docker部署CUPS打印服务</title>
-      <link>https://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</link>
+      <link>https://blog.mose.ltd/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</link>
       <pubDate>Sun, 08 Oct 2023 14:33:56 +0800</pubDate>
-      <guid>https://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</guid>
+      <guid>https://blog.mose.ltd/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/</guid>
       <description>&lt;h2 id=&#34;docker部署cups打印服务-使传统打印机支持airprint&#34;&gt;Docker部署CUPS打印服务， 使传统打印机支持AirPrint&lt;/h2&gt;&#xA;&lt;p&gt;在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的使用打印功能。但是，我们并不是所有的打印机都支持AirPrint功能， 而且支持AirPrint功能都比较昂贵，那么我们如何才能将传统的USB打印机通过一些技术手段，将USB打印机变为AirPrint打印机呢？&lt;/p&gt;&#xA;&lt;p&gt;前期准备工作：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Docker （ 任何运行方式都可以， 比如软路由，群晖，Ubuntu&amp;hellip; everything )&lt;/li&gt;&#xA;&lt;li&gt;一台USB打印机 任何品牌&lt;/li&gt;&#xA;&lt;li&gt;打印机的Linux驱动 （ 官网下载， 如果CUPS默认自带打印机驱动可不用额外准备 ）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;具体方案如下:&lt;/p&gt;&#xA;&lt;p&gt;1.docker 部署CUPS服务&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo docker run -d --name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;airprint --net&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;host&amp;#34;&lt;/span&gt;  --privileged&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;true  -e TZ&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Asia/Shanghai&amp;#34;&lt;/span&gt;  -e HOST_OS&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;“Ubuntu” -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;631:631&amp;#39;&lt;/span&gt;  -v &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/volume1/docker/airprint/config&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/config&amp;#34;&lt;/span&gt;  -v /dev:/dev  -v &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/volume1/docker/airprint/avahi&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/etc/avahi/services&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\-&lt;/span&gt;v /var/run/dbus:/var/run/dbus &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;olbat/cupsd&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;2.执行完毕后运行。&lt;/p&gt;&#xA;&lt;p&gt;cupsd启动之后打开浏览器访问cups服务的web管理页面， 并点击顶部菜单&amp;quot;Administration&amp;quot;, 点击 Printers 分类中的 &amp;ldquo;Add Print&amp;rdquo; 按钮，然后输入默认的账号 print , 密码 print ，登陆之后你就会看到USB连接到这台docker设备上的打印机型号， 我这里的打印机是佳能的激光打印机 Canon LBP6018L , 这里我们发现Local Printers已经识别出来 &amp;ldquo;Canon LBP6030/6040/6018L&amp;quot;打印机了， 我们选择，然后点击continue 继续。&lt;/p&gt;</description>
     </item>
   </channel>

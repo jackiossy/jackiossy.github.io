@@ -21,22 +21,22 @@
     <meta name="description" content="Docker部署CUPS打印服务， 使传统打印机支持AirPrint 在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的 …">
     <meta name="keywords" content='blog, gokarna, hugo, Docker, CUPS, AirPrint'>
 
-    <meta property="og:url" content="https://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
+    <meta property="og:url" content="https://blog.mose.ltd/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Docker部署CUPS打印服务">
     <meta property="og:description" content="Docker部署CUPS打印服务， 使传统打印机支持AirPrint 在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的 …">
-    <meta property="og:image" content="https://blog.by1.site/images/avatar.jpg">
-    <meta property="og:image:secure_url" content="https://blog.by1.site/images/avatar.jpg">
+    <meta property="og:image" content="https://blog.mose.ltd/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="https://blog.mose.ltd/images/avatar.jpg">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Docker部署CUPS打印服务">
     <meta name="twitter:description" content="Docker部署CUPS打印服务， 使传统打印机支持AirPrint 在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的 …">
-    <meta property="twitter:domain" content="https://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
-    <meta property="twitter:url" content="https://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
-    <meta name="twitter:image" content="https://blog.by1.site/images/avatar.jpg">
+    <meta property="twitter:domain" content="https://blog.mose.ltd/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
+    <meta property="twitter:url" content="https://blog.mose.ltd/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
+    <meta name="twitter:image" content="https://blog.mose.ltd/images/avatar.jpg">
 
     
-    <link rel="canonical" href="https://blog.by1.site/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
+    <link rel="canonical" href="https://blog.mose.ltd/posts/docker%E9%83%A8%E7%BD%B2cups%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1-%E4%BD%BF%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8D%B0%E6%9C%BA%E6%94%AF%E6%8C%81airprint/">
 
     
     <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
@@ -62,24 +62,24 @@
 
         
         <div class="avatar">
-            <a href="https://blog.by1.site/">
+            <a href="https://blog.mose.ltd/">
                 <img src='/images/avatar.jpg' alt="avatar">
             </a>
         </div>
         
 
         <div class="nav-title">
-            <a class="nav-brand" href="https://blog.by1.site/">Biney&#39;s blog</a>
+            <a class="nav-brand" href="https://blog.mose.ltd/">Biney&#39;s blog</a>
         </div>
 
         <div class="nav-links">
             
             <div class="nav-link">
-                <a href="https://blog.by1.site/posts/" aria-label="posts" > Posts </a>
+                <a href="https://blog.mose.ltd/posts/" aria-label="posts" > Posts </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://blog.by1.site/tags/" aria-label="tags" > Tags </a>
+                <a href="https://blog.mose.ltd/tags/" aria-label="tags" > Tags </a>
             </div>
             
             <div class="nav-link">
@@ -106,11 +106,11 @@
             <ul class="nav-hamburger-list visibility-hidden">
                 
                 <li class="nav-item">
-                    <a href="https://blog.by1.site/posts/" > Posts </a>
+                    <a href="https://blog.mose.ltd/posts/" > Posts </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://blog.by1.site/tags/" > Tags </a>
+                    <a href="https://blog.mose.ltd/tags/" > Tags </a>
                 </li>
                 
                 <li class="nav-item">
@@ -159,15 +159,15 @@
         <ul class="post-tags">
           
            
-             <li class="post-tag"><a href="https://blog.by1.site/tags/docker">Docker</a></li>
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/docker">Docker</a></li>
            
          
            
-             <li class="post-tag"><a href="https://blog.by1.site/tags/cups">CUPS</a></li>
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/cups">CUPS</a></li>
            
          
            
-             <li class="post-tag"><a href="https://blog.by1.site/tags/airprint">AirPrint</a></li>
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/airprint">AirPrint</a></li>
            
          
         </ul>
