@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>不背成语｜把 Core Data 搜索提快 70% 的门诊病历</title>
+    <meta name="description" content="主诉
+有用户留言：“搜索像憋着气，一下快一下慢。”我盯着输入法候选框发了会儿呆，决定把这口气顺过来。
+既往史
+这不是云检索。我在首启时通过 HTTPS 拉全量（上千条高频成语），落到 Core Data（SQLite 后端）；之后每天拉增量更新。搜索完全本地，离线也能用。
+初诊：先摸脉，再下刀 那晚我没改一行代码，只开 …">
+    <meta name="keywords" content='blog, gokarna, hugo, iOS'>
+
+    <meta property="og:url" content="https://blog.mose.ltd/posts/%E4%B8%8D%E8%83%8C%E6%88%90%E8%AF%AD%E6%8A%8A-core-data-%E6%90%9C%E7%B4%A2%E6%8F%90%E5%BF%AB-70-%E7%9A%84%E9%97%A8%E8%AF%8A%E7%97%85%E5%8E%86/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="不背成语｜把 Core Data 搜索提快 70% 的门诊病历">
+    <meta property="og:description" content="主诉
+有用户留言：“搜索像憋着气，一下快一下慢。”我盯着输入法候选框发了会儿呆，决定把这口气顺过来。
+既往史
+这不是云检索。我在首启时通过 HTTPS 拉全量（上千条高频成语），落到 Core Data（SQLite 后端）；之后每天拉增量更新。搜索完全本地，离线也能用。
+初诊：先摸脉，再下刀 那晚我没改一行代码，只开 …">
+    <meta property="og:image" content="https://blog.mose.ltd/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="https://blog.mose.ltd/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="不背成语｜把 Core Data 搜索提快 70% 的门诊病历">
+    <meta name="twitter:description" content="主诉
+有用户留言：“搜索像憋着气，一下快一下慢。”我盯着输入法候选框发了会儿呆，决定把这口气顺过来。
+既往史
+这不是云检索。我在首启时通过 HTTPS 拉全量（上千条高频成语），落到 Core Data（SQLite 后端）；之后每天拉增量更新。搜索完全本地，离线也能用。
+初诊：先摸脉，再下刀 那晚我没改一行代码，只开 …">
+    <meta property="twitter:domain" content="https://blog.mose.ltd/posts/%E4%B8%8D%E8%83%8C%E6%88%90%E8%AF%AD%E6%8A%8A-core-data-%E6%90%9C%E7%B4%A2%E6%8F%90%E5%BF%AB-70-%E7%9A%84%E9%97%A8%E8%AF%8A%E7%97%85%E5%8E%86/">
+    <meta property="twitter:url" content="https://blog.mose.ltd/posts/%E4%B8%8D%E8%83%8C%E6%88%90%E8%AF%AD%E6%8A%8A-core-data-%E6%90%9C%E7%B4%A2%E6%8F%90%E5%BF%AB-70-%E7%9A%84%E9%97%A8%E8%AF%8A%E7%97%85%E5%8E%86/">
+    <meta name="twitter:image" content="https://blog.mose.ltd/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="https://blog.mose.ltd/posts/%E4%B8%8D%E8%83%8C%E6%88%90%E8%AF%AD%E6%8A%8A-core-data-%E6%90%9C%E7%B4%A2%E6%8F%90%E5%BF%AB-70-%E7%9A%84%E9%97%A8%E8%AF%8A%E7%97%85%E5%8E%86/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.3eb19cb61dde9e37b9522867f3e024aeb68e26ab8e03252e46e365abcb19acf7.js" integrity="sha256-PrGcth3enje5Uihn8&#43;AkrraOJquOAyUuRuNlq8sZrPc="></script>
+
+    
+    
+    <link rel='stylesheet' href='/css/site-tweak.css'>
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://blog.mose.ltd/">
+                <img src='/images/avatar.jpg' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://blog.mose.ltd/">Biney&#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://blog.mose.ltd/posts/" aria-label="posts" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://blog.mose.ltd/tags/" aria-label="tags" > Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com" aria-label="github" ><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://blog.mose.ltd/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://blog.mose.ltd/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com" ><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>不背成语｜把 Core Data 搜索提快 70% 的门诊病历</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">May 15, 2025
+           
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/ios">iOS</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p><strong>主诉</strong></p>
+<p>有用户留言：“搜索像憋着气，一下快一下慢。”我盯着输入法候选框发了会儿呆，决定把这口气顺过来。</p>
+<p><strong>既往史</strong></p>
+<p>这不是云检索。我在首启时通过 <strong>HTTPS 拉全量</strong>（上千条高频成语），<strong>落到 Core Data（SQLite 后端）</strong>；之后每天拉<strong>增量更新</strong>。搜索完全本地，离线也能用。</p>
+<hr>
+<h3 id="初诊先摸脉再下刀"><strong>初诊：先摸脉，再下刀</strong></h3>
+<p>那晚我没改一行代码，只开了 <strong>Instruments（Core Data Fetches + Time Profiler）</strong> 和 <strong>OSLog signpost</strong>。连续敲“f”“fe”“fen”… 记录了 100 次样本（iPhone 15）：</p>
+<ul>
+<li>构建谓词：约 8 ms</li>
+<li>fetch：<strong>120–180 ms</strong>（抖动明显）</li>
+<li>cell 绑定：约 35 ms</li>
+<li>端到端：<strong>170–220 ms/次</strong></li>
+</ul>
+<p>几千条数据不该这样抖。问题不是量级，是查询形态。</p>
+<hr>
+<h3 id="诊断几处暗伤"><strong>诊断：几处“暗伤”</strong></h3>
+<ol>
+<li>谓词用的是三连 <strong>CONTAINS</strong>（汉字/拼音/首字母），在 SQLite 上基本等价全表扫；</li>
+<li>列表首屏只显示“成语+释义前缀”，却把整条对象都解包；</li>
+<li>排序按 hanzi 的默认规则，既不友好也难走索引；</li>
+<li>每次键入都在<strong>主队列 context</strong> 上同步 fetch，UI 与 IO 抢同一口气；</li>
+<li>增量更新时只改了业务字段，忘了重算搜索相关的“衍生字段”，让老数据“口音”没改掉。</li>
+</ol>
+<hr>
+<h3 id="处置五步手术步步能回退"><strong>处置：五步手术，步步能回退</strong></h3>
+<p><strong>① 重铸检索字段：把“包含”变成“可索引的前缀”</strong></p>
+<p>落地时为每条记录生成一个<strong>归一化 searchKey</strong>：小写、去标点、空格分词，拼接“汉字 + 全拼 + 首字母”。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-swift" data-lang="swift"><span style="display:flex;"><span>“风马牛不相及”
+</span></span><span style="display:flex;"><span>→ <span style="color:#f1fa8c">&#34;风马牛不相及 fengmaniu buxiangji fmn bxj&#34;</span>
+</span></span></code></pre></div><p>谓词从 CONTAINS 换成 <strong>LIKE 前缀</strong>（能吃索引）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-swift" data-lang="swift"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">like</span> = token.lowercased()
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">pred</span> = NSPredicate(format:
+</span></span><span style="display:flex;"><span>  <span style="color:#f1fa8c">&#34;searchKey LIKE[cd] %@ OR searchKey LIKE[cd] %@&#34;</span>,
+</span></span><span style="display:flex;"><span>  like <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;*&#34;</span>, <span style="color:#f1fa8c">&#34; &#34;</span> <span style="color:#ff79c6">+</span> like <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;*&#34;</span>) <span style="color:#6272a4">// 词首与词中前缀</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>并在 Data Model 勾选 searchKey 的 <strong>Indexed</strong>。</p>
+<p><strong>直接收益</strong>：fetch 平均从 ~150 ms 降到 <strong>~60–70 ms</strong>，抖动收敛。</p>
+<p>—</p>
+<p><strong>② 少拿一点：只取首屏需要的属性</strong></p>
+<p>默认 includesPropertyValues = true 会把整条属性都带出来。我收紧为首屏所需：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-swift" data-lang="swift"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">req</span> = NSFetchRequest&lt;NSManagedObject&gt;(entityName: <span style="color:#f1fa8c">&#34;Idiom&#34;</span>)
+</span></span><span style="display:flex;"><span>req.predicate = pred
+</span></span><span style="display:flex;"><span>req.fetchLimit = <span style="color:#bd93f9">50</span>
+</span></span><span style="display:flex;"><span>req.fetchBatchSize = <span style="color:#bd93f9">25</span>
+</span></span><span style="display:flex;"><span>req.includesPropertyValues = <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>req.propertiesToFetch = [<span style="color:#f1fa8c">&#34;hanzi&#34;</span>, <span style="color:#f1fa8c">&#34;brief&#34;</span>, <span style="color:#f1fa8c">&#34;searchKey&#34;</span>]
+</span></span><span style="display:flex;"><span>req.returnsObjectsAsFaults = <span style="color:#ff79c6">true</span>
+</span></span></code></pre></div><p><strong>收益</strong>：对象解包次数减少，cell 绑定从 ~35 ms 降到 <strong>~18 ms</strong>。</p>
+<p>—</p>
+<p><strong>③ 把查询搬到后台，还要“能取消”</strong></p>
+<p>改为 <strong>后台 context</strong> 执行，并在连续键入时<strong>去抖 + 取消上一个查询</strong>，只渲染最后一次结果。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-swift" data-lang="swift"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> <span style="color:#8be9fd;font-style:italic">pending</span>: NSAsynchronousFetchResult&lt;Idiom&gt;?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">search</span>(<span style="color:#ff79c6">_</span> token: <span style="color:#8be9fd;font-style:italic">String</span>) {
+</span></span><span style="display:flex;"><span>  debounce.fire(after: .milliseconds(<span style="color:#bd93f9">120</span>)) { [<span style="color:#ff79c6">weak</span> <span style="color:#ff79c6">self</span>] <span style="color:#ff79c6">in</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">guard</span> <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">self</span> = <span style="color:#ff79c6">self</span> <span style="color:#ff79c6">else</span> { <span style="color:#ff79c6">return</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">self</span>.background.perform {
+</span></span><span style="display:flex;"><span>      <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">req</span> = makeRequest(token)
+</span></span><span style="display:flex;"><span>      <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">async</span> = NSAsynchronousFetchRequest&lt;Idiom&gt;(fetchRequest: req) { result <span style="color:#ff79c6">in</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">items</span> = result.finalResult ?? []
+</span></span><span style="display:flex;"><span>        DispatchQueue.main.async { <span style="color:#ff79c6">self</span>.adapter.apply(items) }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">self</span>.pending?.cancel()
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">self</span>.pending = <span style="color:#ff79c6">try</span>? <span style="color:#ff79c6">self</span>.background.execute(async) <span style="color:#ff79c6">as</span>? NSAsynchronousFetchResult&lt;Idiom&gt;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>收益</strong>：键入流畅度肉眼提升，UI 掉帧告警消失。</p>
+<p>—</p>
+<p><strong>④ 排序别为难数据库：用可计算的键</strong></p>
+<p>中文直接按 hanzi 排效果一般。我在落地时额外存一个 pinyinSortKey（不带声调/空格）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-swift" data-lang="swift"><span style="display:flex;"><span>req.sortDescriptors = [NSSortDescriptor(key: <span style="color:#f1fa8c">&#34;pinyinSortKey&#34;</span>, ascending: <span style="color:#ff79c6">true</span>)]
+</span></span></code></pre></div><p><strong>收益</strong>：人眼更顺，排序阶段 CPU 从 ~10 ms 降到 <strong>~2–3 ms</strong>。</p>
+<p>—</p>
+<p><strong>⑤ 更新既要“补课”，也要“对账”</strong></p>
+<p>增量更新合并后，统一重算 searchKey/pinyinSortKey，并写一次“更新数/重算数”到 OSLog，预防“语音没改掉”的旧数据。</p>
+<p>一次性补旧账：用 <strong>Batch Update</strong> 很快扫完几千条：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-swift" data-lang="swift"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">update</span> = NSBatchUpdateRequest(entityName: <span style="color:#f1fa8c">&#34;Idiom&#34;</span>)
+</span></span><span style="display:flex;"><span>update.propertiesToUpdate = [
+</span></span><span style="display:flex;"><span>  <span style="color:#f1fa8c">&#34;searchKey&#34;</span>:  NSExpression(forFunction: <span style="color:#f1fa8c">&#34;normalize:&#34;</span>, arguments: [
+</span></span><span style="display:flex;"><span>                  NSExpression(forKeyPath: <span style="color:#f1fa8c">&#34;hanzi&#34;</span>),
+</span></span><span style="display:flex;"><span>                  NSExpression(forKeyPath: <span style="color:#f1fa8c">&#34;pinyin&#34;</span>),
+</span></span><span style="display:flex;"><span>                  NSExpression(forKeyPath: <span style="color:#f1fa8c">&#34;initial&#34;</span>)
+</span></span><span style="display:flex;"><span>                ]),
+</span></span><span style="display:flex;"><span>  <span style="color:#f1fa8c">&#34;pinyinSortKey&#34;</span>: NSExpression(forFunction: <span style="color:#f1fa8c">&#34;toPinyinSortKey:&#34;</span>,
+</span></span><span style="display:flex;"><span>                  arguments: [NSExpression(forKeyPath: <span style="color:#f1fa8c">&#34;pinyin&#34;</span>)])
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>update.resultType = .updatedObjectsCountResultType
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">try</span> container.viewContext.execute(update)
+</span></span></code></pre></div><hr>
+<h3 id="复查数字要能自证"><strong>复查：数字要能自证</strong></h3>
+<p>同机同库，前后各 100 次采样（排除首装预热）：</p>
+<ul>
+<li><strong>平均耗时</strong>：<strong>188 ms → 56 ms（-70.2%）</strong></li>
+<li><strong>P95</strong>：<strong>312 ms → 96 ms（-69.2%）</strong></li>
+<li><strong>输入期间掉帧告警</strong>：由偶发 → <strong>无</strong></li>
+<li><strong>用户可感</strong>：连敲三字时，列表不再“憋气”，滚动无顿点</li>
+</ul>
+<hr>
+<h3 id="出院医嘱三件一直有效的小事"><strong>出院医嘱：三件一直有效的小事</strong></h3>
+<ul>
+<li>键入流别急：<strong>去抖 120 ms + 可取消的后台查询</strong>，是移动端的体感基线；</li>
+<li>任何更新都要顺带<strong>重算衍生字段</strong>（searchKey/pinyinSortKey），并写对账日志；</li>
+<li>指标看 P95，不只看均值；在 Instruments 里把 “Fetch Rows / Fetched Faults” 养成随手一眼。</li>
+</ul>
+<hr>
+<h3 id="随访与预案"><strong>随访与预案</strong></h3>
+<ul>
+<li>目前的量级（几千条）不需要引入 FTS；如果未来上到十万级，再评估 <strong>FTS5 虚表</strong> 或“本地索引文件 + 结果映射回 Core Data”；</li>
+<li>复杂筛选（多字段交叉）优先用<strong>可组合的前缀键</strong>，尽量避免落回 %like%；</li>
+<li>版本升级时跑一次 <strong>轻量验收脚本</strong>：随机 100 个 token，对比结果集和耗时，防回退。</li>
+</ul>
+<hr>
+<p><strong>尾声</strong></p>
+<p>那条“像在憋气”的评论现在翻不到前排了。不是因为我写了什么“炫技”的算法，而是把数据库听得懂的话说清楚，让它少一点猜。</p>
+<p>我喜欢这个节奏：一天只做几刀，但每一刀都能回退，都能自证。产品该快的地方快，剩下的留给内容和口碑。用户敲下“风”的时候，列表秒回一句“风马牛不相及”，这口气，就顺了。</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2025 Biney</span>
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

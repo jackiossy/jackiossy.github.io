@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>UIKit 实战手册：iOS 4 高质量界面工程</title>
+    <meta name="description" content="UIKit 实战手册：iOS 4 高质量界面工程 那会儿还没有 Storyboard，也没有 Auto Layout。界面的骨架靠 Nib/XIB &#43; 代码，布局全靠 Springs &amp; Struts。动画第一次全面转向 Block API，多任务刚登陆，Retina 初露锋芒。下面这份笔记是给要把 iOS 4 …">
+    <meta name="keywords" content='blog, gokarna, hugo, Docker, CUPS, AirPrint'>
+
+    <meta property="og:url" content="http://localhost:1313/posts/uikit-%E5%AE%9E%E6%88%98%E6%89%8B%E5%86%8Cios-4-%E9%AB%98%E8%B4%A8%E9%87%8F%E7%95%8C%E9%9D%A2%E5%B7%A5%E7%A8%8B/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UIKit 实战手册：iOS 4 高质量界面工程">
+    <meta property="og:description" content="UIKit 实战手册：iOS 4 高质量界面工程 那会儿还没有 Storyboard，也没有 Auto Layout。界面的骨架靠 Nib/XIB &#43; 代码，布局全靠 Springs &amp; Struts。动画第一次全面转向 Block API，多任务刚登陆，Retina 初露锋芒。下面这份笔记是给要把 iOS 4 …">
+    <meta property="og:image" content="http://localhost:1313/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="http://localhost:1313/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UIKit 实战手册：iOS 4 高质量界面工程">
+    <meta name="twitter:description" content="UIKit 实战手册：iOS 4 高质量界面工程 那会儿还没有 Storyboard，也没有 Auto Layout。界面的骨架靠 Nib/XIB &#43; 代码，布局全靠 Springs &amp; Struts。动画第一次全面转向 Block API，多任务刚登陆，Retina 初露锋芒。下面这份笔记是给要把 iOS 4 …">
+    <meta property="twitter:domain" content="http://localhost:1313/posts/uikit-%E5%AE%9E%E6%88%98%E6%89%8B%E5%86%8Cios-4-%E9%AB%98%E8%B4%A8%E9%87%8F%E7%95%8C%E9%9D%A2%E5%B7%A5%E7%A8%8B/">
+    <meta property="twitter:url" content="http://localhost:1313/posts/uikit-%E5%AE%9E%E6%88%98%E6%89%8B%E5%86%8Cios-4-%E9%AB%98%E8%B4%A8%E9%87%8F%E7%95%8C%E9%9D%A2%E5%B7%A5%E7%A8%8B/">
+    <meta name="twitter:image" content="http://localhost:1313/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/uikit-%E5%AE%9E%E6%88%98%E6%89%8B%E5%86%8Cios-4-%E9%AB%98%E8%B4%A8%E9%87%8F%E7%95%8C%E9%9D%A2%E5%B7%A5%E7%A8%8B/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.3eb19cb61dde9e37b9522867f3e024aeb68e26ab8e03252e46e365abcb19acf7.js" integrity="sha256-PrGcth3enje5Uihn8&#43;AkrraOJquOAyUuRuNlq8sZrPc="></script>
+
+    
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="http://localhost:1313/">
+                <img src='/images/avatar.jpg' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="http://localhost:1313/">Biney&#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/posts/" aria-label="posts" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/tags/" aria-label="tags" > Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com" aria-label="github" ><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com" ><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>UIKit 实战手册：iOS 4 高质量界面工程</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">October 15, 2015
+           
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/docker">Docker</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/cups">CUPS</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/airprint">AirPrint</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <h1 id="uikit-实战手册ios-4-高质量界面工程"><strong>UIKit 实战手册：iOS 4 高质量界面工程</strong></h1>
+<blockquote>
+<p>那会儿还没有 Storyboard，也没有 Auto Layout。界面的骨架靠 <strong>Nib/XIB + 代码</strong>，布局全靠 <strong>Springs &amp; Struts</strong>。动画第一次全面转向 <strong>Block API</strong>，多任务刚登陆，Retina 初露锋芒。下面这份笔记是给要把 iOS 4 项目做“稳、顺、快”的工程师的。</p>
+</blockquote>
+<hr>
+<h2 id="目录"><strong>目录</strong></h2>
+<ol>
+<li><a href="#%E5%BA%94%E7%94%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E5%A4%9A%E4%BB%BB%E5%8A%A1">应用生命周期与多任务</a></li>
+<li><a href="#%E8%A7%86%E5%9B%BE%E6%8E%A7%E5%88%B6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%97%8B%E8%BD%AC%E4%B8%8E%E5%B1%95%E7%A4%BA">视图控制器：生命周期、旋转与展示</a></li>
+<li><a href="#%E5%B8%83%E5%B1%80%E4%BD%93%E7%B3%BBsprings--struts%E5%BC%B9%E7%B0%A7%E4%B8%8E%E6%8C%A1%E6%9D%BF">布局体系：Springs &amp; Struts（弹簧与挡板）</a></li>
+<li><a href="#%E6%B8%B2%E6%9F%93%E4%B8%8E%E5%8A%A8%E7%94%BB%E8%AE%A9-gpu-%E5%92%8C%E4%B8%BB%E7%BA%BF%E7%A8%8B%E5%96%98%E5%8F%A3%E6%B0%94">渲染与动画：让 GPU 和主线程喘口气</a></li>
+<li><a href="#%E8%A1%A8%E6%A0%BC%E4%B8%8E%E6%BB%9A%E5%8A%A8%E6%80%A7%E8%83%BD%E5%8D%A1%E9%A1%BF%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5">表格与滚动性能：卡顿从哪里来</a></li>
+<li><a href="#retina-%E4%B8%8E%E8%87%AA%E7%BB%98%E5%83%8F%E7%B4%A0%E4%B8%8E%E5%9D%90%E6%A0%87%E7%9A%84%E5%AF%B9%E9%BD%90%E6%9C%AF">Retina 与自绘：像素与坐标的“对齐术”</a></li>
+<li><a href="#%E6%89%8B%E5%8A%BF%E4%B8%8E%E4%BA%8B%E4%BB%B6%E8%AE%A9%E4%BA%A4%E4%BA%92%E4%B8%8D%E6%89%93%E6%9E%B6">手势与事件：让交互不打架</a></li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E4%B8%8E%E7%BE%8E%E6%9C%AF%E8%B5%84%E6%BA%90%E5%B0%8F%E4%BD%93%E7%A7%AF%E5%8F%AF%E6%8B%89%E4%BC%B8%E5%8F%AF%E5%A4%8D%E7%94%A8">主题与美术资源：小体积、可拉伸、可复用</a></li>
+<li><a href="#%E6%9C%AC%E5%9C%B0%E5%8C%96%E4%B8%8E%E6%96%87%E6%9C%AC%E6%8E%92%E7%89%88%E5%BD%93%E5%B9%B4%E7%9A%84%E9%9D%A0%E8%B0%B1%E5%81%9A%E6%B3%95">本地化与文本排版：当年的靠谱做法</a></li>
+<li><a href="#%E8%B0%83%E8%AF%95%E4%B8%8E%E6%B5%8B%E8%AF%95instruments-%E4%B8%8E-uiautomation">调试与测试：Instruments 与 UIAutomation</a></li>
+<li><a href="#%E5%B7%A5%E7%A8%8B%E7%BB%84%E7%BB%87%E4%B8%8E%E7%BA%A6%E5%AE%9A%E8%AE%A9%E9%A1%B9%E7%9B%AE%E5%8F%AF%E9%95%BF%E8%B7%91">工程组织与约定：让项目“可长跑”</a></li>
+<li><a href="#%E4%B8%8A%E7%BA%BF%E5%89%8D-checklist">上线前 Checklist</a></li>
+</ol>
+<hr>
+<h2 id="应用生命周期与多任务"><strong>应用生命周期与多任务</strong></h2>
+<p>iOS 4 引入多任务，应用从单轨变为“前台—后台—挂起/终止”的状态机。<strong>把状态转场处理好，就等于护住数据安全与用户预期。</strong></p>
+<p><strong>AppDelegate 常用回调：</strong></p>
+<pre tabindex="0"><code>- (void)applicationDidEnterBackground:(UIApplication *)application {
+    // 保存轻量状态、写盘、提交未完成任务
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    // 恢复 UI、刷新数据
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // 重启被暂停的动画/计时器/任务
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    // 暂停动画、音频、游戏循环
+}
+</code></pre><p><strong>后台有限时间任务（保证“善终”）</strong>：</p>
+<pre tabindex="0"><code>- (void)flushBeforeSuspension {
+    UIBackgroundTaskIdentifier task = [[UIApplication sharedApplication]
+        beginBackgroundTaskWithExpirationHandler:^{
+            // 时间不够，做最后兜底清理
+        }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // 写盘 / 发送尾包 / 关闭文件句柄
+        [[UIApplication sharedApplication] endBackgroundTask:task];
+    });
+}
+</code></pre><p><strong>后台模式</strong>（Info.plist，UIBackgroundModes）：音频、VoIP、位置等。<strong>只申请你真需要的</strong>，否则是自找耗电与被拒。</p>
+<p><strong>本地通知</strong>（iOS 4 新增）：在后台/挂起时可靠提醒用户，配合状态恢复路径做“回前台即到达目标页”。</p>
+<hr>
+<h2 id="视图控制器生命周期旋转与展示"><strong>视图控制器：生命周期、旋转与展示</strong></h2>
+<p><strong>生命周期（iOS 4 年代的“标准姿势”）</strong>：</p>
+<pre tabindex="0"><code>init / awakeFromNib
+viewDidLoad
+viewWillAppear:
+viewDidAppear:
+（用户交互）
+viewWillDisappear:
+viewDidDisappear:
+didReceiveMemoryWarning → viewDidUnload（可释放可再生资源）
+dealloc
+</code></pre><p><strong>秘籍</strong>：</p>
+<ul>
+<li>viewDidLoad 只做一次性装配；</li>
+<li>viewWillAppear: 做“每次可见”的刷新；</li>
+<li>didReceiveMemoryWarning 释放大图、缓存；</li>
+<li>viewDidUnload（iOS 6 后废弃）里将 IBOutlets 置空。</li>
+</ul>
+<p><strong>展示与返回（2010 口味 API）</strong>：</p>
+<pre tabindex="0"><code>[self presentModalViewController:naviController animated:YES];
+// ...
+[self dismissModalViewControllerAnimated:YES];
+</code></pre><p><strong>旋转支持（pre-iOS 6）</strong>：</p>
+<pre tabindex="0"><code>- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)io {
+    return (io == UIInterfaceOrientationPortrait);
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)to duration:(NSTimeInterval)dur {}
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)from {}
+</code></pre><blockquote>
+<p>旋转适配交给 <strong>autoresizingMask</strong>，少在 willRotate&hellip; 里硬改 frame。</p>
+</blockquote>
+<hr>
+<h2 id="布局体系springs--struts弹簧与挡板"><strong>布局体系：Springs &amp; Struts（弹簧与挡板）</strong></h2>
+<p>当年没有 Auto Layout。一个<strong>autoresizingMask</strong> 解决横竖屏、父子关系变化。</p>
+<p><strong>常见组合：</strong></p>
+<ul>
+<li><strong>撑满父视图</strong>：UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight</li>
+<li><strong>底部工具栏</strong>：FlexibleTopMargin | FlexibleWidth</li>
+<li><strong>水平居中固定宽度</strong>：FlexibleLeftMargin | FlexibleRightMargin</li>
+</ul>
+<pre tabindex="0"><code>view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+</code></pre><p><strong>动态文本</strong>：sizeToFit，然后更新相邻控件的位置。局部动画用 animateWithDuration: 包起来，体验顺。</p>
+<p><strong>可拉伸图片（iOS 4 经典）</strong>：</p>
+<pre tabindex="0"><code>UIImage *bg = [[UIImage imageNamed:@&#34;btn.png&#34;]
+    stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+[button setBackgroundImage:bg forState:UIControlStateNormal];
+</code></pre><blockquote>
+<p>带圆角矩形的按钮一律用“九宫格”拼法（当年的说法），容量小、边缘不虚。</p>
+</blockquote>
+<hr>
+<h2 id="渲染与动画让-gpu-和主线程喘口气"><strong>渲染与动画：让 GPU 和主线程喘口气</strong></h2>
+<p><strong>Block 动画（iOS 4 新 API）</strong>：</p>
+<pre tabindex="0"><code>[UIView animateWithDuration:0.25
+                 animations:^{
+                     view.alpha = 1.0;
+                     view.frame = targetFrame;
+                 }];
+</code></pre><p><strong>避免多层透明叠加</strong>：层层 alpha &lt; 1 会让合成成本“叠罗汉”。能不透明就不透明，背景色给到位。</p>
+<p><strong>阴影/遮罩谨慎</strong>：layer.shadow*、mask 容易触发离屏。静态阴影尽量<strong>烘焙到切图</strong>。</p>
+<p><strong>图片解码</strong>：大图首帧解码别卡主线程。用后台队列解码后回主线程赋值：</p>
+<pre tabindex="0"><code>dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    UIImage *img = [UIImage imageWithContentsOfFile:path]; // 避免 imageNamed: 全局缓存
+    UIGraphicsBeginImageContext(img.size); // 强制解码一遍
+    [img drawAtPoint:CGPointZero];
+    UIImage *decoded = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    dispatch_async(dispatch_get_main_queue(), ^{
+        imageView.image = decoded;
+    });
+});
+</code></pre><p><strong>shouldRasterize 慎用</strong>：静态复杂层可加速，频繁变化的层会占内存、还可能更慢。</p>
+<hr>
+<h2 id="表格与滚动性能卡顿从哪里来"><strong>表格与滚动性能：卡顿从哪里来</strong></h2>
+<p><strong>复用是底线</strong>：</p>
+<pre tabindex="0"><code>- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)ip {
+    static NSString *ID = @&#34;Cell&#34;;
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:ID];
+    if (!cell) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID] autorelease];
+        // 子视图只在这里创建一次
+    }
+    // 只更新内容
+    return cell;
+}
+</code></pre><p><strong>异步图片加载 + 取消</strong>（NSOperationQueue 搭配 NSCache）：</p>
+<pre tabindex="0"><code>// 头文件里
+@property (nonatomic, retain) NSOperationQueue *imageQueue;
+@property (nonatomic, retain) NSCache *imageCache;
+
+// 复用前取消旧任务
+- (void)tableView:(UITableView *)tv didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)ip {
+    // 给 cell 打一个 token，离开屏幕后取消关联任务（自行管理映射）
+}
+
+// 加载逻辑
+UIImage *cached = [self.imageCache objectForKey:url];
+if (cached) { cell.imageView.image = cached; }
+else {
+    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        UIImage *img = [UIImage imageWithData:data];
+        if (img) [self.imageCache setObject:img forKey:url];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            // cell 仍然可见且是同一行再赋值
+            cell.imageView.image = img;
+        }];
+    }];
+    [self.imageQueue addOperation:op];
+}
+</code></pre><p><strong>RunLoop 模式</strong>：滚动时将重型任务放到 NSDefaultRunLoopMode，避免和 UITrackingRunLoopMode 抢时间片；需要“边滚边加载”的小任务可放 NSRunLoopCommonModes。</p>
+<hr>
+<h2 id="retina-与自绘像素与坐标的对齐术"><strong>Retina 与自绘：像素与坐标的“对齐术”</strong></h2>
+<p><strong>Retina 检测与比例</strong>：</p>
+<pre tabindex="0"><code>CGFloat scale = [[UIScreen mainScreen] respondsToSelector:@selector(scale)] ? [[UIScreen mainScreen] scale] : 1.0;
+</code></pre><p><strong>位图上下文用对 API</strong>（iOS 4 新增，第三个参数传 0.0 跟随屏幕）：</p>
+<pre tabindex="0"><code>UIGraphicsBeginImageContextWithOptions(size, NO, 0.0); // 0.0 → 自动用 2x
+// 绘制...
+UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+UIGraphicsEndImageContext();
+</code></pre><p><strong>像素对齐</strong>：避免 0.5 的边，让线条落在像素中心：</p>
+<pre tabindex="0"><code>CGContextRef ctx = UIGraphicsGetCurrentContext();
+CGFloat onePixel = 1.0 / scale;
+CGContextSetLineWidth(ctx, onePixel);
+CGContextMoveToPoint(ctx, 0, 0.5 * onePixel);
+CGContextAddLineToPoint(ctx, width, 0.5 * onePixel);
+CGContextStrokePath(ctx);
+</code></pre><hr>
+<h2 id="手势与事件让交互不打架"><strong>手势与事件：让交互不打架</strong></h2>
+<p><strong>UIGestureRecognizer</strong>（那时就很香）：点按、长按、左/右滑、捏合。</p>
+<pre tabindex="0"><code>UILongPressGestureRecognizer *lp = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)] autorelease];
+lp.minimumPressDuration = 0.4;
+[view addGestureRecognizer:lp];
+</code></pre><p><strong>冲突管理</strong>：</p>
+<pre tabindex="0"><code>[pan requireGestureRecognizerToFail:swipe]; // 让 swipe 胜出
+gesture.cancelsTouchesInView = YES;         // 手势吃掉 touches
+</code></pre><p><strong>何时用 touchesBegan:</strong>：需要完全自定义的绘制/手势，或与 ScrollView 的手势细粒度配合时。</p>
+<hr>
+<h2 id="主题与美术资源小体积可拉伸可复用"><strong>主题与美术资源：小体积、可拉伸、可复用</strong></h2>
+<ul>
+<li><strong>按钮与气泡</strong>：全部使用 stretchableImageWithLeftCapWidth:topCapHeight: 形成九宫格。</li>
+<li><strong>列表分割线</strong>：浅色 1px 线用图片，或 Core Graphics 画线（像素对齐）。</li>
+<li><strong>图标</strong>：准备 @2x 资源，命名保持一致。</li>
+<li><strong>大图加载路径</strong>：imageWithContentsOfFile: 替代 imageNamed:，可控缓存。</li>
+</ul>
+<hr>
+<h2 id="本地化与文本排版当年的靠谱做法"><strong>本地化与文本排版：当年的靠谱做法</strong></h2>
+<ul>
+<li>文本统一 NSLocalizedString(key, nil)；</li>
+<li>文本变化大处使用 sizeToFit；</li>
+<li>多语言长度差异用 <strong>autoresizingMask</strong> 和“右侧留白”吸收；</li>
+<li>自定义绘制文本使用 Core Text（当时就已经很能打），行距/字距自己掌控。</li>
+</ul>
+<hr>
+<h2 id="调试与测试instruments-与-uiautomation"><strong>调试与测试：Instruments 与 UIAutomation</strong></h2>
+<p><strong>Instruments</strong>：</p>
+<ul>
+<li><strong>Time Profiler</strong> 查热点；</li>
+<li><strong>Core Animation</strong> 查看帧率、混合层（Blended Layers）；</li>
+<li><strong>Allocations</strong> 盯峰值；</li>
+<li><strong>Leaks</strong> 找泄漏；</li>
+<li><strong>Zombies</strong> 抓过释放对象。</li>
+</ul>
+<p><strong>UIAutomation（iOS 4 提供）</strong>：用 JavaScript 驱动冒烟回归场景，夜里跑，白天省心。</p>
+<hr>
+<h2 id="工程组织与约定让项目可长跑"><strong>工程组织与约定：让项目“可长跑”</strong></h2>
+<ul>
+<li><strong>每个页面一个 XIB + 一个 Controller</strong>，子模块尽量自封装视图。</li>
+<li><strong>图片命名</strong>：模块_用途_状态@2x.png，查找与替换都简单。</li>
+<li><strong>公共控件</strong>：抽成小类（按钮、气泡、头像视图），别在各页面复制粘贴。</li>
+<li><strong>异步约定</strong>：统一 NSOperationQueue / GCD 包装，支持取消，避免“幽灵回调”。</li>
+<li><strong>内存策略</strong>：可再生资源用 NSCache，收到内存警告清空。</li>
+</ul>
+<hr>
+<h2 id="上线前-checklist"><strong>上线前 Checklist</strong></h2>
+<ul>
+<li>旋转路径稳定（shouldAutorotateToInterfaceOrientation: 返回一致）</li>
+<li>大图不走 imageNamed:；首帧解码在后台</li>
+<li>表格滚动 60fps（A4 机器也顺），图片加载可取消</li>
+<li>Core Animation 模板下无大片红色混合层</li>
+<li>多任务切前/后台状态保存与恢复自洽</li>
+<li>本地通知路径测试通过（点击通知直达目标页）</li>
+<li>Retina 自绘使用 UIGraphicsBeginImageContextWithOptions(&hellip;, 0.0)</li>
+<li>国际化 key 完整；长文本不截断或有折行策略</li>
+<li>Zombis/Leaks/Allocations 都跑过一轮</li>
+<li>崩溃日志符号化验证（Release 带 dSYM）</li>
+</ul>
+<hr>
+<h2 id="收尾"><strong>收尾</strong></h2>
+<p>iOS 4 的 UIKit 没有花哨的自动布局，但也因此<strong>更可预期</strong>：</p>
+<ul>
+<li>布局靠弹簧与挡板，</li>
+<li>动画靠 Block，</li>
+<li>滚动靠复用与异步，</li>
+<li>Retina 靠像素对齐与恰当的位图上下文，</li>
+<li>多任务靠状态管理。</li>
+</ul>
+<p>把这些老路修平，老项目能跑得稳，新项目也能在“约束少、控制多”的前提下干净利落地起步。</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2015 The Marauders</span>
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

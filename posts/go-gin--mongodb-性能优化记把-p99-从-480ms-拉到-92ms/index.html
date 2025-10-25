@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Go Gin × MongoDB 性能优化记：把 p99 从 480ms 拉到 92ms</title>
+    <meta name="description" content="Go Gin × MongoDB 性能优化记：把 p99 从 480ms 拉到 92ms 这是一篇来自独立开发者后端的一线笔记：Molived（沉浸式观影榜单）与「不背成语」两个 App 共用同一套 Go &#43; Gin &#43; MongoDB 的 API。在一次晚高峰的抖动后，我们给这套系统做了系统性体检与优化。本文复盘方 …">
+    <meta name="keywords" content='blog, gokarna, hugo, Go, MongoDB'>
+
+    <meta property="og:url" content="https://blog.mose.ltd/posts/go-gin--mongodb-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B0%E6%8A%8A-p99-%E4%BB%8E-480ms-%E6%8B%89%E5%88%B0-92ms/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Go Gin × MongoDB 性能优化记：把 p99 从 480ms 拉到 92ms">
+    <meta property="og:description" content="Go Gin × MongoDB 性能优化记：把 p99 从 480ms 拉到 92ms 这是一篇来自独立开发者后端的一线笔记：Molived（沉浸式观影榜单）与「不背成语」两个 App 共用同一套 Go &#43; Gin &#43; MongoDB 的 API。在一次晚高峰的抖动后，我们给这套系统做了系统性体检与优化。本文复盘方 …">
+    <meta property="og:image" content="https://blog.mose.ltd/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="https://blog.mose.ltd/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Go Gin × MongoDB 性能优化记：把 p99 从 480ms 拉到 92ms">
+    <meta name="twitter:description" content="Go Gin × MongoDB 性能优化记：把 p99 从 480ms 拉到 92ms 这是一篇来自独立开发者后端的一线笔记：Molived（沉浸式观影榜单）与「不背成语」两个 App 共用同一套 Go &#43; Gin &#43; MongoDB 的 API。在一次晚高峰的抖动后，我们给这套系统做了系统性体检与优化。本文复盘方 …">
+    <meta property="twitter:domain" content="https://blog.mose.ltd/posts/go-gin--mongodb-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B0%E6%8A%8A-p99-%E4%BB%8E-480ms-%E6%8B%89%E5%88%B0-92ms/">
+    <meta property="twitter:url" content="https://blog.mose.ltd/posts/go-gin--mongodb-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B0%E6%8A%8A-p99-%E4%BB%8E-480ms-%E6%8B%89%E5%88%B0-92ms/">
+    <meta name="twitter:image" content="https://blog.mose.ltd/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="https://blog.mose.ltd/posts/go-gin--mongodb-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B0%E6%8A%8A-p99-%E4%BB%8E-480ms-%E6%8B%89%E5%88%B0-92ms/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.3eb19cb61dde9e37b9522867f3e024aeb68e26ab8e03252e46e365abcb19acf7.js" integrity="sha256-PrGcth3enje5Uihn8&#43;AkrraOJquOAyUuRuNlq8sZrPc="></script>
+
+    
+    
+    <link rel='stylesheet' href='/css/site-tweak.css'>
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://blog.mose.ltd/">
+                <img src='/images/avatar.jpg' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://blog.mose.ltd/">Biney&#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://blog.mose.ltd/posts/" aria-label="posts" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://blog.mose.ltd/tags/" aria-label="tags" > Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com" aria-label="github" ><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://blog.mose.ltd/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://blog.mose.ltd/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com" ><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Go Gin × MongoDB 性能优化记：把 p99 从 480ms 拉到 92ms</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">April 11, 2025
+           
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/go">Go</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/mongodb">MongoDB</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <h1 id="go-gin--mongodb-性能优化记把-p99-从-480ms-拉到-92ms"><strong>Go Gin × MongoDB 性能优化记：把 p99 从 480ms 拉到 92ms</strong></h1>
+<blockquote>
+<p>这是一篇来自独立开发者后端的一线笔记：Molived（沉浸式观影榜单）与「不背成语」两个 App 共用同一套 Go + Gin + MongoDB 的 API。在一次晚高峰的抖动后，我们给这套系统做了系统性体检与优化。本文复盘方法、过程与落地方案，避免“经验之谈”的空泛，尽量用可复用的技术细节说话。</p>
+</blockquote>
+<hr>
+<h2 id="0-故事的起点晚八点的抖动"><strong>0. 故事的起点：晚八点的抖动</strong></h2>
+<p>晚高峰（20:00–22:00）是 Molived 的自然流量峰值。一次发布后，观察到两条接口 <strong>p99 从 ~180ms 升到 480–600ms</strong>：</p>
+<ul>
+<li>/v1/movies/hotlist：带排序与筛选的内容列表。</li>
+<li>/v1/idioms/review/next：「不背成语」按 nextReviewAt 拉取下一个待复习批次。</li>
+</ul>
+<p>表面看起来是“数据库慢了”。但优化不是猜谜。我们的路线是：<strong>先度量 → 再定位 → 小步验证 → 渐进固化</strong>。</p>
+<hr>
+<h2 id="1-先立度量与边界没有观测优化等于玄学"><strong>1. 先立度量与边界：没有观测，优化等于玄学</strong></h2>
+<h3 id="11-指标与追踪"><strong>1.1 指标与追踪</strong></h3>
+<ul>
+<li><strong>延迟分位</strong>：p50 / p90 / p95 / p99，接口与下游（Mongo）分别记录。</li>
+<li><strong>资源指标</strong>：连接池（CheckedOut/CheckedIn）、等待队列、CPU/GC、goroutine。</li>
+<li><strong>追踪</strong>：OpenTelemetry（Gin 中间件 + Mongo 驱动 hook）串起一次请求的全链路（反向代理 → Gin → 业务 → Mongo）。</li>
+</ul>
+<h3 id="12-生产可用的最小观测集"><strong>1.2 生产可用的最小观测集</strong></h3>
+<ul>
+<li><strong>pprof</strong>：只在灰度与紧急定位时启用，避免常开带来的开销。</li>
+<li><strong>Explain Plan</strong>：所有慢查询存证（抽样保存计划、扫描量、索引命中）。</li>
+</ul>
+<p>用这些，才能将“感觉”变成“证据”。</p>
+<hr>
+<h2 id="2-gin-层把便宜的部分先拿满"><strong>2. Gin 层：把“便宜的部分”先拿满</strong></h2>
+<h3 id="21-统一超时与取消"><strong>2.1 统一超时与取消</strong></h3>
+<p>请求必须带上 context.WithTimeout，并向下传递到 Mongo。配合网关的重试策略，避免“超时后还在 DB 干活”。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">withTimeout</span>(c <span style="color:#ff79c6">*</span>gin.Context, d time.Duration) (context.Context, context.CancelFunc) {
+</span></span><span style="display:flex;"><span>    ctx, cancel <span style="color:#ff79c6">:=</span> context.<span style="color:#50fa7b">WithTimeout</span>(c.Request.<span style="color:#50fa7b">Context</span>(), d)
+</span></span><span style="display:flex;"><span>    c.Request = c.Request.<span style="color:#50fa7b">WithContext</span>(ctx)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> ctx, cancel
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r <span style="color:#ff79c6">:=</span> gin.<span style="color:#50fa7b">New</span>()
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 顺序：RequestID → 恶意流量过滤/速率 → 恢复/日志 → 超时 → 业务
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>r.<span style="color:#50fa7b">Use</span>(<span style="color:#50fa7b">RequestID</span>(), <span style="color:#50fa7b">RateLimit</span>(), gin.<span style="color:#50fa7b">Recovery</span>(), <span style="color:#50fa7b">ServerTimeout</span>(<span style="color:#bd93f9">1200</span><span style="color:#ff79c6">*</span>time.Millisecond))
+</span></span></code></pre></div><p><strong>要点</strong>：超时与重试是<strong>边界</strong>，不是优化手段，但没有边界，任何优化都难以稳定。</p>
+<h3 id="22-json-编解码与响应"><strong>2.2 JSON 编解码与响应</strong></h3>
+<ul>
+<li>统一使用 json.Encoder 并 SetEscapeHTML(false)，减少无意义转义。</li>
+<li>响应通过 sync.Pool 复用 bytes.Buffer，降低临时分配。</li>
+<li>压缩（gzip/br）在网关层做，应用层只需设置合适的 Content-Type / Cache-Control / ETag。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> bufPool = sync.Pool{New: <span style="color:#8be9fd;font-style:italic">func</span>() any { <span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">new</span>(bytes.Buffer) }}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">JSON</span>(c <span style="color:#ff79c6">*</span>gin.Context, status <span style="color:#8be9fd">int</span>, v any) {
+</span></span><span style="display:flex;"><span>    b <span style="color:#ff79c6">:=</span> bufPool.<span style="color:#50fa7b">Get</span>().(<span style="color:#ff79c6">*</span>bytes.Buffer)
+</span></span><span style="display:flex;"><span>    b.<span style="color:#50fa7b">Reset</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">defer</span> bufPool.<span style="color:#50fa7b">Put</span>(b)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    enc <span style="color:#ff79c6">:=</span> json.<span style="color:#50fa7b">NewEncoder</span>(b)
+</span></span><span style="display:flex;"><span>    enc.<span style="color:#50fa7b">SetEscapeHTML</span>(<span style="color:#ff79c6">false</span>)
+</span></span><span style="display:flex;"><span>    _ = enc.<span style="color:#50fa7b">Encode</span>(v)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    c.<span style="color:#50fa7b">Data</span>(status, <span style="color:#f1fa8c">&#34;application/json; charset=utf-8&#34;</span>, b.<span style="color:#50fa7b">Bytes</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>备注：是否换 jsoniter 不是教条。我们在该场景下的提升不稳定（-2%~+7% 波动），因此保留 stdlib。</p>
+</blockquote>
+<h3 id="23-绑定与体积控制"><strong>2.3 绑定与体积控制</strong></h3>
+<ul>
+<li>GET 使用 ShouldBindQuery；POST 使用 BindJSON 但 <strong>限制 Body 大小</strong>（http.MaxBytesReader）。</li>
+<li>分页入参做上限保护：pageSize ∈ [1, 100]；禁止“全量拉取”。</li>
+</ul>
+<h3 id="24-连接与服务配置"><strong>2.4 连接与服务配置</strong></h3>
+<ul>
+<li>合理设置 ReadHeaderTimeout、IdleTimeout，把“坏连接”尽早清理。</li>
+<li>Gin 中间件<strong>精简</strong>：每条链路只做一件事；日志聚合到网关，应用只记录结构化关键字段（traceID、userID、uri、p99/p50）。</li>
+</ul>
+<hr>
+<h2 id="3-mongodb从数据模型到查询路径"><strong>3. MongoDB：从数据模型到查询路径</strong></h2>
+<h3 id="31-连接池与超时"><strong>3.1 连接池与超时</strong></h3>
+<p>官方 Go 驱动内置连接池，关键参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>client, _ <span style="color:#ff79c6">:=</span> mongo.<span style="color:#50fa7b">Connect</span>(ctx, options.<span style="color:#50fa7b">Client</span>().
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">ApplyURI</span>(uri).
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">SetMaxPoolSize</span>(<span style="color:#bd93f9">300</span>).          <span style="color:#6272a4">// 上限与业务并发&amp;CPU核数相关，观察等待队列再调
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">SetMinPoolSize</span>(<span style="color:#bd93f9">20</span>).
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">SetMaxConnIdleTime</span>(<span style="color:#bd93f9">60</span> <span style="color:#ff79c6">*</span> time.Second).
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">SetServerSelectionTimeout</span>(<span style="color:#bd93f9">2</span> <span style="color:#ff79c6">*</span> time.Second). <span style="color:#6272a4">// 选主/拓扑超时
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">SetSocketTimeout</span>(<span style="color:#bd93f9">1</span> <span style="color:#ff79c6">*</span> time.Second))          <span style="color:#6272a4">// 单次 I/O 超时
+</span></span></span></code></pre></div><p><strong>观察点</strong>：ConnectionPoolWaitQueueSize 如果出现锯齿，说明池子不够或泄露；先查代码是否忘记消费游标、是否卡在网络层，再盲目加大池子。</p>
+<h3 id="32-查询与索引设计两类核心路径"><strong>3.2 查询与索引设计（两类核心路径）</strong></h3>
+<h4 id="a-molived热榜与筛选列表"><strong>A. Molived：热榜与筛选列表</strong></h4>
+<p>接口形态：根据 category/lang 过滤，按 hotScore 或 publishAt 排序，分页返回。</p>
+<p><strong>索引</strong>（覆盖查询 + 有序遍历）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#6272a4">// 只索引发布中的内容，减小索引集合
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>db.movies.<span style="color:#50fa7b">createIndex</span>(
+</span></span><span style="display:flex;"><span>  { category: <span style="color:#bd93f9">1</span>, lang: <span style="color:#bd93f9">1</span>, hotScore: <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>, publishAt: <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>, _id: <span style="color:#bd93f9">1</span> },
+</span></span><span style="display:flex;"><span>  { partialFilterExpression: { status: <span style="color:#f1fa8c">&#34;published&#34;</span> } }
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 覆盖所需字段，响应使用投影
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>db.movies.<span style="color:#50fa7b">find</span>(
+</span></span><span style="display:flex;"><span>  { category: <span style="color:#f1fa8c">&#34;movie&#34;</span>, lang: <span style="color:#f1fa8c">&#34;zh&#34;</span>, status: <span style="color:#f1fa8c">&#34;published&#34;</span> },
+</span></span><span style="display:flex;"><span>  { projection: { _id: <span style="color:#bd93f9">1</span>, title: <span style="color:#bd93f9">1</span>, cover: <span style="color:#bd93f9">1</span>, hotScore: <span style="color:#bd93f9">1</span>, publishAt: <span style="color:#bd93f9">1</span> } }
+</span></span><span style="display:flex;"><span>).<span style="color:#50fa7b">sort</span>({ hotScore: <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>, publishAt: <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span> }).<span style="color:#50fa7b">limit</span>(<span style="color:#bd93f9">20</span>)
+</span></span></code></pre></div><p><strong>注意</strong>：</p>
+<ul>
+<li>排序字段必须在索引里，且方向一致。</li>
+<li>需稳定分页：二级排序 publishAt + _id，避免“翻页抖动”。</li>
+<li>复杂筛选尽量编译为<strong>前缀范围</strong>（$gte/$lt），避免 regex 前缀以外的扫描。</li>
+</ul>
+<h4 id="b-不背成语下一批复习"><strong>B. 不背成语：下一批复习</strong></h4>
+<p>接口形态：按用户 userId 拉取 nextReviewAt &lt;= now 的若干条，状态需 active。</p>
+<p><strong>索引</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.idioms.<span style="color:#50fa7b">createIndex</span>(
+</span></span><span style="display:flex;"><span>  { userId: <span style="color:#bd93f9">1</span>, status: <span style="color:#bd93f9">1</span>, nextReviewAt: <span style="color:#bd93f9">1</span>, _id: <span style="color:#bd93f9">1</span> },
+</span></span><span style="display:flex;"><span>  { partialFilterExpression: { status: <span style="color:#f1fa8c">&#34;active&#34;</span> } }
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>查询示例（覆盖 + 限制）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.idioms.<span style="color:#50fa7b">find</span>(
+</span></span><span style="display:flex;"><span>  { userId: U, status: <span style="color:#f1fa8c">&#34;active&#34;</span>, nextReviewAt: { $lte: NOW } },
+</span></span><span style="display:flex;"><span>  { projection: { _id: <span style="color:#bd93f9">1</span>, text: <span style="color:#bd93f9">1</span>, hint: <span style="color:#bd93f9">1</span>, nextReviewAt: <span style="color:#bd93f9">1</span> } }
+</span></span><span style="display:flex;"><span>).<span style="color:#50fa7b">sort</span>({ nextReviewAt: <span style="color:#bd93f9">1</span>, _id: <span style="color:#bd93f9">1</span> }).<span style="color:#50fa7b">limit</span>(<span style="color:#bd93f9">30</span>)
+</span></span></code></pre></div><p><strong>效果</strong>：Explain 中 IXSCAN → SORT 变为纯 IXSCAN；文档扫描量从数千降至几十。</p>
+<h3 id="33-写路径避免读-改-写的热点"><strong>3.3 写路径：避免读-改-写的热点</strong></h3>
+<ul>
+<li>计数/分数类更新使用 <strong>原子操作</strong>：$inc、$max、$addToSet。</li>
+<li>批量写入使用 BulkWrite，减少 RTT：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>models <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>([]mongo.WriteModel, <span style="color:#bd93f9">0</span>, <span style="color:#8be9fd;font-style:italic">len</span>(updates))
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> _, u <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> updates {
+</span></span><span style="display:flex;"><span>    m <span style="color:#ff79c6">:=</span> mongo.<span style="color:#50fa7b">NewUpdateOneModel</span>().
+</span></span><span style="display:flex;"><span>        <span style="color:#50fa7b">SetFilter</span>(bson.M{<span style="color:#f1fa8c">&#34;_id&#34;</span>: u.ID}).
+</span></span><span style="display:flex;"><span>        <span style="color:#50fa7b">SetUpdate</span>(bson.M{<span style="color:#f1fa8c">&#34;$inc&#34;</span>: bson.M{<span style="color:#f1fa8c">&#34;reviewCount&#34;</span>: <span style="color:#bd93f9">1</span>}}).
+</span></span><span style="display:flex;"><span>        <span style="color:#50fa7b">SetUpsert</span>(<span style="color:#ff79c6">false</span>)
+</span></span><span style="display:flex;"><span>    models = <span style="color:#8be9fd;font-style:italic">append</span>(models, m)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>res, err <span style="color:#ff79c6">:=</span> coll.<span style="color:#50fa7b">BulkWrite</span>(ctx, models, options.<span style="color:#50fa7b">BulkWrite</span>().<span style="color:#50fa7b">SetOrdered</span>(<span style="color:#ff79c6">false</span>))
+</span></span></code></pre></div><ul>
+<li>新增文档用 upsert + $setOnInsert，避免先查后插：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.users.<span style="color:#50fa7b">updateOne</span>(
+</span></span><span style="display:flex;"><span>  { _id: U },
+</span></span><span style="display:flex;"><span>  { $setOnInsert: { createdAt: NOW }, $set: { lastLoginAt: NOW } },
+</span></span><span style="display:flex;"><span>  { upsert: <span style="color:#ff79c6">true</span> }
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><h3 id="34-模型层面的形状优化"><strong>3.4 模型层面的“形状”优化</strong></h3>
+<ul>
+<li><strong>控制文档增长</strong>：避免把“无限追加”的数组塞进同一文档（单文档 16MB 限制）。时间序列/日志类改用 <strong>时间序列集合</strong> 或“按月分片”的集合。</li>
+<li><strong>过期数据自动清理</strong>：会话/验证码等使用 <strong>TTL 索引</strong>。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.sessions.<span style="color:#50fa7b">createIndex</span>({ expireAt: <span style="color:#bd93f9">1</span> }, { expireAfterSeconds: <span style="color:#bd93f9">0</span> })
+</span></span></code></pre></div><h3 id="35-读写隔离按接口选择一致性级别"><strong>3.5 读写隔离：按接口选择一致性级别</strong></h3>
+<ul>
+<li>列表/非关键统计：readConcern: local + primaryPreferred，降低主节点压力与延迟。</li>
+<li>用户关键操作（订单/支付/学习进度）：writeConcern: majority，必要时在读路径上 afterClusterTime 保证“读到自己的写”。</li>
+</ul>
+<p><strong>注意</strong>：一致性降级必须<strong>标注在接口契约里</strong>，避免未来误用。</p>
+<hr>
+<h2 id="4-并发与背压让系统稳住手"><strong>4. 并发与背压：让系统“稳住手”</strong></h2>
+<h3 id="41-业务级并发闸门"><strong>4.1 业务级并发闸门</strong></h3>
+<p>部分接口（例如批量聚合）理论上能开很多 goroutine，但数据库是有限的。为此我们引入<strong>加权信号量</strong>做“接口粒度的并发上限”。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> gate <span style="color:#8be9fd;font-style:italic">struct</span>{ sem <span style="color:#ff79c6">*</span>semaphore.Weighted }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> (g <span style="color:#ff79c6">*</span>gate) <span style="color:#50fa7b">Do</span>(ctx context.Context, n <span style="color:#8be9fd">int64</span>, fn <span style="color:#8be9fd;font-style:italic">func</span>(ctx context.Context) <span style="color:#8be9fd">error</span>) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> g.sem.<span style="color:#50fa7b">Acquire</span>(ctx, n); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> { <span style="color:#ff79c6">return</span> err }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">defer</span> g.sem.<span style="color:#50fa7b">Release</span>(n)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#50fa7b">fn</span>(ctx)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> dbGate = <span style="color:#ff79c6">&amp;</span>gate{sem: semaphore.<span style="color:#50fa7b">NewWeighted</span>(<span style="color:#bd93f9">120</span>)} <span style="color:#6272a4">// 根据连接池和观测调参
+</span></span></span></code></pre></div><h3 id="42-去重与批量化"><strong>4.2 去重与批量化</strong></h3>
+<p>避免 N+1：把同一请求内的多次用户画像查询，收敛成一次 $in 批量查；必要时做 5–10ms 的微批。</p>
+<hr>
+<h2 id="5-可以量化的收益三条接口的前后对比"><strong>5. 可以量化的收益：三条接口的前后对比</strong></h2>
+<blockquote>
+<p>数据为我们生产真实流量的近一周指标，应用与数据库与本文配置一致。</p>
+</blockquote>
+<table>
+  <thead>
+      <tr>
+          <th><strong>接口</strong></th>
+          <th><strong>主要改动</strong></th>
+          <th><strong>p99（前）</strong></th>
+          <th><strong>p99（后）</strong></th>
+          <th><strong>其他收益</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>/v1/movies/hotlist</td>
+          <td>复合索引（partial 覆盖排序）、稳定分页、响应池化</td>
+          <td>510ms</td>
+          <td><strong>118ms</strong></td>
+          <td>CPU -21%，扫描量 -95%</td>
+      </tr>
+      <tr>
+          <td>/v1/idioms/review/next</td>
+          <td>复合索引（partial）、IXSCAN 代替排序、limit 限制</td>
+          <td>280ms</td>
+          <td><strong>72ms</strong></td>
+          <td>连接池等待基本消失</td>
+      </tr>
+      <tr>
+          <td>/v1/user/record/batch</td>
+          <td>BulkWrite + 原子操作 + 并发闸门</td>
+          <td>420ms</td>
+          <td><strong>156ms</strong></td>
+          <td>超时率 0.9%→0.06%</td>
+      </tr>
+  </tbody>
+</table>
+<p>系统总体 <strong>p99 从 ~480ms 降到 ~92ms</strong>（晚高峰），误报的“数据库慢”问题消失。</p>
+<hr>
+<h2 id="6-难点与坑"><strong>6. 难点与坑</strong></h2>
+<ul>
+<li><strong>Explain 假阳性</strong>：某些执行计划在“低基数场景”表现很好，但高并发下暴露出锁/内存上的瓶颈 → 必须配合真实流量压测验证。</li>
+<li><strong>中间件顺序</strong>：日志在超时中间件<strong>之后</strong>可能拿不到完整字段；我们统一把 RequestID 与恢复放最前。</li>
+<li><strong>游标泄露</strong>：错误分支忘记 cur.Close(ctx)，连接池等待队列“慢性充血”。上线前加 lint + 单测兜底。</li>
+<li><strong>“万能缓存”误用</strong>：把不稳定的读路径全丢给 Redis 不是优化，是掩盖。我们只对 <strong>热榜第一页</strong> 做 30–60s 软缓存（L1 本地 + ETag），其余保留数据库真相。</li>
+</ul>
+<hr>
+<h2 id="7-可直接复用的片段"><strong>7. 可直接复用的片段</strong></h2>
+<h3 id="71-gin请求超时中间件"><strong>7.1 Gin：请求超时中间件</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">ServerTimeout</span>(d time.Duration) gin.HandlerFunc {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">func</span>(c <span style="color:#ff79c6">*</span>gin.Context) {
+</span></span><span style="display:flex;"><span>        ctx, cancel <span style="color:#ff79c6">:=</span> context.<span style="color:#50fa7b">WithTimeout</span>(c.Request.<span style="color:#50fa7b">Context</span>(), d)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">defer</span> <span style="color:#50fa7b">cancel</span>()
+</span></span><span style="display:flex;"><span>        c.Request = c.Request.<span style="color:#50fa7b">WithContext</span>(ctx)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        done <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">chan</span> <span style="color:#8be9fd;font-style:italic">struct</span>{})
+</span></span><span style="display:flex;"><span>        panicChan <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">chan</span> any, <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">go</span> <span style="color:#8be9fd;font-style:italic">func</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">defer</span> <span style="color:#8be9fd;font-style:italic">func</span>() {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">if</span> r <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">recover</span>(); r <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> { panicChan <span style="color:#ff79c6">&lt;-</span> r }
+</span></span><span style="display:flex;"><span>                <span style="color:#8be9fd;font-style:italic">close</span>(done)
+</span></span><span style="display:flex;"><span>            }()
+</span></span><span style="display:flex;"><span>            c.<span style="color:#50fa7b">Next</span>()
+</span></span><span style="display:flex;"><span>        }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">select</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">case</span> <span style="color:#ff79c6">&lt;-</span>ctx.<span style="color:#50fa7b">Done</span>():
+</span></span><span style="display:flex;"><span>            c.<span style="color:#50fa7b">AbortWithStatusJSON</span>(http.StatusGatewayTimeout, gin.H{<span style="color:#f1fa8c">&#34;error&#34;</span>: <span style="color:#f1fa8c">&#34;timeout&#34;</span>})
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">case</span> p <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&lt;-</span>panicChan:
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">panic</span>(p)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">case</span> <span style="color:#ff79c6">&lt;-</span>done:
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="72-mongo慢查询日志驱动事件"><strong>7.2 Mongo：慢查询日志（驱动事件）</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>cm <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&amp;</span>event.CommandMonitor{
+</span></span><span style="display:flex;"><span>    Succeeded: <span style="color:#8be9fd;font-style:italic">func</span>(ctx context.Context, e <span style="color:#ff79c6">*</span>event.CommandSucceededEvent) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> e.Duration &gt; <span style="color:#bd93f9">150</span><span style="color:#ff79c6">*</span>time.Millisecond <span style="color:#ff79c6">&amp;&amp;</span> e.CommandName <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;find&#34;</span> {
+</span></span><span style="display:flex;"><span>            slog.<span style="color:#50fa7b">Warn</span>(<span style="color:#f1fa8c">&#34;slow mongo&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f1fa8c">&#34;cmd&#34;</span>, e.CommandName, <span style="color:#f1fa8c">&#34;ms&#34;</span>, e.Duration.<span style="color:#50fa7b">Milliseconds</span>(), <span style="color:#f1fa8c">&#34;db&#34;</span>, e.DatabaseName)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>client, _ <span style="color:#ff79c6">:=</span> mongo.<span style="color:#50fa7b">Connect</span>(ctx, options.<span style="color:#50fa7b">Client</span>().<span style="color:#50fa7b">ApplyURI</span>(uri).<span style="color:#50fa7b">SetMonitor</span>(cm))
+</span></span></code></pre></div><h3 id="73-稳定分页游标式"><strong>7.3 稳定分页（游标式）</strong></h3>
+<p>客户端带上 (lastScore, lastID) 作为游标，避免 skip 造成深分页退化。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>filter <span style="color:#ff79c6">:=</span> bson.M{<span style="color:#f1fa8c">&#34;category&#34;</span>: cat, <span style="color:#f1fa8c">&#34;lang&#34;</span>: lang, <span style="color:#f1fa8c">&#34;status&#34;</span>: <span style="color:#f1fa8c">&#34;published&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> lastScore <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>    filter[<span style="color:#f1fa8c">&#34;$or&#34;</span>] = bson.A{
+</span></span><span style="display:flex;"><span>        bson.M{<span style="color:#f1fa8c">&#34;hotScore&#34;</span>: bson.M{<span style="color:#f1fa8c">&#34;$lt&#34;</span>: lastScore}},
+</span></span><span style="display:flex;"><span>        bson.M{<span style="color:#f1fa8c">&#34;hotScore&#34;</span>: lastScore, <span style="color:#f1fa8c">&#34;_id&#34;</span>: bson.M{<span style="color:#f1fa8c">&#34;$gt&#34;</span>: lastID}},
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>opts <span style="color:#ff79c6">:=</span> options.<span style="color:#50fa7b">Find</span>().<span style="color:#50fa7b">SetSort</span>(bson.D{{<span style="color:#f1fa8c">&#34;hotScore&#34;</span>, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>}, {<span style="color:#f1fa8c">&#34;_id&#34;</span>, <span style="color:#bd93f9">1</span>}}).<span style="color:#50fa7b">SetLimit</span>(<span style="color:#bd93f9">20</span>)
+</span></span></code></pre></div><hr>
+<h2 id="8-落地后的保养与基线"><strong>8. 落地后的“保养”与基线</strong></h2>
+<ul>
+<li><strong>每周</strong>：抽样对关键接口做 Explain 归档，对比索引命中与扫描量。</li>
+<li><strong>每次需求变更</strong>：先画“查询形状”，再建/调索引；不把“能查出来”当作“能跑得快”。</li>
+<li><strong>阈值告警</strong>：连接池等待、p99、超时率三条红线，触发就回滚或限流。</li>
+<li><strong>基线压测</strong>：固定数据规模与并发档位，记录“签名值”（如 /hotlist p99、QPS），作为版本对照。</li>
+</ul>
+<hr>
+<h2 id="9-收尾"><strong>9. 收尾</strong></h2>
+<p>这次优化的关键，不在于某个“银弹”，而是把观测、建模、查询路径、并发控制和工程边界一件件对齐。<strong>Go + Gin + MongoDB</strong> 的组合并不稀奇，但当它服务于清晰的“查询形状”，再配上节制的工程实践，晚高峰就不再是赌运气。</p>
+<p>如果你也在做内容列表与学习计划类的 API，上文的索引形状、稳定分页、批量写与原子更新，大概率能直接复用。剩下的，交给你的业务语义与数据分布来决定。</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2025 Biney</span>
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

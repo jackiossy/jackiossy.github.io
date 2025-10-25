@@ -1,0 +1,82 @@
+---
+layout: post
+tags: ["Docker","CUPS","AirPrint"]
+title: "Docker部署CUPS打印服务"
+date: 2023-10-08T14:33:56+08:00
+math: false
+draft: false
+type: "post"
+---
+
+##  Docker部署CUPS打印服务， 使传统打印机支持AirPrint 
+
+
+
+在iOS / macOS / iPadOS 当中， 我们在任意分享页面经常可以看到“打印”，如果我们有支持AirPrint功能的打印机的时候，当打印机连接在和设备的同一局域网下面的时候， 我们就可以在打印当中发现AirPrint打印机，并快速 便捷的使用打印功能。但是，我们并不是所有的打印机都支持AirPrint功能， 而且支持AirPrint功能都比较昂贵，那么我们如何才能将传统的USB打印机通过一些技术手段，将USB打印机变为AirPrint打印机呢？ 
+
+前期准备工作：
+
+* Docker （ 任何运行方式都可以， 比如软路由，群晖，Ubuntu... everything )
+* 一台USB打印机 任何品牌 
+* 打印机的Linux驱动 （ 官网下载， 如果CUPS默认自带打印机驱动可不用额外准备 ） 
+
+具体方案如下:
+
+1.docker 部署CUPS服务
+
+```shell
+sudo docker run -d --name=airprint --net="host"  --privileged=true  -e TZ="Asia/Shanghai"  -e HOST_OS=“Ubuntu” -p '631:631'  -v "/volume1/docker/airprint/config":"/config"  -v /dev:/dev  -v "/volume1/docker/airprint/avahi":"/etc/avahi/services" \-v /var/run/dbus:/var/run/dbus "olbat/cupsd"
+```
+
+2.执行完毕后运行。 
+
+cupsd启动之后打开浏览器访问cups服务的web管理页面， 并点击顶部菜单"Administration", 点击 Printers 分类中的 "Add Print" 按钮，然后输入默认的账号 print , 密码 print ，登陆之后你就会看到USB连接到这台docker设备上的打印机型号， 我这里的打印机是佳能的激光打印机 Canon LBP6018L , 这里我们发现Local Printers已经识别出来 "Canon LBP6030/6040/6018L"打印机了， 我们选择，然后点击continue 继续。
+
+
+
+3.按提示填写打印机的名字/描述, 并勾选☑️“Share This Printer” , 然后点击继续。在驱动列表当中选择你的打印机品牌和型号， 如果列表当中有你的打印机型号， 即添加打印机完毕。 可在Web管理当中打印测试页进行测试。如果列表当中并没有你的打印机型号的时候， 请你去官网去查找你的打印机的Linux驱动， 并下载到本地。 通过 scp 服务传输到我们docker所在的服务器/主机当中。并传输进docker容器当中（使用docker cp) 命令。
+
+4.（非必要） 在docker当中安装linux打印机驱动， 一般驱动包解压出来后， 里面会有 install.sh 安装文件， 我们执行 ./install.sh 命令后，即可自动执行驱动的安装， 当Linux安装完毕之后， 我们重新进入步骤2， 进入web管理页面按照刚才的方法添加打印机，在驱动选择的列表即可看到您的打印机型号。 按照上面的教程添加即可。
+
+5.可成功在Web管理页面打印测试页面后， 我们需要在iOS/iPadOS/macOS当中， 直接选择打印机， 我们随意找一个文档， 可以是网页/PDF/备忘录/Page/照片等等均可。 我们在选择打印机的时候， 就可以看到我们刚才安装的打印机啦， 我们选择发现的打印机即可直接打印。 
+
+
+
+6.Share CUPS Printer via Bonjour/IPP Protocol.
+
+如果在iPhone/ macOS当中， 并没有发现打印机。 我们需要在docker所在的系统当中， 去安装 Avahi-daemon 服务并运行。
+
+```shell
+sudo apt install avahi-daemon
+```
+
+执行启动服务命令：
+
+```
+sudo systemctl start avahi-daemon
+```
+
+将avahi-daemon服务加入到开机启动计划当中：
+
+```
+sudo systemctl enable avahi-daemon
+```
+
+我们将UDP 5353端口打开， 因为 avahi-daemon  要使用5353端口进行广播： 
+
+```
+sudo ufw allow 5353/udp
+```
+
+成功运行 avahi-daemon 服务之后， iOS/ macOS就会发现我们共享的AirPrint打印机🖨️ ， 我们直接使用即可。
+
+参考文档： 
+
+https://www.linuxbabe.com/ubuntu/set-up-cups-print-server-ubuntu-bonjour-ipp-samba-airprint 
+
+
+
+
+
+
+

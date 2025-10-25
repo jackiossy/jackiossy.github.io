@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>手拧出来的界面——Python &#43; Qt5 纯代码布局实战手账</title>
+    <meta name="description" content=" 记录一次从“拖一拖就能跑”到“手拧螺丝”的转向。
+场景：做一个日志管理与点云浏览的小工具，迭代很快，UI 需要频繁改版。
+00｜为什么我从可视化回到纯代码 那天晚上 23:40，我在 Qt Designer 里把两个 QHBoxLayout 嵌套成了“左树右表”，又加了三层 QSpacerItem。看起来顺手，但两件 …">
+    <meta name="keywords" content='blog, gokarna, hugo, python, QT'>
+
+    <meta property="og:url" content="https://blog.mose.ltd/posts/%E6%89%8B%E6%8B%A7%E5%87%BA%E6%9D%A5%E7%9A%84%E7%95%8C%E9%9D%A2python-&#43;-qt5-%E7%BA%AF%E4%BB%A3%E7%A0%81%E5%B8%83%E5%B1%80%E5%AE%9E%E6%88%98%E6%89%8B%E8%B4%A6/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="手拧出来的界面——Python &#43; Qt5 纯代码布局实战手账">
+    <meta property="og:description" content=" 记录一次从“拖一拖就能跑”到“手拧螺丝”的转向。
+场景：做一个日志管理与点云浏览的小工具，迭代很快，UI 需要频繁改版。
+00｜为什么我从可视化回到纯代码 那天晚上 23:40，我在 Qt Designer 里把两个 QHBoxLayout 嵌套成了“左树右表”，又加了三层 QSpacerItem。看起来顺手，但两件 …">
+    <meta property="og:image" content="https://blog.mose.ltd/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="https://blog.mose.ltd/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="手拧出来的界面——Python &#43; Qt5 纯代码布局实战手账">
+    <meta name="twitter:description" content=" 记录一次从“拖一拖就能跑”到“手拧螺丝”的转向。
+场景：做一个日志管理与点云浏览的小工具，迭代很快，UI 需要频繁改版。
+00｜为什么我从可视化回到纯代码 那天晚上 23:40，我在 Qt Designer 里把两个 QHBoxLayout 嵌套成了“左树右表”，又加了三层 QSpacerItem。看起来顺手，但两件 …">
+    <meta property="twitter:domain" content="https://blog.mose.ltd/posts/%E6%89%8B%E6%8B%A7%E5%87%BA%E6%9D%A5%E7%9A%84%E7%95%8C%E9%9D%A2python-&#43;-qt5-%E7%BA%AF%E4%BB%A3%E7%A0%81%E5%B8%83%E5%B1%80%E5%AE%9E%E6%88%98%E6%89%8B%E8%B4%A6/">
+    <meta property="twitter:url" content="https://blog.mose.ltd/posts/%E6%89%8B%E6%8B%A7%E5%87%BA%E6%9D%A5%E7%9A%84%E7%95%8C%E9%9D%A2python-&#43;-qt5-%E7%BA%AF%E4%BB%A3%E7%A0%81%E5%B8%83%E5%B1%80%E5%AE%9E%E6%88%98%E6%89%8B%E8%B4%A6/">
+    <meta name="twitter:image" content="https://blog.mose.ltd/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="https://blog.mose.ltd/posts/%E6%89%8B%E6%8B%A7%E5%87%BA%E6%9D%A5%E7%9A%84%E7%95%8C%E9%9D%A2python-&#43;-qt5-%E7%BA%AF%E4%BB%A3%E7%A0%81%E5%B8%83%E5%B1%80%E5%AE%9E%E6%88%98%E6%89%8B%E8%B4%A6/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.3eb19cb61dde9e37b9522867f3e024aeb68e26ab8e03252e46e365abcb19acf7.js" integrity="sha256-PrGcth3enje5Uihn8&#43;AkrraOJquOAyUuRuNlq8sZrPc="></script>
+
+    
+    
+    <link rel='stylesheet' href='/css/site-tweak.css'>
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://blog.mose.ltd/">
+                <img src='/images/avatar.jpg' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://blog.mose.ltd/">Biney&#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://blog.mose.ltd/posts/" aria-label="posts" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://blog.mose.ltd/tags/" aria-label="tags" > Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com" aria-label="github" ><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://blog.mose.ltd/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://blog.mose.ltd/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com" ><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>手拧出来的界面——Python + Qt5 纯代码布局实战手账</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">August 2, 2025
+           
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/python">python</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/qt">QT</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <blockquote>
+<p>记录一次从“拖一拖就能跑”到“手拧螺丝”的转向。</p>
+</blockquote>
+<blockquote>
+<p>场景：做一个日志管理与点云浏览的小工具，迭代很快，UI 需要频繁改版。</p>
+</blockquote>
+<hr>
+<h2 id="00为什么我从可视化回到纯代码"><strong>00｜为什么我从可视化回到纯代码</strong></h2>
+<p><strong>那天晚上 23:40</strong>，我在 Qt Designer 里把两个 QHBoxLayout 嵌套成了“左树右表”，又加了三层 QSpacerItem。看起来顺手，但两件小事把我劝退了：</p>
+<ul>
+<li><strong>改动难做“参数化”</strong>：想“根据配置隐藏右栏”，在 .ui 里要加占位、条件样式，变成“面向工具工作”，不是“面向需求工作”。</li>
+<li><strong>版本控制不可读</strong>：.ui 是 XML，MR 里几十行 diff 看不出<strong>意图</strong>，合并时冲突又脆。</li>
+</ul>
+<p>后来我用纯代码重搭一遍布局。几百行 Python 全在仓里，谁改了哪一行一眼明白。主题切换、动态插拔控件、AB 测试布局，都更像写程序而不是拼积木。</p>
+<blockquote>
+<p><strong>总结</strong>：</p>
+</blockquote>
+<ul>
+<li>
+<blockquote>
+<p><strong>Designer 优点</strong>：上手快、视觉把控直观、适合静态页面。</p>
+</blockquote>
+</li>
+<li>
+<blockquote>
+<p><strong>Designer 痛点</strong>：动态视图/条件布局吃力、PR 不可读、多人协作容易踩冲突。</p>
+</blockquote>
+</li>
+<li>
+<blockquote>
+<p><strong>纯代码优点</strong>：参数化、复用、可测试、可 review。</p>
+</blockquote>
+</li>
+<li>
+<blockquote>
+<p><strong>纯代码门槛</strong>：前期慢；但一旦形成“布局配方”，改动成本下降快。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="01三张布局配方卡"><strong>01｜三张“布局配方卡”</strong></h2>
+<blockquote>
+<p>配方卡都用 <strong>PyQt5</strong>（pip install PyQt5），关键是<strong>结构</strong>与<strong>伸缩因子</strong>用对。</p>
+</blockquote>
+<h3 id="卡-1经典三段式工具栏--主区--状态栏"><strong>卡 1：经典三段式（工具栏 / 主区 / 状态栏）</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> PyQt5.QtWidgets <span style="color:#ff79c6">import</span> (QApplication, QMainWindow, QWidget, QVBoxLayout,
+</span></span><span style="display:flex;"><span>                             QHBoxLayout, QToolBar, QLabel, QStatusBar, QPushButton)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Shell</span>(QMainWindow):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>setWindowTitle(<span style="color:#f1fa8c">&#34;三段式配方&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># 1) 工具栏</span>
+</span></span><span style="display:flex;"><span>        tb <span style="color:#ff79c6">=</span> QToolBar(<span style="color:#f1fa8c">&#34;工具&#34;</span>)
+</span></span><span style="display:flex;"><span>        tb<span style="color:#ff79c6">.</span>addAction(<span style="color:#f1fa8c">&#34;刷新&#34;</span>)
+</span></span><span style="display:flex;"><span>        tb<span style="color:#ff79c6">.</span>addAction(<span style="color:#f1fa8c">&#34;导出&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>addToolBar(tb)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># 2) 中心区：左列（过滤器）+ 右列（内容）</span>
+</span></span><span style="display:flex;"><span>        center <span style="color:#ff79c6">=</span> QWidget()
+</span></span><span style="display:flex;"><span>        main <span style="color:#ff79c6">=</span> QHBoxLayout(center)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        left <span style="color:#ff79c6">=</span> QWidget(); left_col <span style="color:#ff79c6">=</span> QVBoxLayout(left)
+</span></span><span style="display:flex;"><span>        left_col<span style="color:#ff79c6">.</span>addWidget(QLabel(<span style="color:#f1fa8c">&#34;过滤器&#34;</span>))
+</span></span><span style="display:flex;"><span>        left_col<span style="color:#ff79c6">.</span>addStretch(<span style="color:#bd93f9">1</span>)  <span style="color:#6272a4"># 左列靠上，剩余空间往下消化</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        right <span style="color:#ff79c6">=</span> QWidget(); right_col <span style="color:#ff79c6">=</span> QVBoxLayout(right)
+</span></span><span style="display:flex;"><span>        right_col<span style="color:#ff79c6">.</span>addWidget(QLabel(<span style="color:#f1fa8c">&#34;内容视图&#34;</span>))
+</span></span><span style="display:flex;"><span>        right_col<span style="color:#ff79c6">.</span>addStretch(<span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        main<span style="color:#ff79c6">.</span>addWidget(left, <span style="color:#bd93f9">0</span>)   <span style="color:#6272a4"># 权重 0：窄栏</span>
+</span></span><span style="display:flex;"><span>        main<span style="color:#ff79c6">.</span>addWidget(right, <span style="color:#bd93f9">1</span>)  <span style="color:#6272a4"># 权重 1：主栏</span>
+</span></span><span style="display:flex;"><span>        main<span style="color:#ff79c6">.</span>setContentsMargins(<span style="color:#bd93f9">12</span>, <span style="color:#bd93f9">12</span>, <span style="color:#bd93f9">12</span>, <span style="color:#bd93f9">12</span>)
+</span></span><span style="display:flex;"><span>        main<span style="color:#ff79c6">.</span>setSpacing(<span style="color:#bd93f9">10</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>setCentralWidget(center)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>setStatusBar(QStatusBar())
+</span></span></code></pre></div><p><strong>要点</strong>：</p>
+<ul>
+<li>addStretch(1) 把控件“压”到上方/左侧；</li>
+<li>addWidget(widget, stretch) 第二个参数就是<strong>权重</strong>；</li>
+<li>QMainWindow 必须 setCentralWidget，否则布局不生效（见踩坑 ③）。</li>
+</ul>
+<hr>
+<h3 id="卡-2自适应双栏"><strong>卡 2：自适应双栏（</strong></h3>
+<h3 id="qsplitter"><strong>QSplitter</strong></h3>
+<h3 id="驱动"><strong>驱动）</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> PyQt5.QtWidgets <span style="color:#ff79c6">import</span> (QWidget, QSplitter, QListView, QTableView, QVBoxLayout)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> PyQt5.QtCore <span style="color:#ff79c6">import</span> Qt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">TwoPane</span>(QWidget):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
+</span></span><span style="display:flex;"><span>        layout <span style="color:#ff79c6">=</span> QVBoxLayout(self)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        splitter <span style="color:#ff79c6">=</span> QSplitter(Qt<span style="color:#ff79c6">.</span>Horizontal)
+</span></span><span style="display:flex;"><span>        splitter<span style="color:#ff79c6">.</span>addWidget(QListView())   <span style="color:#6272a4"># 左：树/列表</span>
+</span></span><span style="display:flex;"><span>        splitter<span style="color:#ff79c6">.</span>addWidget(QTableView())  <span style="color:#6272a4"># 右：表/画布</span>
+</span></span><span style="display:flex;"><span>        splitter<span style="color:#ff79c6">.</span>setStretchFactor(<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>)   <span style="color:#6272a4"># 左栏固定</span>
+</span></span><span style="display:flex;"><span>        splitter<span style="color:#ff79c6">.</span>setStretchFactor(<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">1</span>)   <span style="color:#6272a4"># 右栏吃剩余</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        layout<span style="color:#ff79c6">.</span>addWidget(splitter)
+</span></span><span style="display:flex;"><span>        layout<span style="color:#ff79c6">.</span>setContentsMargins(<span style="color:#bd93f9">8</span>, <span style="color:#bd93f9">8</span>, <span style="color:#bd93f9">8</span>, <span style="color:#bd93f9">8</span>)
+</span></span></code></pre></div><p><strong>要点</strong>：</p>
+<ul>
+<li>QSplitter 比纯 QHBoxLayout 更<strong>可交互</strong>，用户可拖动分割线；</li>
+<li>setStretchFactor 管“谁扩张”，resize 时右侧优先吃空间。</li>
+</ul>
+<hr>
+<h3 id="卡-3数据表单"><strong>卡 3：数据表单（</strong></h3>
+<h3 id="qformlayout"><strong>QFormLayout</strong></h3>
+<h3 id="heading"><strong>+</strong></h3>
+<h3 id="qgridlayout"><strong>QGridLayout</strong></h3>
+<h3 id="混编"><strong>混编）</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> PyQt5.QtWidgets <span style="color:#ff79c6">import</span> (QWidget, QFormLayout, QLineEdit, QSpinBox,
+</span></span><span style="display:flex;"><span>                             QGridLayout, QPushButton)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">FormPane</span>(QWidget):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
+</span></span><span style="display:flex;"><span>        grid <span style="color:#ff79c6">=</span> QGridLayout(self)       <span style="color:#6272a4"># 外层栅格负责两列</span>
+</span></span><span style="display:flex;"><span>        form <span style="color:#ff79c6">=</span> QFormLayout()           <span style="color:#6272a4"># 内层表单负责行对齐</span>
+</span></span><span style="display:flex;"><span>        form<span style="color:#ff79c6">.</span>setLabelAlignment(Qt<span style="color:#ff79c6">.</span>AlignRight)
+</span></span><span style="display:flex;"><span>        form<span style="color:#ff79c6">.</span>setFormAlignment(Qt<span style="color:#ff79c6">.</span>AlignTop)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        name <span style="color:#ff79c6">=</span> QLineEdit()
+</span></span><span style="display:flex;"><span>        age  <span style="color:#ff79c6">=</span> QSpinBox(); age<span style="color:#ff79c6">.</span>setRange(<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">120</span>)
+</span></span><span style="display:flex;"><span>        city <span style="color:#ff79c6">=</span> QLineEdit()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        form<span style="color:#ff79c6">.</span>addRow(<span style="color:#f1fa8c">&#34;姓名&#34;</span>, name)
+</span></span><span style="display:flex;"><span>        form<span style="color:#ff79c6">.</span>addRow(<span style="color:#f1fa8c">&#34;年龄&#34;</span>, age)
+</span></span><span style="display:flex;"><span>        form<span style="color:#ff79c6">.</span>addRow(<span style="color:#f1fa8c">&#34;城市&#34;</span>, city)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        btn_save <span style="color:#ff79c6">=</span> QPushButton(<span style="color:#f1fa8c">&#34;保存&#34;</span>)
+</span></span><span style="display:flex;"><span>        btn_cancel <span style="color:#ff79c6">=</span> QPushButton(<span style="color:#f1fa8c">&#34;取消&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        grid<span style="color:#ff79c6">.</span>addLayout(form, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>)    <span style="color:#6272a4"># 表单占两列</span>
+</span></span><span style="display:flex;"><span>        grid<span style="color:#ff79c6">.</span>addWidget(btn_save, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">0</span>)
+</span></span><span style="display:flex;"><span>        grid<span style="color:#ff79c6">.</span>addWidget(btn_cancel, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>        grid<span style="color:#ff79c6">.</span>setRowStretch(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">1</span>)            <span style="color:#6272a4"># 底部留白向下吃</span>
+</span></span><span style="display:flex;"><span>        grid<span style="color:#ff79c6">.</span>setContentsMargins(<span style="color:#bd93f9">16</span>, <span style="color:#bd93f9">16</span>, <span style="color:#bd93f9">16</span>, <span style="color:#bd93f9">16</span>)
+</span></span></code></pre></div><p><strong>要点</strong>：</p>
+<ul>
+<li>QFormLayout 解决“标签对齐”问题；</li>
+<li>外层 QGridLayout 控制按钮排布与伸缩。</li>
+</ul>
+<hr>
+<h2 id="02看不顺眼就加边框调布局的现场技巧"><strong>02｜“看不顺眼就加边框”：调布局的现场技巧</strong></h2>
+<ul>
+<li>临时加可视化边框排查层级：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>w<span style="color:#ff79c6">.</span>setStyleSheet(<span style="color:#f1fa8c">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  QWidget { background: transparent; }
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  QFrame#debug { border: 1px dashed #999; }
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;&#34;&#34;</span>)
+</span></span></code></pre></div><ul>
+<li>打点几何：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span>(widget<span style="color:#ff79c6">.</span>metaObject()<span style="color:#ff79c6">.</span>className(), widget<span style="color:#ff79c6">.</span>geometry())
+</span></span></code></pre></div><ul>
+<li><strong>延迟一次布局</strong>（窗口初次 show() 后）再测量：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> PyQt5.QtCore <span style="color:#ff79c6">import</span> QTimer
+</span></span><span style="display:flex;"><span>QTimer<span style="color:#ff79c6">.</span>singleShot(<span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">lambda</span>: <span style="color:#8be9fd;font-style:italic">print</span>(widget<span style="color:#ff79c6">.</span>size()))
+</span></span></code></pre></div><hr>
+<h2 id="03纯代码常用螺丝刀"><strong>03｜纯代码常用“螺丝刀”</strong></h2>
+<ul>
+<li>
+<p><strong>边距 &amp; 间距</strong>：layout.setContentsMargins(l, t, r, b)、layout.setSpacing(px)</p>
+</li>
+<li>
+<p><strong>对齐</strong>：layout.addWidget(w, stretch, alignment=Qt.AlignRight|Qt.AlignVCenter)</p>
+</li>
+<li>
+<p><strong>占位</strong>：layout.addStretch(1)、layout.addSpacerItem(QSpacerItem(w, h))</p>
+</li>
+<li>
+<p><strong>尺寸策略</strong>：</p>
+<ul>
+<li>w.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)</li>
+<li>表格/画布用 Expanding，工具栏/标签多用 Preferred。</li>
+</ul>
+</li>
+<li>
+<p><strong>堆叠页</strong>：QStackedLayout 做“模式切换”（空数据页 / 数据页）。</p>
+</li>
+</ul>
+<hr>
+<h2 id="04踩坑复盘这些我都真踩过"><strong>04｜踩坑复盘（这些我都真踩过）</strong></h2>
+<p>① <strong>把布局 set 到错的对象</strong></p>
+<ul>
+<li><strong>症状</strong>：控件显示挤在角落；窗口放大控件不变。</li>
+<li><strong>原因</strong>：把 QVBoxLayout 赋给了子控件，没给父容器。</li>
+<li><strong>解法</strong>：parent_layout.addLayout(child_layout)；中心窗口用 self.setCentralWidget(container)。</li>
+</ul>
+<hr>
+<p>② <strong>重复 setLayout</strong></p>
+<ul>
+<li><strong>症状</strong>：运行报错 QWidget::setLayout: Attempting to set QLayout &quot;&quot; on &hellip;, which already has a layout。</li>
+<li><strong>解法</strong>：要么在构造里一次性 setLayout，要么只对顶层容器 setLayout，其余用 addLayout。</li>
+</ul>
+<hr>
+<p>③ <strong>QMainWindow 忘记 setCentralWidget</strong></p>
+<ul>
+<li><strong>症状</strong>：工具栏在，内容没托管，状态栏也不跟随。</li>
+<li><strong>解法</strong>：新建 center = QWidget() + self.setCentralWidget(center)，再对 center 设置布局。</li>
+</ul>
+<hr>
+<p>④ <strong>尺寸策略打架</strong></p>
+<ul>
+<li><strong>症状</strong>：左边本想固定宽，结果被右侧撑开；或滚动条出现/消失跳动。</li>
+<li><strong>解法</strong>：左栏 setFixedWidth 或 setSizePolicy(Preferred, Expanding)，右栏 Expanding, Expanding；外层设置合适的 stretch。</li>
+</ul>
+<hr>
+<p>⑤ <strong>滚动区域外包层漏了</strong></p>
+<ul>
+<li><strong>症状</strong>：QScrollArea 里内容不滚或滚动只部分生效。</li>
+<li><strong>解法</strong>：必须 scroll.setWidget(container) 且 container.setLayout(&hellip;)；若内容宽度自适应，scroll.setWidgetResizable(True)。</li>
+</ul>
+<hr>
+<p>⑥ <strong>对象名与 QSS 不匹配</strong></p>
+<ul>
+<li><strong>症状</strong>：样式没生效。</li>
+<li><strong>解法</strong>：widget.setObjectName(&ldquo;toolbar&rdquo;) 与 QSS #toolbar { &hellip; } 一一对应；不要指望类名匹配一切。</li>
+</ul>
+<hr>
+<h2 id="05信号-槽我遇到的三个问题与修复"><strong>05｜信号-槽：我遇到的三个问题与修复</strong></h2>
+<p><strong>Problem A：循环里 connect 把同一个槽连了 N 次</strong></p>
+<ul>
+<li><strong>现象</strong>：点击一次触发 N 次。</li>
+<li><strong>示例（错误）</strong>：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">5</span>):
+</span></span><span style="display:flex;"><span>    btn<span style="color:#ff79c6">.</span>clicked<span style="color:#ff79c6">.</span>connect(self<span style="color:#ff79c6">.</span>on_click)  <span style="color:#6272a4"># 重复连接</span>
+</span></span></code></pre></div><ul>
+<li></li>
+<li><strong>修复</strong>：连接前先断开，或只连接一次；或用自定义信号转发。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">try</span>:
+</span></span><span style="display:flex;"><span>    btn<span style="color:#ff79c6">.</span>clicked<span style="color:#ff79c6">.</span>disconnect(self<span style="color:#ff79c6">.</span>on_click)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">except</span> TypeError:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">pass</span>
+</span></span><span style="display:flex;"><span>btn<span style="color:#ff79c6">.</span>clicked<span style="color:#ff79c6">.</span>connect(self<span style="color:#ff79c6">.</span>on_click)
+</span></span></code></pre></div><hr>
+<p><strong>Problem B：lambda 捕获循环变量晚绑定</strong></p>
+<ul>
+<li><strong>现象</strong>：五个按钮都传最后一个索引。</li>
+<li><strong>示例（错误）</strong>：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">5</span>):
+</span></span><span style="display:flex;"><span>    btn<span style="color:#ff79c6">.</span>clicked<span style="color:#ff79c6">.</span>connect(<span style="color:#ff79c6">lambda</span>: self<span style="color:#ff79c6">.</span>open_tab(i))  <span style="color:#6272a4"># i 晚绑定</span>
+</span></span></code></pre></div><ul>
+<li></li>
+<li><strong>修复</strong>：用默认参数或 functools.partial。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> functools <span style="color:#ff79c6">import</span> partial
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">5</span>):
+</span></span><span style="display:flex;"><span>    btn<span style="color:#ff79c6">.</span>clicked<span style="color:#ff79c6">.</span>connect(partial(self<span style="color:#ff79c6">.</span>open_tab, i))
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 或</span>
+</span></span><span style="display:flex;"><span>btn<span style="color:#ff79c6">.</span>clicked<span style="color:#ff79c6">.</span>connect(<span style="color:#ff79c6">lambda</span> _, idx<span style="color:#ff79c6">=</span>i: self<span style="color:#ff79c6">.</span>open_tab(idx))
+</span></span></code></pre></div><hr>
+<p><strong>Problem C：跨线程更新 UI</strong></p>
+<ul>
+<li><strong>现象</strong>：偶发崩溃/卡死/输出“QObject::setParent: Cannot set parent, new parent is in a different thread”。</li>
+<li><strong>修复</strong>：Worker 放到 QThread，用自定义 pyqtSignal 回主线程；UI 更新只在主线程做。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> PyQt5.QtCore <span style="color:#ff79c6">import</span> QObject, QThread, pyqtSignal
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Worker</span>(QObject):
+</span></span><span style="display:flex;"><span>    progress <span style="color:#ff79c6">=</span> pyqtSignal(<span style="color:#8be9fd;font-style:italic">int</span>)
+</span></span><span style="display:flex;"><span>    done <span style="color:#ff79c6">=</span> pyqtSignal(<span style="color:#8be9fd;font-style:italic">list</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">run</span>(self):
+</span></span><span style="display:flex;"><span>        data <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">100</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># ... 计算 ...</span>
+</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>progress<span style="color:#ff79c6">.</span>emit(i)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>done<span style="color:#ff79c6">.</span>emit(data)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>thread <span style="color:#ff79c6">=</span> QThread()
+</span></span><span style="display:flex;"><span>worker <span style="color:#ff79c6">=</span> Worker()
+</span></span><span style="display:flex;"><span>worker<span style="color:#ff79c6">.</span>moveToThread(thread)
+</span></span><span style="display:flex;"><span>thread<span style="color:#ff79c6">.</span>started<span style="color:#ff79c6">.</span>connect(worker<span style="color:#ff79c6">.</span>run)
+</span></span><span style="display:flex;"><span>worker<span style="color:#ff79c6">.</span>progress<span style="color:#ff79c6">.</span>connect(<span style="color:#ff79c6">lambda</span> v: ui<span style="color:#ff79c6">.</span>progressBar<span style="color:#ff79c6">.</span>setValue(v))  <span style="color:#6272a4"># 主线程安全</span>
+</span></span><span style="display:flex;"><span>worker<span style="color:#ff79c6">.</span>done<span style="color:#ff79c6">.</span>connect(<span style="color:#ff79c6">lambda</span> data: ui<span style="color:#ff79c6">.</span>tableModel<span style="color:#ff79c6">.</span>reset_with(data))
+</span></span><span style="display:flex;"><span>thread<span style="color:#ff79c6">.</span>start()
+</span></span></code></pre></div><blockquote>
+<p>附加点：需要“消息排队”时可指定 Qt.QueuedConnection；无需强行加锁。</p>
+</blockquote>
+<hr>
+<h2 id="06小型项目的连接规范减少后期返工"><strong>06｜小型项目的“连接规范”（减少后期返工）</strong></h2>
+<ul>
+<li><strong>一处连接，一处断开</strong>：在控件生命周期明确 connect 与 disconnect 的位置（通常构造/销毁）。</li>
+<li><strong>不在构造里做复杂逻辑</strong>：构造只搭结构，业务 init() 在 showEvent 或外部调用。</li>
+<li><strong>自定义信号做“中转层”</strong>：UI 控件的 clicked → Presenter 的 requestSave → Model；避免直接把控件绑到数据层。</li>
+</ul>
+<hr>
+<h2 id="07一个从-0-到-1的纯代码页面示例可抄"><strong>07｜一个“从 0 到 1”的纯代码页面示例（可抄）</strong></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> PyQt5.QtWidgets <span style="color:#ff79c6">import</span> (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+</span></span><span style="display:flex;"><span>                             QHBoxLayout, QSplitter, QListWidget, QTableWidget, 
+</span></span><span style="display:flex;"><span>                             QTableWidgetItem, QToolBar, QStatusBar, QPushButton, QLabel)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> PyQt5.QtCore <span style="color:#ff79c6">import</span> Qt
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Page</span>(QMainWindow):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>setWindowTitle(<span style="color:#f1fa8c">&#34;手拧出来的界面&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>_build_ui()
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>_wire_events()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">_build_ui</span>(self):
+</span></span><span style="display:flex;"><span>        tb <span style="color:#ff79c6">=</span> QToolBar(<span style="color:#f1fa8c">&#34;工具&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>act_refresh <span style="color:#ff79c6">=</span> tb<span style="color:#ff79c6">.</span>addAction(<span style="color:#f1fa8c">&#34;刷新&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>act_export  <span style="color:#ff79c6">=</span> tb<span style="color:#ff79c6">.</span>addAction(<span style="color:#f1fa8c">&#34;导出&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>addToolBar(Qt<span style="color:#ff79c6">.</span>TopToolBarArea, tb)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        center <span style="color:#ff79c6">=</span> QWidget(); self<span style="color:#ff79c6">.</span>setCentralWidget(center)
+</span></span><span style="display:flex;"><span>        root <span style="color:#ff79c6">=</span> QVBoxLayout(center)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        splitter <span style="color:#ff79c6">=</span> QSplitter(Qt<span style="color:#ff79c6">.</span>Horizontal)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>list <span style="color:#ff79c6">=</span> QListWidget(); self<span style="color:#ff79c6">.</span>list<span style="color:#ff79c6">.</span>addItems([<span style="color:#f1fa8c">f</span><span style="color:#f1fa8c">&#34;任务 </span><span style="color:#f1fa8c">{</span>i<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">21</span>)])
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>table <span style="color:#ff79c6">=</span> QTableWidget(<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">3</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>table<span style="color:#ff79c6">.</span>setHorizontalHeaderLabels([<span style="color:#f1fa8c">&#34;时间&#34;</span>, <span style="color:#f1fa8c">&#34;级别&#34;</span>, <span style="color:#f1fa8c">&#34;消息&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        splitter<span style="color:#ff79c6">.</span>addWidget(self<span style="color:#ff79c6">.</span>list)
+</span></span><span style="display:flex;"><span>        splitter<span style="color:#ff79c6">.</span>addWidget(self<span style="color:#ff79c6">.</span>table)
+</span></span><span style="display:flex;"><span>        splitter<span style="color:#ff79c6">.</span>setStretchFactor(<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>)
+</span></span><span style="display:flex;"><span>        splitter<span style="color:#ff79c6">.</span>setStretchFactor(<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        btns <span style="color:#ff79c6">=</span> QHBoxLayout()
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>btn_ok <span style="color:#ff79c6">=</span> QPushButton(<span style="color:#f1fa8c">&#34;确定&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>btn_cancel <span style="color:#ff79c6">=</span> QPushButton(<span style="color:#f1fa8c">&#34;取消&#34;</span>)
+</span></span><span style="display:flex;"><span>        btns<span style="color:#ff79c6">.</span>addStretch(<span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>        btns<span style="color:#ff79c6">.</span>addWidget(self<span style="color:#ff79c6">.</span>btn_ok)
+</span></span><span style="display:flex;"><span>        btns<span style="color:#ff79c6">.</span>addWidget(self<span style="color:#ff79c6">.</span>btn_cancel)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        root<span style="color:#ff79c6">.</span>addWidget(splitter)
+</span></span><span style="display:flex;"><span>        root<span style="color:#ff79c6">.</span>addLayout(btns)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>setStatusBar(QStatusBar())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">_wire_events</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>act_refresh<span style="color:#ff79c6">.</span>triggered<span style="color:#ff79c6">.</span>connect(self<span style="color:#ff79c6">.</span>load_data_once)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>list<span style="color:#ff79c6">.</span>currentTextChanged<span style="color:#ff79c6">.</span>connect(self<span style="color:#ff79c6">.</span>on_select)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>btn_ok<span style="color:#ff79c6">.</span>clicked<span style="color:#ff79c6">.</span>connect(self<span style="color:#ff79c6">.</span>on_ok)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>btn_cancel<span style="color:#ff79c6">.</span>clicked<span style="color:#ff79c6">.</span>connect(self<span style="color:#ff79c6">.</span>close)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># --- slots ---</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">load_data_once</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>table<span style="color:#ff79c6">.</span>setRowCount(<span style="color:#bd93f9">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">5</span>):
+</span></span><span style="display:flex;"><span>            r <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>table<span style="color:#ff79c6">.</span>rowCount()
+</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>table<span style="color:#ff79c6">.</span>insertRow(r)
+</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>table<span style="color:#ff79c6">.</span>setItem(r, <span style="color:#bd93f9">0</span>, QTableWidgetItem(<span style="color:#f1fa8c">f</span><span style="color:#f1fa8c">&#34;12:</span><span style="color:#f1fa8c">{</span>i<span style="color:#f1fa8c">:</span><span style="color:#f1fa8c">02d</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>))
+</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>table<span style="color:#ff79c6">.</span>setItem(r, <span style="color:#bd93f9">1</span>, QTableWidgetItem(<span style="color:#f1fa8c">&#34;INFO&#34;</span>))
+</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>table<span style="color:#ff79c6">.</span>setItem(r, <span style="color:#bd93f9">2</span>, QTableWidgetItem(<span style="color:#f1fa8c">f</span><span style="color:#f1fa8c">&#34;载入第 </span><span style="color:#f1fa8c">{</span>i<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c"> 条&#34;</span>))
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>statusBar()<span style="color:#ff79c6">.</span>showMessage(<span style="color:#f1fa8c">&#34;已刷新&#34;</span>, <span style="color:#bd93f9">1500</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">on_select</span>(self, name):
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>statusBar()<span style="color:#ff79c6">.</span>showMessage(<span style="color:#f1fa8c">f</span><span style="color:#f1fa8c">&#34;选中：</span><span style="color:#f1fa8c">{</span>name<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>, <span style="color:#bd93f9">800</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">on_ok</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># TODO: 真正提交动作</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>statusBar()<span style="color:#ff79c6">.</span>showMessage(<span style="color:#f1fa8c">&#34;已提交&#34;</span>, <span style="color:#bd93f9">1000</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> __name__ <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    app <span style="color:#ff79c6">=</span> QApplication(sys<span style="color:#ff79c6">.</span>argv)
+</span></span><span style="display:flex;"><span>    win <span style="color:#ff79c6">=</span> Page()
+</span></span><span style="display:flex;"><span>    win<span style="color:#ff79c6">.</span>resize(<span style="color:#bd93f9">900</span>, <span style="color:#bd93f9">600</span>)
+</span></span><span style="display:flex;"><span>    win<span style="color:#ff79c6">.</span>show()
+</span></span><span style="display:flex;"><span>    sys<span style="color:#ff79c6">.</span>exit(app<span style="color:#ff79c6">.</span>exec_())
+</span></span></code></pre></div><hr>
+<h2 id="08回到起点一个判断题"><strong>08｜回到起点：一个判断题</strong></h2>
+<blockquote>
+<p><strong>当你需要“条件化、数据驱动、多人协作”的 UI 时，纯代码是更稳的积木。</strong></p>
+</blockquote>
+<blockquote>
+<p>而当你要做一个固定结构、一次性 demo，Designer 会更省时间。</p>
+</blockquote>
+<p>我现在的习惯是：<strong>先用纸画出层级与伸缩，直接写代码搭“骨架”</strong>；难的时候就加临时边框看几何；信号与槽只连一次，复杂流转走中转信号。</p>
+<p>界面是拧出来的，不是堆出来的。手感一旦对了，后面就全是熟练工。</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2025 Biney</span>
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

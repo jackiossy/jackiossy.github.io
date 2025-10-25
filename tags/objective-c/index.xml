@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Objective-C on Biney&#39;s blog</title>
+    <link>http://localhost:1313/tags/objective-c/</link>
+    <description>Recent content in Objective-C on Biney&#39;s blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 08 Oct 2015 14:33:56 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/objective-c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Objecitive-C内存管理在实战开发当中的总结</title>
+      <link>http://localhost:1313/posts/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%9C%A8%E5%AE%9E%E6%88%98%E5%BC%80%E5%8F%91%E5%BD%93%E4%B8%AD%E7%9A%84%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 08 Oct 2015 14:33:56 +0800</pubDate>
+      <guid>http://localhost:1313/posts/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%9C%A8%E5%AE%9E%E6%88%98%E5%BC%80%E5%8F%91%E5%BD%93%E4%B8%AD%E7%9A%84%E6%80%BB%E7%BB%93/</guid>
+      <description>&lt;h1 id=&#34;heading&#34;&gt;&lt;/h1&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;ARC 还没来救你。Xcode 的静态分析刚能用，Instruments 能跑 Leaks/Allocations，但大部分时候，代码的命脉仍在你手上。下面这份札记，是我在 iOS 4.x 年代踩坑之后留下的“手感指南”。&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;一四条金律背会就能活下去&#34;&gt;&lt;strong&gt;一、四条金律（背会就能活下去）&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Create/Copy ⇒ 你拥有（+1）&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;任何以 alloc/new/copy/mutableCopy（或 CF 的 Create/Copy）返回的对象，你对它负责。&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;retain ⇒ 你拥有（+1）&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;你显式 retain 了它，就得还一次 release。&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;不拥有就别放&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;没有通过 1、2 取得所有权的对象，别 release/drain/CFRelease。&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;拥有就要还&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;每一次取得所有权，终将对应一次 release 或一次 autorelease。&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;小抄：心里给每个对象记账。加过 1，就想着在哪儿减回去。&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;二初始化属性与-dealloc当年的标准手法&#34;&gt;&lt;strong&gt;二、初始化、属性与 dealloc：当年的“标准手法”&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1初始化要自持&#34;&gt;&lt;strong&gt;1）初始化要“自持”&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;- (id)init {&#xA;    self = [super init];&#xA;    if (self) {&#xA;        _items = [[NSMutableArray alloc] init]; // +1 自己持有&#xA;        _title = [@&amp;#34;默认标题&amp;#34; copy];             // 字符串/集合用 copy 更稳&#xA;    }&#xA;    return self;&#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2属性语义选对味ios-4-没有-weak&#34;&gt;&lt;strong&gt;2）属性语义选对味（iOS 4 没有 weak）&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;@property (nonatomic, retain) NSMutableArray *items;&#xA;@property (nonatomic, copy)   NSString *title;&#xA;@property (nonatomic, assign) id&amp;lt;UITableViewDelegate&amp;gt; delegate; // 反向引用防环&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;想自己写 setter？老派写法如下：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

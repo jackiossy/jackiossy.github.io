@@ -1,0 +1,35 @@
+/* 文件路径：static/css/site-tweak.css */
+
+/* 1) 全局基准字号：默认 16px，改成 ~94% 的体量 */
+html { font-size: 14.5px; }              /* 14.5/16 = 90.6% */
+
+/* 2) 正文和导航轻微缩小（主题若用 rem 会跟着走；若用 px，这里兜底） */
+body { font-size: 0.93rem; }
+
+/* 3) 标题稍收一点，避免“显大”的压迫感 */
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.2rem; }
+
+/* 4) 代码块默认都偏大，这里下调一点点 */
+pre, code, kbd, samp { font-size: 0.88em; }
+
+/* 5) 文章内容区略微收窄，阅读更专注（若不需要可删掉） */
+.main, .content, .post-content { max-width: 760px; margin-left: auto; margin-right: auto; }
+
+/* 6) 大屏回调，避免过小 */
+@media (min-width: 1400px) {
+  html { font-size: 15.5px; } /* 超宽屏回正到 ~97% */
+}
+
+/* Hide theme footer credit ("Made with ❤️ using Gokarna") */
+footer, .footer, .site-footer, footer.footer, #footer, .powered-by,
+footer .powered-by, footer .credit, footer .made-with,
+footer a[href*="gokarna" i] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}

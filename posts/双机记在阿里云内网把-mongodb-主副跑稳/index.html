@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>双机记：在阿里云内网把 MongoDB 主/副跑稳</title>
+    <meta name="description" content=" 这不是白皮书，也不是“十分钟学会复制集”。这是一次上线前夜的“实战日志”。两台 ECS：A 和 B，同一 VPC，只开内网。目标很朴素：A 为 Primary，B 为 Secondary，数据稳、切换可预期、故障能复盘。
+00｜开机前的三张小纸条（先决条件） 网：A 与 B 在同一 VPC/交换机，仅放行 27017 …">
+    <meta name="keywords" content='blog, gokarna, hugo, mongodb, 运维'>
+
+    <meta property="og:url" content="https://blog.mose.ltd/posts/%E5%8F%8C%E6%9C%BA%E8%AE%B0%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E7%BD%91%E6%8A%8A-mongodb-%E4%B8%BB%E5%89%AF%E8%B7%91%E7%A8%B3/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="双机记：在阿里云内网把 MongoDB 主/副跑稳">
+    <meta property="og:description" content=" 这不是白皮书，也不是“十分钟学会复制集”。这是一次上线前夜的“实战日志”。两台 ECS：A 和 B，同一 VPC，只开内网。目标很朴素：A 为 Primary，B 为 Secondary，数据稳、切换可预期、故障能复盘。
+00｜开机前的三张小纸条（先决条件） 网：A 与 B 在同一 VPC/交换机，仅放行 27017 …">
+    <meta property="og:image" content="https://blog.mose.ltd/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="https://blog.mose.ltd/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="双机记：在阿里云内网把 MongoDB 主/副跑稳">
+    <meta name="twitter:description" content=" 这不是白皮书，也不是“十分钟学会复制集”。这是一次上线前夜的“实战日志”。两台 ECS：A 和 B，同一 VPC，只开内网。目标很朴素：A 为 Primary，B 为 Secondary，数据稳、切换可预期、故障能复盘。
+00｜开机前的三张小纸条（先决条件） 网：A 与 B 在同一 VPC/交换机，仅放行 27017 …">
+    <meta property="twitter:domain" content="https://blog.mose.ltd/posts/%E5%8F%8C%E6%9C%BA%E8%AE%B0%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E7%BD%91%E6%8A%8A-mongodb-%E4%B8%BB%E5%89%AF%E8%B7%91%E7%A8%B3/">
+    <meta property="twitter:url" content="https://blog.mose.ltd/posts/%E5%8F%8C%E6%9C%BA%E8%AE%B0%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E7%BD%91%E6%8A%8A-mongodb-%E4%B8%BB%E5%89%AF%E8%B7%91%E7%A8%B3/">
+    <meta name="twitter:image" content="https://blog.mose.ltd/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="https://blog.mose.ltd/posts/%E5%8F%8C%E6%9C%BA%E8%AE%B0%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E7%BD%91%E6%8A%8A-mongodb-%E4%B8%BB%E5%89%AF%E8%B7%91%E7%A8%B3/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.3eb19cb61dde9e37b9522867f3e024aeb68e26ab8e03252e46e365abcb19acf7.js" integrity="sha256-PrGcth3enje5Uihn8&#43;AkrraOJquOAyUuRuNlq8sZrPc="></script>
+
+    
+    
+    <link rel='stylesheet' href='/css/site-tweak.css'>
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://blog.mose.ltd/">
+                <img src='/images/avatar.jpg' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://blog.mose.ltd/">Biney&#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://blog.mose.ltd/posts/" aria-label="posts" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://blog.mose.ltd/tags/" aria-label="tags" > Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com" aria-label="github" ><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://blog.mose.ltd/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://blog.mose.ltd/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com" ><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>双机记：在阿里云内网把 MongoDB 主/副跑稳</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">July 22, 2025
+           
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/mongodb">mongodb</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://blog.mose.ltd/tags/%E8%BF%90%E7%BB%B4">运维</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <blockquote>
+<p>这不是白皮书，也不是“十分钟学会复制集”。这是一次上线前夜的“实战日志”。两台 ECS：<strong>A</strong> 和 <strong>B</strong>，同一 VPC，只开内网。目标很朴素：A 为 <strong>Primary</strong>，B 为 <strong>Secondary</strong>，数据稳、切换可预期、故障能复盘。</p>
+</blockquote>
+<hr>
+<h2 id="00开机前的三张小纸条先决条件"><strong>00｜开机前的三张小纸条（先决条件）</strong></h2>
+<ul>
+<li><strong>网</strong>：A 与 B 在同一 <strong>VPC/交换机</strong>，仅放行 <strong>27017</strong> 彼此互通；22 端口仅对跳板机开放。</li>
+<li><strong>时</strong>：两台机器时钟同步（chrony / ntp），否则复制与鉴权会出幺蛾子。</li>
+<li><strong>名</strong>：给 A/B 起<strong>固定主机名</strong>或内网域名，后面配置里直接写这个名（别写公网）。</li>
+</ul>
+<hr>
+<h2 id="01分镜一生成暗号keyfile"><strong>01｜分镜一：生成“暗号”（keyFile）</strong></h2>
+<p><strong>旁白</strong>：复制集要彼此信任，先做一把共同钥匙。</p>
+<p>在 <strong>A</strong> 上：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo bash -c <span style="color:#f1fa8c">&#39;openssl rand -base64 756 &gt; /etc/mongo-keyfile&#39;</span>
+</span></span><span style="display:flex;"><span>sudo chown mongod:mongod /etc/mongo-keyfile
+</span></span><span style="display:flex;"><span>sudo chmod <span style="color:#bd93f9">600</span> /etc/mongo-keyfile
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 复制到 B（走内网）</span>
+</span></span><span style="display:flex;"><span>scp -o <span style="color:#8be9fd;font-style:italic">StrictHostKeyChecking</span><span style="color:#ff79c6">=</span>no /etc/mongo-keyfile root@B内网IP:/etc/mongo-keyfile
+</span></span><span style="display:flex;"><span>ssh root@B内网IP <span style="color:#f1fa8c">&#34;chown mongod:mongod /etc/mongo-keyfile &amp;&amp; chmod 600 /etc/mongo-keyfile&#34;</span>
+</span></span></code></pre></div><blockquote>
+<p>口令文件权限<strong>必须</strong>是 600，否则 mongod 直接罢工。</p>
+</blockquote>
+<hr>
+<h2 id="02分镜二写两份不对称的"><strong>02｜分镜二：写两份不对称的</strong></h2>
+<h2 id="mongodconf"><strong>mongod.conf</strong></h2>
+<p><strong>道具</strong>：Ubuntu 22.04 / AlmaLinux 9 都行，MongoDB 6.x/7.x 社区版即可。</p>
+<p><strong>共性</strong>：都用 WiredTiger，绑定内网 IP，启用复制与 keyFile。</p>
+<p><strong>A（Primary 候选）</strong> /etc/mongod.conf：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">storage</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">dbPath</span>: /var/lib/mongo
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">journal</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">enabled</span>: <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">net</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">bindIp</span>: <span style="color:#bd93f9">127.0.0.1</span>, A内网IP
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">port</span>: <span style="color:#bd93f9">27017</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">security</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">keyFile</span>: /etc/mongo-keyfile
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">replication</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">replSetName</span>: rs-app
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">setParameter</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">enableLocalhostAuthBypass</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">processManagement</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">fork</span>: <span style="color:#ff79c6">false</span>
+</span></span></code></pre></div><p><strong>B（Secondary）</strong> /etc/mongod.conf：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">storage</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">dbPath</span>: /var/lib/mongo
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">journal</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">enabled</span>: <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">net</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">bindIp</span>: <span style="color:#bd93f9">127.0.0.1</span>, B内网IP
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">port</span>: <span style="color:#bd93f9">27017</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">security</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">keyFile</span>: /etc/mongo-keyfile
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">replication</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">replSetName</span>: rs-app
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">setParameter</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">enableLocalhostAuthBypass</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">processManagement</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">fork</span>: <span style="color:#ff79c6">false</span>
+</span></span></code></pre></div><p>启动：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl <span style="color:#8be9fd;font-style:italic">enable</span> --now mongod
+</span></span><span style="display:flex;"><span>sudo systemctl status mongod
+</span></span></code></pre></div><hr>
+<h2 id="03分镜三在-a-上点火并拉-b-入伙"><strong>03｜分镜三：在 A 上“点火”并拉 B 入伙</strong></h2>
+<p><strong>对白</strong>：A 是队长，先开局；B 作为二当家，随后加入。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mongosh --host A内网IP
+</span></span></code></pre></div><p>在 mongosh：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>// 1) 初始化复制集（只有 A 自己，先站起来）
+</span></span><span style="display:flex;"><span>rs.initiate({
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">_id</span>: <span style="color:#f1fa8c">&#34;rs-app&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">members</span>: [
+</span></span><span style="display:flex;"><span>    { <span style="color:#ff79c6">_id: 0, host</span>: <span style="color:#f1fa8c">&#34;A主机名或内网IP:27017&#34;</span><span style="color:#ff79c6">, priority: 2, tags</span>: {<span style="color:#ff79c6">role</span>: <span style="color:#f1fa8c">&#34;primary&#34;</span>} }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">settings</span>: { <span style="color:#ff79c6">electionTimeoutMillis</span>: <span style="color:#bd93f9">5000</span> }
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 2) 加入 B 为副本
+</span></span><span style="display:flex;"><span>rs.add({ _id: 1, host: &#34;B主机名或内网IP:27017&#34;, priority: 1, tags: {role: &#34;secondary&#34;} })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 3) 创建管理用户（之后都用账号登录）
+</span></span><span style="display:flex;"><span>use admin
+</span></span><span style="display:flex;"><span>db.createUser({
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">user</span>: <span style="color:#f1fa8c">&#34;siteAdmin&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">pwd</span>:  <span style="color:#f1fa8c">&#34;一串强口令&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">roles</span>: [ { <span style="color:#ff79c6">role</span>: <span style="color:#f1fa8c">&#34;root&#34;</span><span style="color:#ff79c6">, db</span>: <span style="color:#f1fa8c">&#34;admin&#34;</span> } ]
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><blockquote>
+<p>小注：priority: 2 &gt; 1 表示<strong>有条件</strong>时 A 更倾向当 Primary，但这不是“钉死”。</p>
+</blockquote>
+<hr>
+<h2 id="04分镜四三步验收看写读"><strong>04｜分镜四：三步验收（看、写、读）</strong></h2>
+<p><strong>看复制状态</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rs.status<span style="color:#ff79c6">()</span>                       // 角色与心跳
+</span></span><span style="display:flex;"><span>rs.printReplicationInfo<span style="color:#ff79c6">()</span>         // Oplog 大小/可回放时长
+</span></span><span style="display:flex;"><span>rs.printSlaveReplicationInfo<span style="color:#ff79c6">()</span>    // 各节点延迟
+</span></span></code></pre></div><p><strong>写入数据（在 A）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>use demo
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd;font-style:italic">let</span> <span style="color:#8be9fd;font-style:italic">i</span> <span style="color:#ff79c6">=</span> 0; i &lt; 1000; i++<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  db.logs.insertOne<span style="color:#ff79c6">({</span> i, ts: new Date<span style="color:#ff79c6">()</span>, from: <span style="color:#f1fa8c">&#34;A&#34;</span> <span style="color:#ff79c6">})</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>db.logs.countDocuments<span style="color:#ff79c6">()</span>
+</span></span></code></pre></div><p><strong>在 B 验收（只读）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mongosh --host B内网IP -u siteAdmin -p <span style="color:#f1fa8c">&#39;密码&#39;</span> --authenticationDatabase admin
+</span></span><span style="display:flex;"><span>rs.secondaryOk<span style="color:#ff79c6">()</span>                  // 允许在副本上读
+</span></span><span style="display:flex;"><span>use demo
+</span></span><span style="display:flex;"><span>db.logs.countDocuments<span style="color:#ff79c6">()</span>          // 应该与 A 一致
+</span></span><span style="display:flex;"><span>db.logs.find<span style="color:#ff79c6">()</span>.sort<span style="color:#ff79c6">({</span>ts:-1<span style="color:#ff79c6">})</span>.limit<span style="color:#ff79c6">(</span>3<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><hr>
+<h2 id="05分镜五一次温和的主从切换彩排"><strong>05｜分镜五：一次“温和”的主从切换彩排</strong></h2>
+<p><strong>场景 A（网络正常）</strong>：在 A 上自愿让贤</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rs.stepDown<span style="color:#ff79c6">(</span>60<span style="color:#ff79c6">)</span>                   // A 让出 <span style="color:#bd93f9">60</span> 秒
+</span></span></code></pre></div><blockquote>
+<p>若两台机都彼此可达，B 会发起选举，通常能升为 Primary（两票都在，过半=2）。</p>
+</blockquote>
+<p><strong>场景 B（A 故障或断网）</strong>：只剩 B 一票</p>
+<ul>
+<li>两节点复制集的“过半”是 <strong>2</strong>。A 不在场时，B 只有 1 票，<strong>不会</strong>自动当主。</li>
+<li>这正是双节点的硬约束：<strong>要高可用，建议加一个仲裁节点（Arbiter）</strong>。</li>
+</ul>
+<hr>
+<h2 id="06加一笔最轻量的高可用仲裁节点可选但强烈建议"><strong>06｜加一笔：最轻量的高可用——仲裁节点（可选，但强烈建议）</strong></h2>
+<p>如果允许新拉一台极小规格 ECS（同 VPC），把它命名为 <strong>C（Arbiter）</strong>。配置与前面相同，但 <strong>不存数据</strong>（默认即不存）。同样放置 keyFile、加入复制集：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>// 在 A 或 B 上执行（Primary 节点）
+</span></span><span style="display:flex;"><span>rs.addArb<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;C主机名或内网IP:27017&#34;</span><span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><ul>
+<li>现在有 <strong>3 张票</strong>，过半为 <strong>2</strong>。任一台数据节点挂了，仍能自动选主。</li>
+<li>Arbiter 不存数据，不占用多少磁盘与内存，成本低；但也不要与数据节点共机。</li>
+</ul>
+<hr>
+<h2 id="07写一致性与卡顿错觉生产前必做取舍"><strong>07｜写一致性与“卡顿错觉”（生产前必做取舍）</strong></h2>
+<ul>
+<li>默认写关注 w:1，落到 Primary 就算成功；复制到 B 异步进行。<strong>低延迟</strong>，但遇到 A 故障可能丢最近一笔（已写 A、未到 B）。</li>
+<li>w:&ldquo;majority&rdquo; 要等过半（双节点=2）确认才返回。<strong>更安全</strong>，但<strong>更依赖内网质量</strong>（阿里云同可用区通常 &lt;1ms，仍建议压测）。</li>
+</ul>
+<p><strong>应用端统一入口（示例 URI）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mongodb://A内网主机:27017,B内网主机:27017/app?replicaSet<span style="color:#ff79c6">=</span>rs-app&amp;<span style="color:#8be9fd;font-style:italic">readPreference</span><span style="color:#ff79c6">=</span>primaryPreferred&amp;<span style="color:#8be9fd;font-style:italic">w</span><span style="color:#ff79c6">=</span>majority&amp;<span style="color:#8be9fd;font-style:italic">wtimeoutMS</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">2000</span>
+</span></span></code></pre></div><ul>
+<li>读：primaryPreferred，主忙时可读副。</li>
+<li>写：majority + 2s 超时 —— 卡顿不无限制，超时自己兜底。</li>
+</ul>
+<hr>
+<h2 id="08灰盒测试清单上线前一口气做完"><strong>08｜“灰盒”测试清单（上线前一口气做完）</strong></h2>
+<ol>
+<li><strong>杀主自愈</strong>：systemctl stop mongod（A）→ 观察 B 是否当主（有 Arbiter 才会自动）。</li>
+<li><strong>链路抖动</strong>：用 tc 注入 3–5ms 延迟/0.5% 丢包，观察写延迟（w:majority）。</li>
+<li><strong>磁盘告急</strong>：在 B 把磁盘占到 90%+，看复制是否告警/堆积。</li>
+<li><strong>权限回收</strong>：删除一个业务库写权限，确认应用侧报错清晰。</li>
+<li><strong>时钟偏移</strong>：手动让 B 偏移 2s，确认鉴权失败并能定位（修正 NTP）。</li>
+</ol>
+<hr>
+<h2 id="09日常运维三把小扳手"><strong>09｜日常运维三把“小扳手”</strong></h2>
+<ul>
+<li><strong>看吞吐</strong>：mongostat &ndash;discover 1、mongotop 1</li>
+<li><strong>看慢语句</strong>：operationProfiling</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>operationProfiling:
+</span></span><span style="display:flex;"><span>  mode: slowOp
+</span></span><span style="display:flex;"><span>  slowOpThresholdMs: <span style="color:#bd93f9">100</span>
+</span></span></code></pre></div><ul>
+<li></li>
+<li><strong>看复制延迟</strong>：rs.printSlaveReplicationInfo()（延迟常态应 &lt;200ms）</li>
+</ul>
+<hr>
+<h2 id="10收尾备份与回滚闸"><strong>10｜收尾：备份与回滚闸</strong></h2>
+<ul>
+<li><strong>快照优先</strong>：ECS 系统盘/数据盘开启<strong>自动快照</strong>（每日、保留 7–14 天）。</li>
+<li><strong>逻辑备份</strong>：非高峰执行 mongodump &ndash;archive=/data/backup/$(date +%F).gz &ndash;gzip &ndash;oplog。</li>
+<li><strong>演练恢复</strong>：至少做一次 mongorestore &ndash;archive=&hellip; &ndash;gzip 到临时环境，确认冷备可用。</li>
+</ul>
+<hr>
+<h2 id="11常见误伤名单踩过一次就不想再踩"><strong>11｜常见“误伤名单”（踩过一次就不想再踩）</strong></h2>
+<ul>
+<li>把 bindIp 设成 0.0.0.0 然后安全组也放大，<strong>血槽见底</strong>。</li>
+<li>keyFile 权限不是 600，启动报错却被忽略。</li>
+<li>两节点没 Arbiter，却指望“自动主备切换”。</li>
+<li>Primary 上把 w:majority 打开，内网偶发抖动，应用侧<strong>间歇卡</strong>却不打点。</li>
+<li>用公网连接复制集，跨 AZ/跨地域，复制延迟爆表。</li>
+</ul>
+<hr>
+<h2 id="12尾声把可预期当作承诺"><strong>12｜尾声：把可预期当作承诺</strong></h2>
+<p>两台机器搞复制集，不是为了“炫技”，而是让你的应用在凌晨三点也能坦然落笔。</p>
+<p><strong>A</strong> 习惯当主，<strong>B</strong> 乐于背书；如果你肯给它们添一个仲裁者，就能把“侥幸可用”升格为“可预期可用”。</p>
+<p>上线不是一跃而就，而是有谱地演一遍又一遍。剧本写在这里，灯光该你打了。</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2025 Biney</span>
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

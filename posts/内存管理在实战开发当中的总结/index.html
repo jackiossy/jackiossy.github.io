@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Objecitive-C内存管理在实战开发当中的总结</title>
+    <meta name="description" content=" ARC 还没来救你。Xcode 的静态分析刚能用，Instruments 能跑 Leaks/Allocations，但大部分时候，代码的命脉仍在你手上。下面这份札记，是我在 iOS 4.x 年代踩坑之后留下的“手感指南”。
+一、四条金律（背会就能活下去） Create/Copy ⇒ 你拥有（&#43;1） …">
+    <meta name="keywords" content='blog, gokarna, hugo, Objective-C, iOS'>
+
+    <meta property="og:url" content="http://localhost:1313/posts/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%9C%A8%E5%AE%9E%E6%88%98%E5%BC%80%E5%8F%91%E5%BD%93%E4%B8%AD%E7%9A%84%E6%80%BB%E7%BB%93/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Objecitive-C内存管理在实战开发当中的总结">
+    <meta property="og:description" content=" ARC 还没来救你。Xcode 的静态分析刚能用，Instruments 能跑 Leaks/Allocations，但大部分时候，代码的命脉仍在你手上。下面这份札记，是我在 iOS 4.x 年代踩坑之后留下的“手感指南”。
+一、四条金律（背会就能活下去） Create/Copy ⇒ 你拥有（&#43;1） …">
+    <meta property="og:image" content="http://localhost:1313/images/avatar.jpg">
+    <meta property="og:image:secure_url" content="http://localhost:1313/images/avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Objecitive-C内存管理在实战开发当中的总结">
+    <meta name="twitter:description" content=" ARC 还没来救你。Xcode 的静态分析刚能用，Instruments 能跑 Leaks/Allocations，但大部分时候，代码的命脉仍在你手上。下面这份札记，是我在 iOS 4.x 年代踩坑之后留下的“手感指南”。
+一、四条金律（背会就能活下去） Create/Copy ⇒ 你拥有（&#43;1） …">
+    <meta property="twitter:domain" content="http://localhost:1313/posts/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%9C%A8%E5%AE%9E%E6%88%98%E5%BC%80%E5%8F%91%E5%BD%93%E4%B8%AD%E7%9A%84%E6%80%BB%E7%BB%93/">
+    <meta property="twitter:url" content="http://localhost:1313/posts/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%9C%A8%E5%AE%9E%E6%88%98%E5%BC%80%E5%8F%91%E5%BD%93%E4%B8%AD%E7%9A%84%E6%80%BB%E7%BB%93/">
+    <meta name="twitter:image" content="http://localhost:1313/images/avatar.jpg">
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%9C%A8%E5%AE%9E%E6%88%98%E5%BC%80%E5%8F%91%E5%BD%93%E4%B8%AD%E7%9A%84%E6%80%BB%E7%BB%93/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.3eb19cb61dde9e37b9522867f3e024aeb68e26ab8e03252e46e365abcb19acf7.js" integrity="sha256-PrGcth3enje5Uihn8&#43;AkrraOJquOAyUuRuNlq8sZrPc="></script>
+
+    
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="http://localhost:1313/">
+                <img src='/images/avatar.jpg' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="http://localhost:1313/">Biney&#39;s blog</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/posts/" aria-label="posts" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/tags/" aria-label="tags" > Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com" aria-label="github" ><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com" ><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Objecitive-C内存管理在实战开发当中的总结</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">October 8, 2015
+           
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/objective-c">Objective-C</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/ios">iOS</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <h1 id="heading"></h1>
+<blockquote>
+<p>ARC 还没来救你。Xcode 的静态分析刚能用，Instruments 能跑 Leaks/Allocations，但大部分时候，代码的命脉仍在你手上。下面这份札记，是我在 iOS 4.x 年代踩坑之后留下的“手感指南”。</p>
+</blockquote>
+<hr>
+<h2 id="一四条金律背会就能活下去"><strong>一、四条金律（背会就能活下去）</strong></h2>
+<ol>
+<li>
+<p><strong>Create/Copy ⇒ 你拥有（+1）</strong></p>
+<p>任何以 alloc/new/copy/mutableCopy（或 CF 的 Create/Copy）返回的对象，你对它负责。</p>
+</li>
+<li>
+<p><strong>retain ⇒ 你拥有（+1）</strong></p>
+<p>你显式 retain 了它，就得还一次 release。</p>
+</li>
+<li>
+<p><strong>不拥有就别放</strong></p>
+<p>没有通过 1、2 取得所有权的对象，别 release/drain/CFRelease。</p>
+</li>
+<li>
+<p><strong>拥有就要还</strong></p>
+<p>每一次取得所有权，终将对应一次 release 或一次 autorelease。</p>
+</li>
+</ol>
+<blockquote>
+<p>小抄：心里给每个对象记账。加过 1，就想着在哪儿减回去。</p>
+</blockquote>
+<hr>
+<h2 id="二初始化属性与-dealloc当年的标准手法"><strong>二、初始化、属性与 dealloc：当年的“标准手法”</strong></h2>
+<h3 id="1初始化要自持"><strong>1）初始化要“自持”</strong></h3>
+<pre tabindex="0"><code>- (id)init {
+    self = [super init];
+    if (self) {
+        _items = [[NSMutableArray alloc] init]; // +1 自己持有
+        _title = [@&#34;默认标题&#34; copy];             // 字符串/集合用 copy 更稳
+    }
+    return self;
+}
+</code></pre><h3 id="2属性语义选对味ios-4-没有-weak"><strong>2）属性语义选对味（iOS 4 没有 weak）</strong></h3>
+<pre tabindex="0"><code>@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, copy)   NSString *title;
+@property (nonatomic, assign) id&lt;UITableViewDelegate&gt; delegate; // 反向引用防环
+</code></pre><p>想自己写 setter？老派写法如下：</p>
+<pre tabindex="0"><code>- (void)setItems:(NSMutableArray *)items {
+    if (_items != items) {
+        [_items release];
+        _items = [items retain];
+    }
+}
+</code></pre><h3 id="3收尾就像打扫战场"><strong>3）收尾就像打扫战场</strong></h3>
+<pre tabindex="0"><code>- (void)dealloc {
+    // 先解绑观察、通知、计时器，免得回调打到僵尸
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [_timer invalidate];
+    [_timer release]; _timer = nil;
+
+    // 再释放自持资源
+    [_items release]; _items = nil;
+    [_title release]; _title = nil;
+
+    _delegate = nil; // assign 反向引用置空以示态度
+    [super dealloc]; // 最后一行
+}
+</code></pre><hr>
+<h2 id="三autorelease与-nsautoreleasepool借用主循环的肩膀"><strong>三、<strong>autorelease</strong>与</strong> NSAutoreleasePool：借用主循环的肩膀</h2>
+<h3 id="1延迟还债的姿势"><strong>1）“延迟还债”的姿势</strong></h3>
+<pre tabindex="0"><code>- (User *)freshUser {
+    User *u = [[User alloc] init];
+    // 配置...
+    return [u autorelease]; // 交给最近的池子
+}
+</code></pre><h3 id="2线程与紧凑循环必须自己建池"><strong>2）线程与紧凑循环必须自己建池</strong></h3>
+<p>iOS 4 的主 RunLoop 会自动建/清理一个池，但<strong>子线程</strong>和<strong>密集循环</strong>要自己管：</p>
+<pre tabindex="0"><code>- (void)startWorkerThread {
+    [NSThread detachNewThreadSelector:@selector(worker)
+                             toTarget:self
+                           withObject:nil];
+}
+
+- (void)worker {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+    for (NSInteger i = 0; i &lt; 10000; i++) {
+        NSAutoreleasePool *inner = [[NSAutoreleasePool alloc] init];
+        NSString *s = [NSString stringWithFormat:@&#34;%ld&#34;, (long)i]; // autorelease
+        // ... 干活 ...
+        [inner drain]; // 及时降峰值内存
+    }
+
+    [pool drain];
+}
+</code></pre><hr>
+<h2 id="四集合与命名规则最容易误判所有权的两处"><strong>四、集合与命名规则：最容易误判所有权的两处</strong></h2>
+<h3 id="1集合会"><strong>1）集合会</strong></h3>
+<h3 id="retain"><strong>retain</strong></h3>
+<h3 id="元素"><strong>元素</strong></h3>
+<pre tabindex="0"><code>Foo *f = [[Foo alloc] init];    // +1（你）
+[array addObject:f];            // 集合也 +1
+[f release];                    // 你归还自己那一次
+</code></pre><p>元素从集合里移除或集合销毁时，集合才会还它的一次。</p>
+<h3 id="2按名字认亲"><strong>2）按名字认亲</strong></h3>
+<ul>
+<li>alloc/new/copy/mutableCopy ⇒ 你拥有（要还）</li>
+<li>其它大多是工厂/便利方法 ⇒ 返回 autorelease（一般别放）</li>
+</ul>
+<hr>
+<h2 id="五core-foundation-桥接谁的孩子谁抱走"><strong>五、Core Foundation 桥接：谁的孩子谁抱走</strong></h2>
+<p>Toll-Free Bridging 允许 NSString ↔ CFStringRef 强转，但<strong>所有权不自动变化</strong>：</p>
+<pre tabindex="0"><code>CFStringRef cf = CFStringCreateWithCString(NULL, &#34;Hi&#34;, kCFStringEncodingUTF8); // +1 (CF)
+NSString *ns = (NSString *)cf; // 只是换了马甲
+// ... 使用 ns ...
+CFRelease(cf); // 用谁的 API 创建，就用谁的 API 放
+</code></pre><p>想交给 Cocoa 的池子？可以：</p>
+<pre tabindex="0"><code>return [(id)cf autorelease]; // 交给 autorelease，此后别再 CFRelease
+</code></pre><blockquote>
+<p>雷区：<strong>禁止</strong>“既 CFRelease 又 autorelease”。选一个。</p>
+</blockquote>
+<hr>
+<h2 id="六blocks-与-gcd两种隐形"><strong>六、Blocks 与 GCD：两种隐形</strong></h2>
+<h2 id="retain-1"><strong>retain</strong></h2>
+<h2 id="源"><strong>源</strong></h2>
+<h3 id="1当年的-block-是栈起步持有时请"><strong>1）当年的 Block 是栈起步，持有时请</strong></h3>
+<h3 id="copy"><strong>copy</strong></h3>
+<pre tabindex="0"><code>@property (nonatomic, copy) void (^completion)(void); // 属性用 copy
+
+self.completion = ^{ NSLog(@&#34;done&#34;); }; // 由栈拷到堆
+self.completion();
+self.completion = nil; // 释放旧值
+</code></pre><h3 id="2循环引用常见于我持有-blockblock-持有我"><strong>2）循环引用常见于“我持有 Block，Block 持有我”</strong></h3>
+<p>iOS 4 没 __weak，通常用 __block 做“非保留引用”：</p>
+<pre tabindex="0"><code>__block MyController *bself = self; // 在 MRC 下不会 retain
+self.completion = [^{
+    [bself finishWork];
+} copy];
+
+// 合适时机清理
+self.completion = nil;
+</code></pre><blockquote>
+<p>风险：如果 Block 延后很久执行，而 self 已经挂了，bself 会悬。对策：在 dealloc 或 cancel 处置空 Block/取消任务。</p>
+</blockquote>
+<h3 id="3把-block-丢给-gcd"><strong>3）把 Block 丢给 GCD？</strong></h3>
+<p>dispatch_async 会帮你把 Block 从栈 copy 到堆，并在执行完后释放。<strong>但只要你自己持有过</strong>（放到了属性/集合），还是要按上面的规则来。</p>
+<hr>
+<h2 id="七系统对象的内存个性"><strong>七、系统对象的“内存个性”</strong></h2>
+<ul>
+<li>
+<p><strong>NSTimer</strong>**/**<strong>CADisplayLink</strong>：会 retain target。常见环是 <em>target ↔ timer</em>。</p>
+<p>解决：invalidate + 置空（在 viewWillDisappear 或 dealloc 都要兜住）。</p>
+</li>
+<li>
+<p><strong>UIImage imageNamed:</strong>：会缓存。大图/一次性图建议 imageWithContentsOfFile:，别把系统缓存当资源池。</p>
+</li>
+<li>
+<p><strong>内存警告（iOS 4）</strong>：-didReceiveMemoryWarning 里释放可再生资源；-viewDidUnload（那会儿还在）里把 IBOutlets 置空。</p>
+</li>
+</ul>
+<hr>
+<h2 id="八调试三板斧zombies--instruments--静态分析"><strong>八、调试三板斧：Zombies / Instruments / 静态分析</strong></h2>
+<ol>
+<li>
+<p><strong>Zombies</strong>（Scheme → Run → Diagnostics）</p>
+<p>打开 NSZombieEnabled=YES，可以知道“这次消息发给了哪类僵尸对象”。</p>
+</li>
+<li>
+<p><strong>Instruments</strong></p>
+<ul>
+<li><strong>Leaks</strong> 看实时泄漏；</li>
+<li><strong>Allocations</strong> 打开 “Record reference counts”，追踪 retain/release 的来龙去脉；</li>
+<li><strong>Heapshot</strong> 前后快照抓“拿了不还”的路径。</li>
+</ul>
+</li>
+<li>
+<p><strong>Clang Static Analyzer（Build &amp; Analyze）</strong></p>
+<p>能捞出不少“条件分支里漏 release/多 release”的直球错误。配合单测最稳。</p>
+</li>
+</ol>
+<hr>
+<h2 id="九当年最常见的十个坑和止血法"><strong>九、当年最常见的十个坑（和止血法）</strong></h2>
+<ol>
+<li>工厂方法返回的对象被你 release 了 → <strong>别动</strong>，它是 autorelease。</li>
+<li>addObject: 之后忘记释放自己那次 → <strong>立刻</strong>在添加后 release 自己的引用。</li>
+<li>NSTimer 没 invalidate → 环与耗电并存 → <strong>统一出口</strong>里失效 + 置空。</li>
+<li>Block 捕获 self → <strong>__block</strong> <strong>替身</strong>，并且有取消/清理时机。</li>
+<li>KVO/通知没移除 → 崩在 dealloc 之后 → <strong>对称 add/remove</strong>，优先在 dealloc 开头移除。</li>
+<li>CF/NS 混放 → <strong>只选一种释放路径</strong>（CFRelease 或 autorelease）。</li>
+<li>子线程/密集循环缺内层池 → 峰值爆表 → <strong>小池子按批次</strong> <strong>drain</strong>。</li>
+<li>相信 retainCount → 被现实教育 → <strong>别看它</strong>，看 Instruments 的引用轨迹。</li>
+<li>retain 代替 copy → 可变子类污染不变语义 → <strong>不变值对象一律</strong> <strong>copy</strong>。</li>
+<li>资源型对象（CGColorRef/CGPathRef…）忘记 CFRelease → <strong>建立成对封装</strong>或 Checklist。</li>
+</ol>
+<hr>
+<h2 id="十几段耐用的代码片段"><strong>十、几段耐用的代码片段</strong></h2>
+<h3 id="1安全释放微宏老派味"><strong>1）“安全释放”微宏（老派味）</strong></h3>
+<pre tabindex="0"><code>#define ReleaseSafely(_x) do { if (_x) { [_x release]; _x = nil; } } while (0)
+</code></pre><blockquote>
+<p>不是必须，但在当年的代码里能统一风格、减少粘贴失误。</p>
+</blockquote>
+<h3 id="2计时器小包装"><strong>2）计时器小包装</strong></h3>
+<pre tabindex="0"><code>@interface SafeTimer : NSObject
+@property (nonatomic, assign) id target;
+@property (nonatomic, assign) SEL selector;
+@property (nonatomic, retain) NSTimer *timer;
+- (void)invalidate;
+@end
+
+@implementation SafeTimer
+- (void)dealloc {
+    [self invalidate];
+    [super dealloc];
+}
+- (void)invalidate {
+    [_timer invalidate];
+    ReleaseSafely(_timer);
+    _target = nil;
+}
+@end
+</code></pre><h3 id="3block-属性的防环范式mrc"><strong>3）Block 属性的“防环”范式（MRC）</strong></h3>
+<pre tabindex="0"><code>__block typeof(self) bself = self;
+self.completion = [^{
+    [bself finishUp];
+} copy];
+
+// 完成后
+self.completion = nil;
+</code></pre><h3 id="4线程模板ios-4-风格"><strong>4）线程模板（iOS 4 风格）</strong></h3>
+<pre tabindex="0"><code>- (void)spawnWorker {
+    [NSThread detachNewThreadSelector:@selector(worker) toTarget:self withObject:nil];
+}
+
+- (void)worker {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    // ... do work ...
+    [pool drain];
+}
+</code></pre><hr>
+<h2 id="十一设计层面的减法美学"><strong>十一、设计层面的“减法美学”</strong></h2>
+<ul>
+<li><strong>所有权单线流动</strong>：谁建谁放，尽量避免“双主权”。</li>
+<li><strong>缓存皆债务</strong>：任何“缓存”都要有丢弃策略（容量/时机/场景）。</li>
+<li><strong>反向引用用 assign</strong>：并<strong>约定置空时机</strong>，避免环。</li>
+<li><strong>把成对资源封装成对象</strong>：创建在 init，释放在 dealloc，别散落一地。</li>
+</ul>
+<hr>
+<h2 id="十二上线前的口袋清单"><strong>十二、上线前的口袋清单</strong></h2>
+<ul>
+<li>子线程/大循环是否都有 NSAutoreleasePool（必要时内层小池）</li>
+<li>计时器/DisplayLink/KVO/通知/Block 有<strong>统一</strong>的解绑/置空出口</li>
+<li>NSString/NSArray/NSDictionary 等<strong>用</strong> <strong>copy</strong> 而非 retain</li>
+<li>往集合里塞对象后，<strong>自己那次</strong>是否 release</li>
+<li>CF/NS 桥接只选一条释放路径（CFRelease <strong>或</strong> autorelease）</li>
+<li>大图不用 imageNamed:；缓存可回收</li>
+<li>Instruments 过 Leaks/Allocations/Heapshot；Zombies 跑过回归路径</li>
+<li>Build &amp; Analyze 为零阻塞问题</li>
+<li>关键对象的 -dealloc 实测能走到（加日志/断点确认）</li>
+</ul>
+<hr>
+<h2 id="尾声"><strong>尾声</strong></h2>
+<p>当年我们没法把内存托付给编译器，就只好把规则刻进手指头。</p>
+<p>把每个对象当成账本上的一笔债：alloc/retain/copy 是借，release/autorelease 是还；集合、Block、Timer 和桥接，是那些会“替你背债或给你加债”的地方。</p>
+<p>把这本账理清，你的 iOS 4 项目就能跑得久、崩得少。写得越久，这本账就越顺手。</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2015 The Marauders</span>
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>
